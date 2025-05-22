@@ -179,7 +179,7 @@ timeline.push({
 timeline.push({
   type: jsPsychHtmlKeyboardResponse,
   stimulus: `<div>
-  <h2> Please prepare for the test as shown below </h2> <h3> Press any key to continue </h3> <img src= "img/SingleImplicitMotivationImage.png" style = "width:500px; height: auto;"/>
+  <h2> Please prepare for the test as shown below </h2> <h3> Press any key to continue </h3> <img src= "img/SingleImplicitMotivationimage.png" style = "width:500px; height: auto;"/>
   </div>`,
   save_trial_parameters: {
     simulus: false
