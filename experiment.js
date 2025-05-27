@@ -444,29 +444,29 @@ timeline.push({
       // Map must be handled with .map().join("") inside template string
       const imageBlocks = brandImgs.map((img, i) => {
         return `
-          <div style="
-            background-color: #ffffff;
-            border-radius: 12px;
-            padding: 20px;
-            width: 140px;
-            text-align: center;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 10px;
-          ">
-            <img src="${img}" height="100" style="object-fit: contain;" />
-            <div style="
-              background-color: ${brandKeyColors[i]};
-              border-radius: 6px;
-              padding: 5px 10px;
-              font-weight: bold;
-              font-family: 'Courier New', monospace;
-              font-size: 16px;
-            ">[${brandKeys[i]}]</div>
-          </div>
-        `;
+              <div style="
+                background-color: #ffffff;
+                border-radius: 12px;
+                padding: 25px;
+                width: 220px;
+                text-align: center;
+                box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 15px;
+              ">
+                <img src="${img}" height="150" style="object-fit: contain;" />
+                <div style="
+                  background-color: ${brandKeyColors[i]};
+                  border-radius: 8px;
+                  padding: 8px 10px;
+                  font-weight: bold;
+                  font-family: 'Courier New', monospace;
+                  font-size: 18px;
+                ">[${brandKeys[i]}]</div>
+              </div>
+            `;
       }).join("");
 
       return `
@@ -496,11 +496,12 @@ timeline.push({
 
           <div style="
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 40px;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 60px;
             width: 100%;
-            max-width: 1000px;
+            max-width: 1100px;
             justify-items: center;
+            align-items: start;
           ">
             ${imageBlocks}
           </div>
@@ -548,68 +549,70 @@ timeline.push({
       const brandKeyColors  = ["rgb(90, 248, 62)", "rgb(60, 145, 237)", "rgb(237, 80, 80)", "rgb(236, 221, 57)"]
     
       return `
+  <div style="
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 5vh 5vw;
+    min-height: 80vh;
+    box-sizing: border-box;
+  ">
+
+    <!-- Attribute card -->
+    <div style="
+      background-color: rgb(216, 212, 212);
+      border-radius: 12px;
+      padding: 30px 50px;
+      margin-bottom: 60px;
+      width: 100%;
+      max-width: 500px;
+      text-align: center;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    ">
+      <p style="font-size: 22px; color: #999; margin-bottom: 10px;">Which brand best represents:</p>
+      <p style="font-size: 32px; font-weight: 700; color: #111; margin: 0;">${attr}</p>
+    </div>
+
+    <!-- Brand choice cards -->
+    <div style="
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 60px;
+      width: 100%;
+      max-width: 1100px;
+      justify-items: center;
+      align-items: start;
+    ">
+      ${brandImgs.map((img, i) => `
         <div style="
+          background-color: #ffffff;
+          border-radius: 12px;
+          padding: 25px;
+          width: 220px;
+          text-align: center;
+          box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
           display: flex;
           flex-direction: column;
           align-items: center;
-          justify-content: center;
-          padding: 5vh 5vw;
-          min-height: 80vh;
-          box-sizing: border-box;
+          gap: 15px;
         ">
-    
-          <!-- Attribute card -->
+          <img src="${img}" height="150" style="object-fit: contain;" />
           <div style="
-            background-color:rgb(216, 212, 212);
-            border-radius: 12px;
-            padding: 30px 50px;
-            margin-bottom: 60px;
-            width: 100%;
-            max-width: 500px;
-            text-align: center;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-          ">
-            <p style="font-size: 22px; color: #999; margin-bottom: 10px;">Which brand best represents:</p>
-            <p style="font-size: 32px; font-weight: 700; color: #111; margin: 0;">${attr}</p>
-          </div>
-    
-          <!-- Brand choice cards -->
-         <div style="
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 40px;
-            width: 100%;
-            max-width: 1000px;
-            justify-items: center;
-          "/>
-            ${brandImgs.map((img, i) => `
-              <div style="
-                background-color: #ffffff ;
-                border-radius: 12px;
-                padding: 20px 20px;
-                width: 140px;
-                text-align: center;
-                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                gap: 10px;
-              ">
-                <img src="${img}" height="100" style="object-fit: contain;" />
-                <div style="
-                  background-color: ${brandKeyColors[i]};
-                  border-radius: 6px;
-                  padding: 5px 10px;
-                  font-weight: bold;
-                  font-family: 'Courier New', monospace;
-                  font-size: 16px;
-                ">[${brandKeys[i]}]</div>
-              </div>
-            `).join('')}
-          </div>
-    
+            background-color: ${brandKeyColors[i]};
+            border-radius: 8px;
+            padding: 8px 10px;
+            font-weight: bold;
+            font-family: 'Courier New', monospace;
+            font-size: 18px;
+          ">[${brandKeys[i]}]</div>
         </div>
-      `;
+      `).join('')}
+    </div>
+
+  </div>
+`;
+
     },
     save_trial_parameters:{
       stimulus: false
