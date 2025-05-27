@@ -143,8 +143,27 @@ const multi_brand_trials = generateCompleteBrandAttributeTrials(attributes, bran
 
 
 
+//------------------------------------------------------------------------------------------------------
 
+const preload = {
+  type: jsPsychPreload,
+  images : 
+  [
+   'img/doritos1.png',
+   'img/lays1.png',
+   'img/pringles1.png',
+   'img/ritz1.png',
+   'img/SingleImplicitMotivationimage.png',
+   'img/takis1.png',
+   'pretest_img/pretest_cat.png',
+   'pretest_img/pretest_fire.png',
+   'pretest_img/pretest_driving.png',
+   'pretest_img/pretest_icecube.png',
+   'img/FCBNY_Logo.png'
+  ]
+}
 
+timeline.push(preload);
 //------------------------------------------------------------------------------------------------------
 
 timeline.push({
@@ -172,26 +191,6 @@ timeline.push({
 });
 
 //----------------------------------------------------------------------------------------------------------------
-
-const preload = {
-  type: jsPsychPreload,
-  images : 
-  [
-   'img/doritos1.png',
-   'img/lays1.png',
-   'img/pringles1.png',
-   'img/ritz1.png',
-   'img/SingleImplicitMotivationimage.png',
-   'img/takis1.png',
-   'pretest_img/pretest_cat.png',
-   'pretest_img/pretest_driving.png',
-   'pretest_img/pretest_icecube.png'
-  ]
-}
-
-timeline.push(preload);
-
-//------------------------------------------------------------------------------------------------------
 
 timeline.push({
   type: jsPsychHtmlKeyboardResponse,
