@@ -1,20 +1,12 @@
 const jsPsych = initJsPsych({
   on_finish: function () {
-  //   const data = jsPsych.data.get().filter({trial_type: 'html-keyboard-response'}).values();
-
-  // fetch("https://script.google.com/a/macros/fcb.com/s/AKfycbyquheRKtZTqysRnLHObLJFCx9_3evNMoYdHyckAleIdu8zulJeuyA5WP2-3Iuw9uTu/exec", {
-  //   method: "POST",
-  //   body: JSON.stringify(data),
-  //   headers: {
-  //     "Content-Type": "application/json"
-  //   }
-  // }).then(() => {
-  //   console.log("Data saved to Google Sheet.");
-  // }).catch((err) => {
-  //   console.error("Error sending data:", err);
-  // });
-    
-    jsPsych.data.get().localSave('csv', 'miat_results.csv');
+    // jsPsych.data.get().localSave('csv', 'miat_results.csv');
+    const allData = jsPsych.data.get().values();
+    database
+      .ref(`miat_results/${survey_name}`)
+      .push(allData)
+      .then(() => console.log('✅ Written to Firebase'))
+      .catch(e => console.error('❌ Firebase error', e));
   }
 });
 

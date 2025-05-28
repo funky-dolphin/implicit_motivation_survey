@@ -82,3 +82,5 @@ const pretest_images_multiple = [
   {name: "Driving", img: "pretest_img/pretest_driving.png", correct:["Travel", "Excitment"]}
 ]
 
+
+const survey_name = "Pringles Trial"
