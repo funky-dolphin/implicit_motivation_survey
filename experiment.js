@@ -143,7 +143,6 @@ const multi_brand_trials = generateCompleteBrandAttributeTrials(attributes, bran
 
 
 
-//------------------------------------------------------------------------------------------------------
 
 const preload = {
   type: jsPsychPreload,
@@ -191,6 +190,7 @@ timeline.push({
 });
 
 //----------------------------------------------------------------------------------------------------------------
+
 
 timeline.push({
   type: jsPsychHtmlKeyboardResponse,
