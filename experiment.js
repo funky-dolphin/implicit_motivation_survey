@@ -255,7 +255,7 @@ timeline.push({
       <!-- Fits Button -->
       <div style="text-align: center;">
         <div style="
-          background-color: rgb(148, 228, 114);
+          background-color: rgb(32, 150, 11);
           border-radius: 12px;
           padding: 15px 25px;
           width: 250px;
@@ -359,7 +359,7 @@ timeline.push({
     
         <div style="display: flex; justify-content: center; gap: 120px; font-size: 20px;">
           <div style="text-align: center;">
-            <div style=" background-color:rgb(148, 228, 114);
+            <div style=" background-color:rgb(32, 150, 11);
           border-radius: 12px;
           padding: 15px 25px;
           margin-bottom: 60px;
@@ -443,7 +443,7 @@ timeline.push({
       const brandImgs = jsPsych.timelineVariable('image_paths');
       const brandKeys = ['A', 'S', 'K', 'L'];
       const brandKeyColors = [
-        "rgb(90, 248, 62)",   // green
+        "rgb(32, 150, 11)",   // green
         "rgb(60, 145, 237)",  // blue
         "rgb(237, 80, 80)",   // red
         "rgb(236, 221, 57)"   // yellow
@@ -554,7 +554,7 @@ timeline.push({
       const attr = jsPsych.timelineVariable('attribute');
       const brandImgs = jsPsych.timelineVariable('brand_images');
       const brandKeys = ['A', 'S', 'K', 'L'];
-      const brandKeyColors  = ["rgb(90, 248, 62)", "rgb(60, 145, 237)", "rgb(237, 80, 80)", "rgb(236, 221, 57)"]
+      const brandKeyColors  = ["rgb(32, 150, 11)", "rgb(60, 145, 237)", "rgb(237, 80, 80)", "rgb(236, 221, 57)"]
     
       return `
   <div style="
@@ -653,5 +653,4 @@ timeline.push({
 });
 console.log(timeline)
 jsPsych.run(timeline);
-
 
