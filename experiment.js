@@ -188,29 +188,56 @@ timeline.push({
       flex-direction: column;
       align-items: center;
       text-align: center;
-      padding: 20px;
+      padding: 5vw;
     "> 
       <img src="img/FCBNY_Logo.png" style="
-        width: 80%;
-        max-width: 300px;
+        width: 70vw;
+        max-width: 450px;
         height: auto;
-        margin-bottom: 20px;
+        margin-bottom: 4vh;
       "/>
-      <p style="font-size: 24px;">Welcome to our Implicit Association Survey!</p>
-      <p style="font-size: 18px;">Thank you for your time</p>
+      <p style="font-size: clamp(1.4rem, 4vw, 2rem); font-weight: 600; margin-bottom: 2vh;">
+        Welcome to our Implicit Association Survey!
+      </p>
+      <p style="font-size: clamp(1rem, 3.5vw, 1.5rem); margin-bottom: 4vh;">
+        Thank you for your time
+      </p>
       ${
         respondentIsMobile
           ? ""
-          : "<p>Press space to continue.</p>"
+          : '<p style="font-size: clamp(1rem, 3vw, 1.3rem); margin-bottom: 3vh;">Press space to continue.</p>'
       }
-      <p style="color: gray; font-size: 12px;">Program built by Nicholas Brereton</p>
+      <p style="color: gray; font-size: clamp(0.8rem, 2.5vw, 1rem); margin-top: 5vh;">
+        Program built by Nicholas Brereton
+      </p>
     </div>
   `,
   save_trial_parameters: {
     stimulus: false
   },
+  // FIX: button_html must be a function, not a string
+  button_html: respondentIsMobile
+    ? (choice, index) => {
+        return `
+          <button style="
+            font-size: clamp(1rem, 3.5vw, 1.5rem);
+            font-weight: 600;
+            padding: 2.5vh 6vw;
+            margin-top: 4vh;
+            border-radius: 1.5vw;
+            border: none;
+            background-color: #007BFF;
+            color: white;
+            box-shadow: 0 0.5vw 1.5vw rgba(0,0,0,0.2);
+            cursor: pointer;
+            width: 60vw;
+          ">${choice}</button>`;
+      }
+    : undefined,
   choices: respondentIsMobile ? ['Begin'] : [' ']
 });
+
+
 
 //----------------------------------------------------------------------------------------------------------------
 
