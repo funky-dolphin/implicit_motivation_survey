@@ -1176,7 +1176,11 @@ const multiple_pretest_completion_trial = {
     stimulus: false
   }
 };
-
+timeline.push({
+  timeline: respondentIsMobile
+    ? [multiple_pretest_completion_trial, mobileBreakerTrial]
+    : [multiple_pretest_completion_trial]
+});
 //-------------------------------------------------------------------------------------------------------------------
 
 const multiImplicitTrial = {
