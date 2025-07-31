@@ -18,8 +18,6 @@ const jsPsych = initJsPsych({
 });
 
 
-
-
 const respondent_id = jsPsych.randomization.randomID(10);
 const timeline = [];
 
@@ -169,27 +167,35 @@ timeline.push(preload);
 //------------------------------------------------------------------------------------------------------
 
 timeline.push({
-  type: jsPsychHtmlKeyboardResponse,
-  stimulus: `<div style="
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 20px 60px 0 60px;"> 
-  <img src= "img/FCBNY_Logo.png"  style="
-      max-width: 500px;
-      height: auto;
-      display: block;
-      justify: center;
-    "/>
-            </div>
-            <p style="font-size: 24px;">Welcome to our Implicit Association Survey!</p>
-            <p style = "font-size: 18px">Thank you for your time </p>
-            <p>Press space to continue.</p>
-            <p style = "color: white; font-size: 12px" > Program built by Nicholas Brereton </p>`,
+  type: respondentIsMobile ? jsPsychHtmlButtonResponse : jsPsychHtmlKeyboardResponse,
+  stimulus: `
+    <div style="
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      padding: 20px;
+    "> 
+      <img src="img/FCBNY_Logo.png" style="
+        width: 80%;
+        max-width: 300px;
+        height: auto;
+        margin-bottom: 20px;
+      "/>
+      <p style="font-size: 24px;">Welcome to our Implicit Association Survey!</p>
+      <p style="font-size: 18px;">Thank you for your time</p>
+      ${
+        respondentIsMobile
+          ? ""
+          : "<p>Press space to continue.</p>"
+      }
+      <p style="color: gray; font-size: 12px;">Program built by Nicholas Brereton</p>
+    </div>
+  `,
   save_trial_parameters: {
-    simulus: false
+    stimulus: false
   },
-  choices: " ",
+  choices: respondentIsMobile ? ['Begin'] : [' ']
 });
 
 //----------------------------------------------------------------------------------------------------------------
