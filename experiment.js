@@ -141,7 +141,9 @@ function generateCompleteBrandAttributeTrials(attributes, brands) {
 }
 const multi_brand_trials = generateCompleteBrandAttributeTrials(attributes, brands);
 
-
+//--------------------------------------------------------------------------------------------------------------------------------------------------------
+//UPLOAD IMAGES FOR PRELOAD HERE
+////--------------------------------------------------------------------------------------------------------------------------------------------------------
 const preload = {
   type: jsPsychPreload,
   images : 
@@ -161,6 +163,11 @@ const preload = {
 }
 
 timeline.push(preload);
+
+//--------------------------------------------------------------------------------------------------------------------------------------------------------
+////--------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
 //------------------------------------------------------------------------------------------------------
 // add a new htmlkeyboard response to clear the loading bar from the screen
 //--------------------------------------------------------------------------------------------------------
@@ -195,7 +202,7 @@ timeline.push({
       <p style="font-size: clamp(1.4rem, 4vw, 2rem); font-weight: 600; margin-bottom: 2vh;">
         Welcome to our Implicit Association Survey!
       </p>
-      <p style="font-size: clamp(1rem, 3.5vw, 1.5rem); margin-bottom: 4vh;">
+      <p style="font-size: clamp(1rem, 3.5vw, 1.5rem); margin-bottom: 1vh;">
         Thank you for your time
       </p>
       ${
@@ -203,7 +210,7 @@ timeline.push({
           ? ""
           : '<p style="font-size: clamp(1rem, 3vw, 1.3rem); margin-bottom: 3vh;">Press space to continue.</p>'
       }
-      <p style="color: gray; font-size: clamp(0.8rem, 2.5vw, 1rem); margin-top: 5vh;">
+      <p style="color: white; font-size: clamp(0.8rem, 2.5vw, 1rem); margin-top: 5vh;">
         Program built by Nicholas Brereton
       </p>
     </div>
@@ -222,7 +229,7 @@ timeline.push({
             margin-top: 4vh;
             border-radius: 2.0vw;
             border: none;
-            background-color: #007BFF;
+            background-color: rgba(62, 126, 245, 0.91);
             color: white;
             box-shadow: 0 0.5vw 1.5vw rgba(0,0,0,0.2);
             cursor: pointer;
@@ -262,6 +269,24 @@ timeline.push({
   save_trial_parameters: {
     simulus: false
   },
+   button_html: respondentIsMobile
+    ? (choice, index) => {
+        return `
+          <button style="
+            font-size: clamp(2rem, 4.0vw, 2.0rem);
+            font-weight: 500;
+            padding: 2.5vh 6vw;
+            margin-top: 4vh;
+            border-radius: 2.0vw;
+            border: none;
+            background-color: rgba(62, 126, 245, 0.91);
+            color: white;
+            box-shadow: 0 0.5vw 1.5vw rgba(0,0,0,0.2);
+            cursor: pointer;
+            width: 80vw;
+          ">${choice}</button>`;
+      }
+    : undefined,
   choices: respondentIsMobile ? ['Ready'] : "ALL_KEYS",
 });
 
@@ -294,10 +319,28 @@ timeline.push({
   save_trial_parameters: {
     simulus: false
   },
+   button_html: respondentIsMobile
+    ? (choice, index) => {
+        return `
+          <button style="
+            font-size: clamp(2rem, 4.0vw, 2.0rem);
+            font-weight: 500;
+            padding: 2.5vh 6vw;
+            margin-top: 4vh;
+            border-radius: 2.0vw;
+            border: none;
+            background-color: rgba(62, 126, 245, 0.91);
+            color: white;
+            box-shadow: 0 0.5vw 1.5vw rgba(0,0,0,0.2);
+            cursor: pointer;
+            width: 80vw;
+          ">${choice}</button>`;
+      }
+    : undefined,
   choices: respondentIsMobile ? ['Begin Pre-Test'] : "ALL_KEYS",
 });
 
-//------------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 timeline.push({
   type: jsPsychHtmlKeyboardResponse,
@@ -310,7 +353,7 @@ timeline.push({
     data.trial_type = 'mobile_breaker'}  // 200ms pause
 });
 
-//------------------------------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 const singleImplicitTrial = {
   type: respondentIsMobile ? jsPsychHtmlButtonResponse : jsPsychHtmlKeyboardResponse,
@@ -319,41 +362,41 @@ const singleImplicitTrial = {
     const attr   = jsPsych.timelineVariable('attribute');
     const cat    = jsPsych.timelineVariable('img_name');
 
-    return  `
+    return `
   <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 70vh;">
 
     <!-- IMAGE BOX -->
     <div style="
       background-color: rgb(216, 212, 212);
       border-radius: 12px;
-      padding: 30px 50px;
-      margin-bottom: 40px;
+      padding: 3vh 5vw;
+      margin-bottom: 4vh;
       width: 90%;
       max-width: 500px;
       text-align: center;
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     ">
-      <p style="font-size: 22px; color: #999; margin-bottom: 10px;">Stim</p>
-      <img src="${imgSrc}" style="height:180px; margin-bottom:10px;" alt="${cat}" />
+      <p style="font-size: clamp(1rem, 2.5vw, 1.3rem); color: #999; margin-bottom: 1vh;">Stim</p>
+      <img src="${imgSrc}" style="height: 20vh; max-height: 200px; margin-bottom: 1vh;" alt="${cat}" />
     </div>
 
     <!-- ATTRIBUTE BOX -->
     <div style="
       background-color: #ffffff;
       border-radius: 12px;
-      padding: 30px 50px;
-      margin-bottom: 40px;
+      padding: 3vh 5vw;
+      margin-bottom: 4vh;
       width: 90%;
       max-width: 500px;
       text-align: center;
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     ">
-      <p style="font-size: 32px; font-weight: 700; color: #111;">${attr}</p>
+      <p style="font-size: clamp(1.5rem, 4vw, 2.5rem); font-weight: 700; color: #111;">${attr}</p>
     </div>
 
     ${
       respondentIsMobile
-        ? '' // no fake buttons; real buttons will appear
+        ? '' // buttons will be rendered by jsPsychHtmlButtonResponse
         : `
         <!-- DESKTOP INSTRUCTIONS -->
         <div style="display: flex; justify-content: center; gap: 120px; font-size: 20px;">
@@ -385,8 +428,30 @@ const singleImplicitTrial = {
     }
 
   </div>`;
-    },
-    choices: respondentIsMobile ? ['Fits', 'Does not fit'] : ['e', 'i'],
+  },
+
+  // Choices
+  choices: respondentIsMobile ? ['Fits', 'Does not fit'] : ['e', 'i'],
+
+  // Side-by-side BIG MOBILE BUTTONS
+  button_html: respondentIsMobile
+    ? (choice, index) => {
+        return `
+          <button style="
+            font-size: clamp(1.2rem, 3.5vw, 1.8rem);
+            font-weight: 600;
+            padding: 3vh 2vw;
+            border-radius: 2vw;
+            border: none;
+            background-color: ${index === 0 ? 'rgb(32, 150, 11)' : 'rgb(105, 135, 236)'};
+            color: white;
+            box-shadow: 0 0.5vw 1.5vw rgba(0,0,0,0.2);
+            cursor: pointer;
+            width: 40vw;
+          ">${choice}</button>`;
+      }
+    : undefined,
+
   data: {
     part: "pretest_single_implicit",
     respondent_id: respondent_id,
@@ -395,6 +460,7 @@ const singleImplicitTrial = {
     category_name: jsPsych.timelineVariable('img_name'),
     is_correct: jsPsych.timelineVariable('is_correct')
   },
+
   on_finish: function(data) {
     let userSaysFits;
     if (respondentIsMobile) {
@@ -431,6 +497,9 @@ timeline.push({
 });
 
 
+//-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+////-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 // timeline.push({
 //   timeline: [{
 //     type: respondentIsMobile ? jsPsychHtmlButtonResponse : jsPsychHtmlKeyboardResponse,
@@ -540,7 +609,7 @@ timeline.push({
 //   trial_duration: 20  // 200ms pause
 // });
 
-//------------------------------------------------------------------------------------------------------
+//----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 timeline.push({
   type: respondentIsMobile ? jsPsychHtmlButtonResponse : jsPsychHtmlKeyboardResponse,
   stimulus: `
@@ -554,12 +623,31 @@ timeline.push({
       }
     </div>
   `,
+  button_html: respondentIsMobile
+    ? (choice, index) => {
+        return `
+          <button style="
+            font-size: clamp(2rem, 4.0vw, 2.0rem);
+            font-weight: 500;
+            padding: 2.5vh 6vw;
+            margin-top: 4vh;
+            border-radius: 2.0vw;
+            border: none;
+            background-color: rgba(62, 126, 245, 0.91);
+            color: white;
+            box-shadow: 0 0.5vw 1.5vw rgba(0,0,0,0.2);
+            cursor: pointer;
+            width: 80vw;
+          ">${choice}</button>`;
+      }
+    : undefined,
   choices: respondentIsMobile ? ['Begin'] : 'ALL_KEYS',
+
   save_trial_parameters: {
     stimulus: false
   }
 });
-//------------------------------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 timeline.push({
   type: jsPsychHtmlKeyboardResponse,
   stimulus: '',
@@ -570,9 +658,9 @@ timeline.push({
     // Optional: clear out fields so it's obvious to drop
     data.trial_type = 'mobile_breaker'}  // 200ms pause
 });
-
-//------------------------------------------------------------------------------------------------------
-// Trial for single-category fit task
+//-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+//Single implicit test
+//---------------------------------------------------------------------------------------------------------------------------------------
 const categoryFitTrial = {
   type: respondentIsMobile ? jsPsychHtmlButtonResponse : jsPsychHtmlKeyboardResponse,
   stimulus: function () {
@@ -586,29 +674,29 @@ const categoryFitTrial = {
         <div style="
           background-color:rgb(216, 212, 212);
           border-radius: 12px;
-          padding: 30px 50px;
-          margin-bottom: 40px;
+          padding: 3vh 5vw;
+          margin-bottom: 4vh;
           width: 90%;
           max-width: 500px;
           text-align: center;
           box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
         ">
-          <p style="font-size: 22px; color: #999; margin-bottom: 10px;">Category</p>
-          <p style="font-size: 28px; font-weight: 600; color: #222;">${category}</p>
+          <p style="font-size: clamp(1rem, 2.5vw, 1.3rem); color: #999; margin-bottom: 1vh;">Category</p>
+          <p style="font-size: clamp(1.4rem, 4vw, 2rem); font-weight: 600; color: #222;">${category}</p>
         </div>
     
         <!-- ATTRIBUTE BOX -->
         <div style="
           background-color: #ffffff;
           border-radius: 12px;
-          padding: 30px 50px;
-          margin-bottom: 60px;
+          padding: 3vh 5vw;
+          margin-bottom: 4vh;
           width: 90%;
           max-width: 500px;
           text-align: center;
           box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
         ">
-          <p style="font-size: 32px; font-weight: 700; color: #111;">${attr}</p>
+          <p style="font-size: clamp(1.5rem, 4vw, 2.5rem); font-weight: 700; color: #111;">${attr}</p>
         </div>
 
         ${
@@ -647,6 +735,26 @@ const categoryFitTrial = {
       </div>`;
   },
   choices: respondentIsMobile ? ['Fits', 'Does not fit'] : ['e', 'i'],
+
+  // Add big side-by-side buttons on mobile
+  button_html: respondentIsMobile
+    ? (choice, index) => {
+        return `
+          <button style="
+            font-size: clamp(1.2rem, 3.5vw, 1.8rem);
+            font-weight: 600;
+            padding: 3vh 2vw;
+            border-radius: 2vw;
+            border: none;
+            background-color: ${index === 0 ? 'rgb(32, 150, 11)' : 'rgb(105, 135, 236)'};
+            color: white;
+            box-shadow: 0 0.5vw 1.5vw rgba(0,0,0,0.2);
+            cursor: pointer;
+            width: 40vw;
+          ">${choice}</button>`;
+      }
+    : undefined,
+
   data: {
     part: "Single Category IAT",
     respondent_id: respondent_id,
@@ -674,6 +782,7 @@ timeline.push({
   timeline_variables: category_fit_trials,
   randomize_order: true
 });
+
 
 // timeline.push({
 //   timeline: [{
@@ -778,6 +887,24 @@ const single_implicit_completition_trial = {
       }
     </div>
   `,
+  button_html: respondentIsMobile
+    ? (choice, index) => {
+        return `
+          <button style="
+            font-size: clamp(2rem, 4.0vw, 2.0rem);
+            font-weight: 500;
+            padding: 2.5vh 6vw;
+            margin-top: 4vh;
+            border-radius: 2.0vw;
+            border: none;
+            background-color: rgba(62, 126, 245, 0.91);
+            color: white;
+            box-shadow: 0 0.5vw 1.5vw rgba(0,0,0,0.2);
+            cursor: pointer;
+            width: 80vw;
+          ">${choice}</button>`;
+      }
+    : undefined,
   choices: respondentIsMobile ? ['Continue'] : 'ALL_KEYS',
   save_trial_parameters: {
     stimulus: false
