@@ -1,3 +1,10 @@
+function isMobileDevice() {
+  return /Android|iPhone|iPad|iPod|Mobile|Tablet/i.test(navigator.userAgent);
+}
+
+const respondentIsMobile = isMobileDevice();
+console.log(respondentIsMobile)
+
 const jsPsych = initJsPsych({
   on_finish: function () {
     // jsPsych.data.get().localSave('csv', 'miat_results.csv');
@@ -21,6 +28,8 @@ const timeline = [];
 
 
 //------------------------------------------------------------------------------------------------------
+// Create Pre-test Single Implicit trials with images and attributes coming from config file
+//------------------------------------------------------------------------------------------------------
 function generatePretestTrials (images, attributes){
   const trials = [];
 
@@ -43,6 +52,8 @@ const pretest_trials = generatePretestTrials(pretest_images, pretest_attributes)
 
 
 //------------------------------------------------------------------------------------------------------
+// Generate trials for Multiple implicitit pretesting
+//-------------------------------------------------------------------------------------------------------
 
 function generateMultiplePretestTrials(attributes, images) {
   const trials = [];
