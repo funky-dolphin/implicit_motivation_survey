@@ -142,10 +142,6 @@ function generateCompleteBrandAttributeTrials(attributes, brands) {
 const multi_brand_trials = generateCompleteBrandAttributeTrials(attributes, brands);
 
 
-
-
-
-
 const preload = {
   type: jsPsychPreload,
   images : 
@@ -191,8 +187,8 @@ timeline.push({
       padding: 5vw;
     "> 
       <img src="img/FCBNY_Logo.png" style="
-        width: 70vw;
-        max-width: 450px;
+        width: 100vw;
+        max-width: 700px;
         height: auto;
         margin-bottom: 4vh;
       "/>
@@ -220,17 +216,17 @@ timeline.push({
     ? (choice, index) => {
         return `
           <button style="
-            font-size: clamp(1rem, 3.5vw, 1.5rem);
-            font-weight: 600;
+            font-size: clamp(2rem, 4.0vw, 2.0rem);
+            font-weight: 500;
             padding: 2.5vh 6vw;
             margin-top: 4vh;
-            border-radius: 1.5vw;
+            border-radius: 2.0vw;
             border: none;
             background-color: #007BFF;
             color: white;
             box-shadow: 0 0.5vw 1.5vw rgba(0,0,0,0.2);
             cursor: pointer;
-            width: 60vw;
+            width: 80vw;
           ">${choice}</button>`;
       }
     : undefined,
