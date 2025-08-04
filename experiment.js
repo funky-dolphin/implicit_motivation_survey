@@ -199,11 +199,11 @@ timeline.push({
         height: auto;
         margin-bottom: 4vh;
       "/>
-      <p style="font-size: clamp(1.4rem, 4vw, 2rem); font-weight: 600; margin-bottom: 2vh;">
+      <p style="font-size: clamp(1.6rem, 6.0vw, 2.8rem); font-weight: 600; margin-bottom: 2vh;">
         Welcome to our Implicit Association Survey!
       </p>
-      <p style="font-size: clamp(1rem, 3.5vw, 1.5rem); margin-bottom: 1vh;">
-        Thank you for your time
+      <p style="font-size: clamp(1.4rem, 4.5vw, 2rem); margin-bottom: 1vh;">
+        Thank you for your time!
       </p>
       ${
         respondentIsMobile
@@ -223,7 +223,7 @@ timeline.push({
     ? (choice, index) => {
         return `
           <button style="
-            font-size: clamp(2rem, 4.0vw, 2.0rem);
+            font-size: clamp(2rem, 6.0vw, 6.0rem);
             font-weight: 500;
             padding: 2.5vh 6vw;
             margin-top: 4vh;
@@ -260,12 +260,29 @@ timeline.push({
 timeline.push({
   type: respondentIsMobile ? jsPsychHtmlButtonResponse : jsPsychHtmlKeyboardResponse,
   stimulus: `<div>
-  <h2> Please prepare for the test as shown below </h2> <img src= "img/SingleImplicitMotivationimage.png" style = "width:500px; height: auto;"/>
+    <h2 style = "font-size: 2.5rem"> Please prepare for the test. </h2>
   </div>
   ${
     respondentIsMobile 
-    ? "" 
-    : "<h3> Press any key to continue </h3>" }`,
+      ? "" 
+      : `
+        <h3 style="font-size: clamp(1.2rem, 2.5vw, 2rem); margin-bottom: 2vh;">
+          Press any key to continue
+        </h3>
+        <img 
+          src='img/SingleImplicitMotivationimage.png' 
+          style="
+            width: auto;
+            max-width: 90vw;
+            max-height: 60vh;
+            object-fit: contain;
+            margin-top: 2vh;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+          "
+        />
+      `
+  }`,
   save_trial_parameters: {
     simulus: false
   },
@@ -273,7 +290,7 @@ timeline.push({
     ? (choice, index) => {
         return `
           <button style="
-            font-size: clamp(2rem, 4.0vw, 2.0rem);
+            font-size: clamp(2rem, 6.0vw, 6.0rem);
             font-weight: 500;
             padding: 2.5vh 6vw;
             margin-top: 4vh;
@@ -309,7 +326,7 @@ timeline.push({
 timeline.push({
   type: respondentIsMobile ? jsPsychHtmlButtonResponse : jsPsychHtmlKeyboardResponse,
   stimulus: `<div>
-  <p> We will begin with a pretest to establish a baseline. </p>
+  <h2 style = "font-size: 2.0rem" > We will begin with a pretest to establish a baseline. </h2>
   </div>
   ${
     respondentIsMobile
@@ -323,7 +340,7 @@ timeline.push({
     ? (choice, index) => {
         return `
           <button style="
-            font-size: clamp(2rem, 4.0vw, 2.0rem);
+            font-size: clamp(2rem, 6.0vw, 6.0rem);
             font-weight: 500;
             padding: 2.5vh 6vw;
             margin-top: 4vh;
@@ -362,37 +379,59 @@ const singleImplicitTrial = {
     const attr   = jsPsych.timelineVariable('attribute');
     const cat    = jsPsych.timelineVariable('img_name');
 
-    return `
-  <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 70vh;">
+    return `<div style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; width: 100%;">
 
-    <!-- IMAGE BOX -->
-    <div style="
-      background-color: rgb(216, 212, 212);
-      border-radius: 12px;
-      padding: 3vh 5vw;
-      margin-bottom: 4vh;
-      width: 90%;
-      max-width: 500px;
-      text-align: center;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    ">
-      <p style="font-size: clamp(1rem, 2.5vw, 1.3rem); color: #999; margin-bottom: 1vh;">Stim</p>
-      <img src="${imgSrc}" style="height: 20vh; max-height: 200px; margin-bottom: 1vh;" alt="${cat}" />
-    </div>
+  <!-- IMAGE BOX -->
+  <div style="
+    background-color: rgb(216, 212, 212);
+    border-radius: 12px;
+    padding: 3vh 5vw;
+    margin-bottom: 4vh;
+    width: 90%;
+    max-width: 800px;
+    text-align: center;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  ">
+    <p style="font-size: clamp(1rem, 2.5vw, 1.3rem); color: #999; margin-bottom: 1vh;">Stim</p>
+    <img src="${imgSrc}" 
+         alt="${cat}" 
+         style="
+           width: auto;
+           max-width: 100%;
+           height: clamp(30vh, 50vh, 60vh);
+           object-fit: contain;
+           margin-bottom: 1vh;
+         " />
+  </div>
 
-    <!-- ATTRIBUTE BOX -->
-    <div style="
-      background-color: #ffffff;
-      border-radius: 12px;
-      padding: 3vh 5vw;
-      margin-bottom: 4vh;
-      width: 90%;
-      max-width: 500px;
+  <!-- ATTRIBUTE BOX -->
+  <div style="
+    background-color: #ffffff;
+    border-radius: 12px;
+    padding: 3vh 5vw;
+    margin-bottom: 4vh;
+    width: 90%;
+    max-width: 500px;
+    text-align: center;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  ">
+    <p style="
+      font-size: clamp(2rem, 5.5vw, 4rem); 
+      font-weight: 700; 
+      color: #111; 
+      margin: 0;
+      line-height: 1.2;
       text-align: center;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      word-wrap: break-word;
+      overflow-wrap: break-word;
+      width: 100%;
     ">
-      <p style="font-size: clamp(1.5rem, 4vw, 2.5rem); font-weight: 700; color: #111;">${attr}</p>
-    </div>
+      ${attr}
+    </p>
+  </div>
+
+</div>
+
 
     ${
       respondentIsMobile
@@ -438,7 +477,7 @@ const singleImplicitTrial = {
     ? (choice, index) => {
         return `
           <button style="
-            font-size: clamp(1.2rem, 3.5vw, 1.8rem);
+            font-size: clamp(2rem, 6.0vw, 6.0rem);
             font-weight: 600;
             padding: 3vh 2vw;
             border-radius: 2vw;
@@ -613,7 +652,7 @@ timeline.push({
 timeline.push({
   type: respondentIsMobile ? jsPsychHtmlButtonResponse : jsPsychHtmlKeyboardResponse,
   stimulus: `
-    <div style="text-align:center;">
+    <div style="text-align:center; font-size: 2rem; font-weight: 500;">
       <p>Thank you.</p>
       <p>The real test will begin after this.</p>
       ${
@@ -627,7 +666,7 @@ timeline.push({
     ? (choice, index) => {
         return `
           <button style="
-            font-size: clamp(2rem, 4.0vw, 2.0rem);
+            font-size: clamp(2rem, 6.0vw, 6.0rem); 
             font-weight: 500;
             padding: 2.5vh 6vw;
             margin-top: 4vh;
@@ -672,32 +711,42 @@ const categoryFitTrial = {
         
         <!-- CATEGORY BOX -->
         <div style="
-          background-color:rgb(216, 212, 212);
-          border-radius: 12px;
-          padding: 3vh 5vw;
-          margin-bottom: 4vh;
-          width: 90%;
-          max-width: 500px;
-          text-align: center;
-          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-        ">
-          <p style="font-size: clamp(1rem, 2.5vw, 1.3rem); color: #999; margin-bottom: 1vh;">Category</p>
-          <p style="font-size: clamp(1.4rem, 4vw, 2rem); font-weight: 600; color: #222;">${category}</p>
-        </div>
+        background-color: rgb(216, 212, 212);
+        border-radius: 16px;
+        padding: 4vh 6vw;
+        margin-bottom: 5vh;
+        width: 90%;
+        max-width: 700px;
+        text-align: center;
+        box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+      ">
+        <p style="font-size: clamp(1.2rem, 3vw, 1.6rem); color: #666; margin-bottom: 1.5vh;">Category</p>
+        <p style="font-size: clamp(2rem, 5vw, 3rem); font-weight: 600; color: #222;">${category}</p>
+      </div>
     
         <!-- ATTRIBUTE BOX -->
-        <div style="
-          background-color: #ffffff;
-          border-radius: 12px;
-          padding: 3vh 5vw;
-          margin-bottom: 4vh;
-          width: 90%;
-          max-width: 500px;
-          text-align: center;
-          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+       <div style="
+        background-color: #ffffff;
+        border-radius: 16px;
+        padding: 4vh 6vw;
+        margin-bottom: 5vh;
+        width: 90%;
+        max-width: 700px;
+        text-align: center;
+        box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+      ">
+        <p style="
+          font-size: clamp(2.2rem, 6vw, 3.2rem); 
+          font-weight: 700; 
+          color: #111; 
+          margin: 0;
+          line-height: 1.3;
+          word-wrap: break-word;
+          overflow-wrap: break-word;
         ">
-          <p style="font-size: clamp(1.5rem, 4vw, 2.5rem); font-weight: 700; color: #111;">${attr}</p>
-        </div>
+          ${attr}
+        </p>
+      </div>
 
         ${
           respondentIsMobile
@@ -741,7 +790,7 @@ const categoryFitTrial = {
     ? (choice, index) => {
         return `
           <button style="
-            font-size: clamp(1.2rem, 3.5vw, 1.8rem);
+            font-size: clamp(2rem, 6.0vw, 6.0rem);
             font-weight: 600;
             padding: 3vh 2vw;
             border-radius: 2vw;
@@ -879,7 +928,7 @@ const single_implicit_completition_trial = {
   type: respondentIsMobile ? jsPsychHtmlButtonResponse : jsPsychHtmlKeyboardResponse,
   stimulus: `
     <div style="text-align:center;">
-      <p style="font-size: 24px;">Part 1 Complete!</p>
+      <p style="font-size: 3rem;">Part 1 Complete!</p>
       ${
         respondentIsMobile
           ? '' // mobile will have a button
@@ -891,7 +940,7 @@ const single_implicit_completition_trial = {
     ? (choice, index) => {
         return `
           <button style="
-            font-size: clamp(2rem, 4.0vw, 2.0rem);
+            font-size: clamp(2rem, 6.0vw, 6.0rem);
             font-weight: 500;
             padding: 2.5vh 6vw;
             margin-top: 4vh;
@@ -922,25 +971,45 @@ timeline.push({
 const multiImplicitIntroTrial = {
   type: respondentIsMobile ? jsPsychHtmlButtonResponse : jsPsychHtmlKeyboardResponse,
   stimulus: `
-    <div style="text-align:center;">
-      <p style="font-size: 24px;">
-        Next, we will begin with a pretest to set a baseline for our Multiple Implicit portion
-      </p>
+    <div style="text-align: center; font-size: 2rem; font-weight: 500;">
+      <p>Next, we will begin with a pretest</p>
+      <p>to set a baseline for our</p>
+      <p>Multiple Implicit portion.</p>
       ${
         respondentIsMobile
-          ? '' // Button replaces keyboard text
-          : '<p>Press any key to continue.</p>'
+          ? '' // Mobile uses button
+          : '<p style="font-size: 1.5rem; color: #666;">Press any key to continue.</p>'
       }
     </div>
   `,
+  button_html: respondentIsMobile
+    ? (choice, index) => {
+        return `
+          <button style="
+            font-size: clamp(2rem, 6vw, 6rem); 
+            font-weight: 500;
+            padding: 2.5vh 6vw;
+            margin-top: 4vh;
+            border-radius: 2vw;
+            border: none;
+            background-color: rgba(62, 126, 245, 0.91);
+            color: white;
+            box-shadow: 0 0.5vw 1.5vw rgba(0,0,0,0.2);
+            cursor: pointer;
+            width: 80vw;
+          ">${choice}</button>`;
+      }
+    : undefined,
   choices: respondentIsMobile ? ['Continue'] : 'ALL_KEYS',
   save_trial_parameters: {
     stimulus: false
   }
 };
+
 //------------------------------------------------------------------------------------------------------
 const multiBrandTrial = {
   type: respondentIsMobile ? jsPsychHtmlButtonResponse : jsPsychHtmlKeyboardResponse,
+
   stimulus: function () {
     const attr = jsPsych.timelineVariable('attribute');
     const brandImgs = jsPsych.timelineVariable('image_paths');
@@ -952,7 +1021,6 @@ const multiBrandTrial = {
       "rgb(236, 221, 57)"
     ];
 
-    // DESKTOP: Grid with keys
     if (!respondentIsMobile) {
       const imageBlocks = brandImgs.map((img, i) => {
         return `
@@ -981,71 +1049,133 @@ const multiBrandTrial = {
       }).join("");
 
       return `
-        <div style="display:flex; flex-direction:column; align-items:center; justify-content:center; padding:5vh 5vw;">
-          <div style="background-color:rgb(216,212,212); border-radius:12px; padding:30px 50px; margin-bottom:60px; width:100%; max-width:500px; text-align:center; box-shadow:0 4px 12px rgba(0,0,0,0.1);">
-            <p style="font-size:22px; color:#999; margin-bottom:10px;">Which image best represents:</p>
-            <p style="font-size:32px; font-weight:700; color:#111; margin:0;">${attr}</p>
-          </div>
-          <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:60px; width:100%; max-width:1100px; justify-items:center;">
-            ${imageBlocks}
-          </div>
-        </div>`;
+       <div style="
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 4vh 4vw;
+        width: 100%;
+      ">
+        <div style="
+          background-color: rgb(216, 212, 212);
+          border-radius: 16px;
+          padding: 3vh 5vw;
+          width: 100%;
+          max-width: 700px;
+          text-align: center;
+          margin-bottom: 4vh;
+          box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+        ">
+          <p style="
+            font-size: clamp(1.5rem, 5.5vw, 2.5rem); 
+            color: #666; 
+            margin: 0 0 1vh 0;
+          ">
+            Which image best represents:
+          </p>
+          <p style="
+            font-size: clamp(2rem, 6vw, 3rem); 
+            font-weight: 700; 
+            color: #111; 
+            margin: 0;
+          ">
+            ${attr}
+          </p>
+        </div>
+        <div style="
+          display: grid; 
+          grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); 
+          gap: 60px; 
+          width: 100%; 
+          max-width: 1100px; 
+          justify-items: center;
+        ">
+          ${imageBlocks}
+        </div>
+      </div>`;
     }
 
-    // MOBILE: Just the prompt. Buttons will hold the images.
+    // MOBILE
     return `
-      <div style="text-align:center; padding:20px;">
-        <p style="font-size:22px; color:#999;">Which image best represents:</p>
-        <p style="font-size:32px; font-weight:700; color:#111;">${attr}</p>
+      <div style="text-align:center; padding:4vh 5vw;">
+        <p style="font-size: clamp(1.2rem, 4.5vw, 2rem); color:#999; margin-bottom: 1vh;">
+          Which image best represents:
+        </p>
+        <p style="font-size: clamp(1.5rem, 6vw, 2.5rem); font-weight:700; color:#111; margin-bottom: 4vh;">
+          ${attr}
+        </p>
+        <div id="mobile-grid-wrapper" style="
+          display: flex;
+          flex-wrap: wrap;
+          justify-content: space-between;
+          gap: 4vw;
+          max-width: 700px;
+          margin: 0 auto;
+        ">
+          <!-- Buttons injected by button_html -->
+        </div>
       </div>`;
   },
 
   choices: respondentIsMobile
-    ? ['0', '1', '2', '3'] // dummy labels (buttons come from button_html)
+    ? ['0', '1', '2', '3']
     : ['a', 's', 'k', 'l'],
 
-  // Show image inside each button for mobile
   button_html: respondentIsMobile
-  ? (choice, index) => {
-      const imgs = jsPsych.timelineVariable('image_paths');
-      const img = imgs[index]; // pick only the correct image for this button
-      return `
-        <button style="background:none; border:none; padding:10px; cursor:pointer;">
-          <img src="${img}" style="width:150px; height:150px; object-fit:contain; border-radius:12px; box-shadow:0 4px 12px rgba(0,0,0,0.15);" />
-        </button>`;
-    }
-  : undefined,
+    ? (choice, index) => {
+        const imgs = jsPsych.timelineVariable('image_paths');
+        const img = imgs[index];
+        return `
+          <button style="
+            background: none;
+            border: none;
+            padding: 0;
+            margin: 0;
+            width: 47%;
+            aspect-ratio: 1 / 1;
+            margin-bottom: 4vw;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            overflow: hidden;
+          ">
+            <img src="${img}" style="
+              width: 100%;
+              height: 100%;
+              object-fit: contain;
+            " />
+          </button>`;
+      }
+    : undefined,
+data: {
+  part: "Multiple Pretest",
+  respondent_id: respondent_id,
+  attribute: jsPsych.timelineVariable('attribute'),
+  image_names: jsPsych.timelineVariable('image_names'),
+  image_paths: jsPsych.timelineVariable('image_paths'),
+  correct_image: jsPsych.timelineVariable('correct_image')
+},
 
-  data: {
-    part: "Multiple Pretest",
-    respondent_id: respondent_id,
-    attribute: jsPsych.timelineVariable('attribute'),
-    image_names: jsPsych.timelineVariable('image_names'),
-    image_paths: jsPsych.timelineVariable('image_paths'),
-    correct_image: jsPsych.timelineVariable('correct_image')
-  },
-
-  on_finish: function (data) {
-    if (respondentIsMobile) {
-      data.selected_image = data.image_names[data.response];
-      data.correct = data.selected_image === data.correct_image;
-    } else {
-      const keyToIndex = { 'a': 0, 's': 1, 'k': 2, 'l': 3 };
-      const idx = keyToIndex[data.response];
-      data.selected_image = data.image_names[idx];
-      data.correct = data.selected_image === data.correct_image;
-    }
+on_finish: function (data) {
+  if (respondentIsMobile) {
+    data.selected_image = data.image_names[data.response];
+    data.correct = data.selected_image === data.correct_image;
+  } else {
+    const keyToIndex = { 'a': 0, 's': 1, 'k': 2, 'l': 3 };
+    const idx = keyToIndex[data.response];
+    data.selected_image = data.image_names[idx];
+    data.correct = data.selected_image === data.correct_image;
   }
+}
 };
 
 const multiBrandTimeline = respondentIsMobile
-  ? [multiBrandTrial, mobileBreakerTrial]
-  : [multiBrandTrial];
+? [multiBrandTrial, mobileBreakerTrial]
+: [multiBrandTrial];
 
 timeline.push({
-  timeline: multiBrandTimeline,
-  timeline_variables: pretest_trials_multiple,
-  randomize_order: true
+timeline: multiBrandTimeline,
+timeline_variables: pretest_trials_multiple,
+randomize_order: true
 });
 
 
@@ -1163,28 +1293,336 @@ timeline.push({
 const multiple_pretest_completion_trial = {
   type: respondentIsMobile ? jsPsychHtmlButtonResponse : jsPsychHtmlKeyboardResponse,
   stimulus: `
-    <div style="text-align:center;">
-      <p style="font-size: 24px;">Multiple Pretest Complete!</p>
-      ${ respondentIsMobile
-        ? '' // mobile will have a button
-        : '<p>Press any key to continue to the main task.</p>'
+    <div style="text-align: center; font-size: 2rem; font-weight: 500;">
+      <p>Multiple Pretest Complete!</p>
+      <p>The main task will begin next.</p>
+      ${
+        respondentIsMobile
+          ? '' // Mobile uses styled button
+          : '<p style="font-size: 1.5rem; color: #666;">Press any key to continue to the main task.</p>'
       }
     </div>
   `,
+  button_html: respondentIsMobile
+    ? (choice, index) => {
+        return `
+          <button style="
+            font-size: clamp(2rem, 6vw, 6rem); 
+            font-weight: 500;
+            padding: 2.5vh 6vw;
+            margin-top: 4vh;
+            border-radius: 2vw;
+            border: none;
+            background-color: rgba(62, 126, 245, 0.91);
+            color: white;
+            box-shadow: 0 0.5vw 1.5vw rgba(0,0,0,0.2);
+            cursor: pointer;
+            width: 80vw;
+          ">${choice}</button>`;
+      }
+    : undefined,
   choices: respondentIsMobile ? ['Continue'] : 'ALL_KEYS',
   save_trial_parameters: {
     stimulus: false
   }
 };
+
 timeline.push({
   timeline: respondentIsMobile
     ? [multiple_pretest_completion_trial, mobileBreakerTrial]
     : [multiple_pretest_completion_trial]
 });
+
 //-------------------------------------------------------------------------------------------------------------------
 
+// const multiImplicitTrial = {
+//   type: respondentIsMobile ? jsPsychHtmlButtonResponse : jsPsychHtmlKeyboardResponse,
+//   stimulus: function () {
+//     const attr = jsPsych.timelineVariable('attribute');
+//     const brandImgs = jsPsych.timelineVariable('brand_images');
+//     const brandKeys = ['A', 'S', 'K', 'L'];
+//     const brandKeyColors = [
+//       "rgb(32, 150, 11)",
+//       "rgb(60, 145, 237)",
+//       "rgb(237, 80, 80)",
+//       "rgb(236, 221, 57)"
+//     ];
+
+//     // Desktop: Grid of 4 images + key hints
+//     if (!respondentIsMobile) {
+//       const imageBlocks = brandImgs.map((img, i) => {
+//         return `
+//           <div style="
+//             background-color: #ffffff;
+//             border-radius: 12px;
+//             padding: 25px;
+//             width: 220px;
+//             text-align: center;
+//             box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+//             display: flex;
+//             flex-direction: column;
+//             align-items: center;
+//             gap: 15px;
+//           ">
+//             <img src="${img}" height="150" style="object-fit: contain;" />
+//             <div style="
+//               background-color: ${brandKeyColors[i]};
+//               border-radius: 8px;
+//               padding: 8px 10px;
+//               font-weight: bold;
+//               font-family: 'Courier New', monospace;
+//               font-size: 18px;
+//             ">[${brandKeys[i]}]</div>
+//           </div>`;
+//       }).join("");
+
+//       return `
+//         <div style="
+//           display: flex;
+//           flex-direction: column;
+//           align-items: center;
+//           justify-content: center;
+//           padding: 5vh 5vw;
+//           min-height: 80vh;
+//           box-sizing: border-box;
+//         ">
+//           <div style="
+//             background-color: rgb(216, 212, 212);
+//             border-radius: 12px;
+//             padding: 30px 50px;
+//             margin-bottom: 60px;
+//             width: 100%;
+//             max-width: 500px;
+//             text-align: center;
+//             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+//           ">
+//             <p style="font-size: 22px; color: #999; margin-bottom: 10px;">Which brand best represents:</p>
+//             <p style="font-size: 32px; font-weight: 700; color: #111; margin: 0;">${attr}</p>
+//           </div>
+
+//           <div style="
+//             display: grid;
+//             grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+//             gap: 60px;
+//             width: 100%;
+//             max-width: 1100px;
+//             justify-items: center;
+//             align-items: start;
+//           ">
+//             ${imageBlocks}
+//           </div>
+//         </div>`;
+//     }
+
+//     // Mobile: Only the prompt (images will appear as buttons)
+//     return `
+//       <div style="text-align:center; padding:20px;">
+//         <p style="font-size:22px; color:#999;">Which brand best represents:</p>
+//         <p style="font-size:32px; font-weight:700; color:#111;">${attr}</p>
+//       </div>
+//     `;
+//   },
+
+//   choices: respondentIsMobile
+//     ? ['0', '1', '2', '3'] // dummy labels
+//     : ['a', 's', 'k', 'l'],
+
+//   // Mobile: buttons are image buttons
+//   button_html: respondentIsMobile
+//     ? (choice, index) => {
+//         const imgs = jsPsych.timelineVariable('brand_images');
+//         const img = imgs[index];
+//         return `
+//           <button style="background:none; border:none; padding:10px; cursor:pointer;">
+//             <img src="${img}" style="width:150px; height:150px; object-fit:contain; border-radius:12px; box-shadow:0 4px 12px rgba(0,0,0,0.15);" />
+//           </button>`;
+//       }
+//     : undefined,
+
+//   data: {
+//     part: "Multiple IAT",
+//     respondent_id: respondent_id,
+//     attribute: jsPsych.timelineVariable('attribute'),
+//     brands: jsPsych.timelineVariable('brand_options'),
+//     brand_images: jsPsych.timelineVariable('brand_images')
+//   },
+
+//   on_finish: function (data) {
+//     if (respondentIsMobile) {
+//       data.selected_brand = data.brands[data.response];
+//     } else {
+//       const keyMap = { 'a': 0, 's': 1, 'k': 2, 'l': 3 };
+//       const selectedIdx = keyMap[data.response];
+//       data.selected_brand = data.brands[selectedIdx];
+//     }
+//   }
+// };
+
+// // Add breaker for mobile
+// const multiImplicitTimeline = respondentIsMobile
+//   ? [multiImplicitTrial, mobileBreakerTrial]
+//   : [multiImplicitTrial];
+
+// timeline.push({
+//   timeline: multiImplicitTimeline,
+//   timeline_variables: multi_brand_trials,
+//   randomize_order: true
+// });
+// const multiImplicitTrial = {
+//   type: respondentIsMobile ? jsPsychHtmlButtonResponse : jsPsychHtmlKeyboardResponse,
+//   stimulus: function () {
+//     const attr = jsPsych.timelineVariable('attribute');
+//     const brandImgs = jsPsych.timelineVariable('brand_images');
+//     const brandKeys = ['A', 'S', 'K', 'L'];
+//     const brandKeyColors = [
+//       "rgb(32, 150, 11)",
+//       "rgb(60, 145, 237)",
+//       "rgb(237, 80, 80)",
+//       "rgb(236, 221, 57)"
+//     ];
+
+//     if (!respondentIsMobile) {
+//       const imageBlocks = brandImgs.map((img, i) => {
+//         return `
+//           <div style="
+//             background-color: #ffffff;
+//             border-radius: 12px;
+//             padding: 25px;
+//             width: 220px;
+//             text-align: center;
+//             box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+//             display: flex;
+//             flex-direction: column;
+//             align-items: center;
+//             gap: 15px;
+//           ">
+//             <img src="${img}" height="150" style="object-fit: contain;" />
+//             <div style="
+//               background-color: ${brandKeyColors[i]};
+//               border-radius: 8px;
+//               padding: 8px 10px;
+//               font-weight: bold;
+//               font-family: 'Courier New', monospace;
+//               font-size: 18px;
+//             ">[${brandKeys[i]}]</div>
+//           </div>`;
+//       }).join("");
+
+//       return `
+//         <div style="
+//           display: flex;
+//           flex-direction: column;
+//           align-items: center;
+//           justify-content: center;
+//           padding: 5vh 5vw;
+//           min-height: 80vh;
+//           box-sizing: border-box;
+//         ">
+//           <div style="
+//             background-color: rgb(216, 212, 212);
+//             border-radius: 12px;
+//             padding: 30px 50px;
+//             margin-bottom: 60px;
+//             width: 100%;
+//             max-width: 500px;
+//             text-align: center;
+//             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+//           ">
+//             <p style="font-size: 22px; color: #999; margin-bottom: 10px;">Which brand best represents:</p>
+//             <p style="font-size: 32px; font-weight: 700; color: #111; margin: 0;">${attr}</p>
+//           </div>
+
+//           <div style="
+//             display: grid;
+//             grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+//             gap: 60px;
+//             width: 100%;
+//             max-width: 1100px;
+//             justify-items: center;
+//             align-items: start;
+//           ">
+//             ${imageBlocks}
+//           </div>
+//         </div>`;
+//     }
+
+//     // MOBILE
+//     return `
+//       <div style="text-align:center; padding:20px;">
+//       <p style="font-size:22px; color:#999;">Which brand best represents:</p>
+//       <p style="font-size:32px; font-weight:700; color:#111;">${attr}</p>
+//     </div>
+//     <div id="mobile-grid" style="
+//       display: grid;
+//       grid-template-columns: repeat(2, 1fr);
+//       gap: 5vw;
+//       padding: 4vh 5vw;
+//       justify-items: center;
+//     ">
+//       <!-- jsPsych will inject buttons here -->
+//     </div>`
+//   },
+
+//   choices: respondentIsMobile
+//     ? ['0', '1', '2', '3']
+//     : ['a', 's', 'k', 'l'],
+
+//   button_html: respondentIsMobile
+//     ? (choice, index) => {
+//         const imgs = jsPsych.timelineVariable('brand_images');
+//         const img = imgs[index];
+//         return `
+//           <button style="
+//           background: none;
+//           border: none;
+//           padding: 0;
+//           cursor: pointer;
+//           width: 100%;
+//           max-width: 100%;
+//         ">
+//           <img src="${img}" style="
+//             width: 100%;
+//             aspect-ratio: 1 / 1;
+//             object-fit: contain;
+//             border-radius: 12px;
+//             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+//           " />
+//         </button>`;
+//       }
+//     : undefined,
+
+//   data: {
+//     part: "Multiple IAT",
+//     respondent_id: respondent_id,
+//     attribute: jsPsych.timelineVariable('attribute'),
+//     brands: jsPsych.timelineVariable('brand_options'),
+//     brand_images: jsPsych.timelineVariable('brand_images')
+//   },
+
+//   on_finish: function (data) {
+//     if (respondentIsMobile) {
+//       data.selected_brand = data.brands[data.response];
+//     } else {
+//       const keyMap = { 'a': 0, 's': 1, 'k': 2, 'l': 3 };
+//       const selectedIdx = keyMap[data.response];
+//       data.selected_brand = data.brands[selectedIdx];
+//     }
+//   }
+// };
+
+// // Timeline logic
+// const multiImplicitTimeline = respondentIsMobile
+//   ? [multiImplicitTrial, mobileBreakerTrial]
+//   : [multiImplicitTrial];
+
+// timeline.push({
+//   timeline: multiImplicitTimeline,
+//   timeline_variables: multi_brand_trials,
+//   randomize_order: true
+// });
 const multiImplicitTrial = {
   type: respondentIsMobile ? jsPsychHtmlButtonResponse : jsPsychHtmlKeyboardResponse,
+
   stimulus: function () {
     const attr = jsPsych.timelineVariable('attribute');
     const brandImgs = jsPsych.timelineVariable('brand_images');
@@ -1196,7 +1634,6 @@ const multiImplicitTrial = {
       "rgb(236, 221, 57)"
     ];
 
-    // Desktop: Grid of 4 images + key hints
     if (!respondentIsMobile) {
       const imageBlocks = brandImgs.map((img, i) => {
         return `
@@ -1229,60 +1666,96 @@ const multiImplicitTrial = {
           display: flex;
           flex-direction: column;
           align-items: center;
-          justify-content: center;
-          padding: 5vh 5vw;
-          min-height: 80vh;
-          box-sizing: border-box;
+          padding: 4vh 4vw;
+          width: 100%;
         ">
           <div style="
             background-color: rgb(216, 212, 212);
-            border-radius: 12px;
-            padding: 30px 50px;
-            margin-bottom: 60px;
+            border-radius: 16px;
+            padding: 3vh 5vw;
             width: 100%;
-            max-width: 500px;
+            max-width: 700px;
             text-align: center;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            margin-bottom: 4vh;
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
           ">
-            <p style="font-size: 22px; color: #999; margin-bottom: 10px;">Which brand best represents:</p>
-            <p style="font-size: 32px; font-weight: 700; color: #111; margin: 0;">${attr}</p>
+            <p style="
+              font-size: clamp(1.5rem, 5.5vw, 2.5rem); 
+              color: #666; 
+              margin: 0 0 1vh 0;
+            ">
+              Which image best represents:
+            </p>
+            <p style="
+              font-size: clamp(2rem, 6vw, 3rem); 
+              font-weight: 700; 
+              color: #111; 
+              margin: 0;
+            ">
+              ${attr}
+            </p>
           </div>
-
           <div style="
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 60px;
-            width: 100%;
-            max-width: 1100px;
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); 
+            gap: 60px; 
+            width: 100%; 
+            max-width: 1100px; 
             justify-items: center;
-            align-items: start;
           ">
             ${imageBlocks}
           </div>
         </div>`;
     }
 
-    // Mobile: Only the prompt (images will appear as buttons)
+    // MOBILE
     return `
-      <div style="text-align:center; padding:20px;">
-        <p style="font-size:22px; color:#999;">Which brand best represents:</p>
-        <p style="font-size:32px; font-weight:700; color:#111;">${attr}</p>
-      </div>
-    `;
+      <div style="text-align:center; padding:4vh 5vw;">
+        <p style="font-size: clamp(1.2rem, 4.5vw, 2rem); color:#999; margin-bottom: 1vh;">
+          Which image best represents:
+        </p>
+        <p style="font-size: clamp(1.5rem, 6vw, 2.5rem); font-weight:700; color:#111; margin-bottom: 4vh;">
+          ${attr}
+        </p>
+        <div id="mobile-grid-wrapper" style="
+          display: flex;
+          flex-wrap: wrap;
+          justify-content: space-between;
+          gap: 4vw;
+          max-width: 700px;
+          margin: 0 auto;
+        ">
+          <!-- Buttons injected by button_html -->
+        </div>
+      </div>`;
   },
 
   choices: respondentIsMobile
-    ? ['0', '1', '2', '3'] // dummy labels
+    ? ['0', '1', '2', '3']
     : ['a', 's', 'k', 'l'],
 
-  // Mobile: buttons are image buttons
   button_html: respondentIsMobile
     ? (choice, index) => {
         const imgs = jsPsych.timelineVariable('brand_images');
         const img = imgs[index];
         return `
-          <button style="background:none; border:none; padding:10px; cursor:pointer;">
-            <img src="${img}" style="width:150px; height:150px; object-fit:contain; border-radius:12px; box-shadow:0 4px 12px rgba(0,0,0,0.15);" />
+          <button style="
+            background: none;
+            border: none;
+            padding: 0;
+            margin: 0;
+            width: 47%;
+            aspect-ratio: 1 / 1;
+            margin-bottom: 4vw;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            overflow: hidden;
+          ">
+            <img src="${img}" style="
+              width: 100%;
+              height: 100%;
+              object-fit: contain;
+            " />
           </button>`;
       }
     : undefined,
@@ -1306,7 +1779,6 @@ const multiImplicitTrial = {
   }
 };
 
-// Add breaker for mobile
 const multiImplicitTimeline = respondentIsMobile
   ? [multiImplicitTrial, mobileBreakerTrial]
   : [multiImplicitTrial];
@@ -1316,6 +1788,7 @@ timeline.push({
   timeline_variables: multi_brand_trials,
   randomize_order: true
 });
+
 //------------------------------------------------------------------------------------------------------
 // timeline.push({
 //   timeline: [{
@@ -1417,9 +1890,25 @@ timeline.push({
 //------------------------------------------------------------------------------------------------------
 timeline.push({
   type: jsPsychHtmlKeyboardResponse,
-  stimulus: "<h3>Thank you for participating!</h3>",
+  stimulus: `
+    <div style="
+      text-align: center;
+      font-size: clamp(2rem, 5vw, 4rem);
+      font-weight: 600;
+      color: #111;
+      padding: 5vh 5vw;
+    ">
+      <p>🎉 Thank you for participating!</p>
+    </div>
+  `,
   choices: "NO_KEYS",
-  trial_duration: 1000
+  trial_duration: 1000, // Optional: Slightly more than 1000ms if you'd like it to linger
+  save_trial_parameters: {
+    stimulus: false
+  },
+  //   on_finish: function() {
+  //   window.location.href = "https://your-redirect-url.com";
+  // }
 });
 console.log(timeline)
 jsPsych.run(timeline);
