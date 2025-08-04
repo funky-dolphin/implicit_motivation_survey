@@ -1099,7 +1099,7 @@ const multiBrandTrial = {
     return `
       <div style="text-align:center; padding:4vh 5vw;">
         <p style="font-size: clamp(1.2rem, 4.5vw, 2rem); color:#999; margin-bottom: 1vh;">
-          Which image best represents:
+          Which brand best represents:
         </p>
         <p style="font-size: clamp(1.5rem, 6vw, 2.5rem); font-weight:700; color:#111; margin-bottom: 4vh;">
           ${attr}
