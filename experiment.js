@@ -199,7 +199,7 @@ timeline.push({
         height: auto;
         margin-bottom: 4vh;
       "/>
-      <p style="font-size: clamp(1.6rem, 6.0vw, 2.8rem); font-weight: 600; margin-bottom: 2vh;">
+      <p1 style="font-size: clamp(1.6rem, 4.0vw, 2rem); font-weight: 600; margin-bottom: 2vh;">
         Welcome to our Implicit Association Survey!
       </p>
       <p style="font-size: clamp(1.4rem, 4.5vw, 2rem); margin-bottom: 1vh;">
