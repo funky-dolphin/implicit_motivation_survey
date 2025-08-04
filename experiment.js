@@ -1071,7 +1071,7 @@ const multiBrandTrial = {
             color: #666; 
             margin: 0 0 1vh 0;
           ">
-            Which image best represents:
+            Which brand best represents:
           </p>
           <p style="
             font-size: clamp(2rem, 6vw, 3rem); 
