@@ -924,6 +924,8 @@ timeline.push({
 
 
 //------------------------------------------------------------------------------------------------------
+//Complete SINGLE IMPLICIT COMPLETE
+//------------------------------------------------------------------------------------------------------
 const single_implicit_completition_trial = {
   type: respondentIsMobile ? jsPsychHtmlButtonResponse : jsPsychHtmlKeyboardResponse,
   stimulus: `
@@ -968,6 +970,8 @@ timeline.push({
   timeline: single_implicit_completition_timeline
 });
 //------------------------------------------------------------------------------------------------------
+// Multi Implicit Pretest Trial Start Button
+//------------------------------------------------------------------------------------------------------
 const multiImplicitIntroTrial = {
   type: respondentIsMobile ? jsPsychHtmlButtonResponse : jsPsychHtmlKeyboardResponse,
   stimulus: `
@@ -1006,6 +1010,8 @@ const multiImplicitIntroTrial = {
   }
 };
 
+//------------------------------------------------------------------------------------------------------
+//Multiple Implicit Pretest Images Trial 
 //------------------------------------------------------------------------------------------------------
 const multiBrandTrial = {
   type: respondentIsMobile ? jsPsychHtmlButtonResponse : jsPsychHtmlKeyboardResponse,
@@ -1289,6 +1295,9 @@ randomize_order: true
 //   },
 //   choices: "ALL_KEYS"
 // });
+//-------------------------------------------------------------------------------------------------------------------
+// Complete Multiple Pretest
+//-------------------------------------------------------------------------------------------------------------------
 
 const multiple_pretest_completion_trial = {
   type: respondentIsMobile ? jsPsychHtmlButtonResponse : jsPsychHtmlKeyboardResponse,
@@ -1620,6 +1629,9 @@ timeline.push({
 //   timeline_variables: multi_brand_trials,
 //   randomize_order: true
 // });
+//------------------------------------------------------------------------------------------------------
+// Multiple Implicit Brand Test
+//------------------------------------------------------------------------------------------------------
 const multiImplicitTrial = {
   type: respondentIsMobile ? jsPsychHtmlButtonResponse : jsPsychHtmlKeyboardResponse,
 
@@ -1888,6 +1900,8 @@ timeline.push({
 
 
 //------------------------------------------------------------------------------------------------------
+// Completion Message
+//------------------------------------------------------------------------------------------------------
 timeline.push({
   type: jsPsychHtmlKeyboardResponse,
   stimulus: `
@@ -1910,6 +1924,7 @@ timeline.push({
   //   window.location.href = "https://your-redirect-url.com";
   // }
 });
+
 console.log(timeline)
 jsPsych.run(timeline);
 
