@@ -1916,7 +1916,7 @@ timeline.push({
     </div>
   `,
   choices: "NO_KEYS",
-  trial_duration: 1000, // Optional: Slightly more than 1000ms if you'd like it to linger
+  trial_duration: 500, // Optional: Slightly more than 1000ms if you'd like it to linger
   save_trial_parameters: {
     stimulus: false
   },
