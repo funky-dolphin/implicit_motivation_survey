@@ -1920,9 +1920,9 @@ timeline.push({
   save_trial_parameters: {
     stimulus: false
   },
-  //   on_finish: function() {
-  //   window.location.href = "https://your-redirect-url.com";
-  // }
+    on_finish: function() {
+    window.location.href = "https://www.surveymonkey.com/r/W3PQ82J";
+  }
 });
 
 console.log(timeline)
