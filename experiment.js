@@ -5,6 +5,14 @@ function isMobileDevice() {
 const respondentIsMobile = isMobileDevice();
 console.log(respondentIsMobile)
 
+function getQueryParam(param) {
+  const urlParams = new URLSearchParams(window.location.search);
+  return urlParams.get(param);
+}
+
+const external_id = getQueryParam("id") || "UNKNOWN";
+jsPsych.data.addProperties({ external_id: external_id });
+
 
 const jsPsych = initJsPsych({
   on_finish: function () {
@@ -147,13 +155,14 @@ const multi_brand_trials = generateCompleteBrandAttributeTrials(attributes, bran
 const preload = {
   type: jsPsychPreload,
   images : 
-  [
-   'img/doritos1.png',
-   'img/lays1.png',
-   'img/pringles1.png',
-   'img/ritz1.png',
+  ['img/BMW.png',
+    'img/Lexus.png',
+    'img/Mercedes.png',
+    'img/Subaru.png',
+    'img/Tesla.png',
+    'img/VW.png',
+    'img/Volvo.png',
    'img/SingleImplicitMotivationimage.png',
-   'img/takis1.png',
    'pretest_img/pretest_cat.png',
    'pretest_img/pretest_fire.png',
    'pretest_img/pretest_driving.png',
