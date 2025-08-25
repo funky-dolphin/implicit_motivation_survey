@@ -10,7 +10,7 @@ const brands = [
 
 const category = "Luxury Cars";
 
-const attributes = ['adventure', 'freedom', 'courage', 'impulsiveness', 'be unconventional', 'discovery', 'escape', 'risk', 'pride', 'perfection', 'recognition', 'success', 'doing my best', 'independence', 'status', 'sophistication', 'discipline', 'efficiency', 'reason', 'control', 'be practical', 'expertise', 'functional', 'simplicity', 'joy', 'spoil myself', 'optimisim', 'contentment', 'comfort', 'indulgence', 'relaxation', 'satisfaction', 'excitement', 'stimulation', 'inspiration', 'vitality', 'change', 'fun', 'individuality', 'playfulness', 'safety', 'security', 'caring', 'togetherness', 'sanctuary', 'belonging', 'peace of mind', 'protection'];
+const attributes = ['adventure', 'freedom', 'courage', 'impulsiveness', 'be unconventional', 'discovery', 'escape', 'risk', 'pride', 'perfection', 'recognition', 'success', 'doing my best', 'independence', 'status', 'sophistication', 'discipline', 'efficiency', 'reason', 'control', 'be practical', 'expertise', 'functional', 'simplicity', 'joy', 'spoil myself', 'optimisim', 'contentment', 'comfort', 'indulgence', 'relaxation', 'satisfaction', 'excitement', 'stimulation', 'inspiration', 'vitality', 'change', 'fun', 'individuality', 'playfulness', 'safety', 'security', 'caring', 'togetherness', 'calmness', 'belonging', 'peace of mind', 'protection'];
 
 const pretest_attributes = [
   "Hot", 
