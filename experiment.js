@@ -11,7 +11,7 @@ function getQueryParam(param) {
 }
 
 const external_id = getQueryParam("id") || "UNKNOWN";
-jsPsych.data.addProperties({ external_id: external_id });
+
 
 
 const jsPsych = initJsPsych({
@@ -25,6 +25,8 @@ const jsPsych = initJsPsych({
       .catch(e => console.error('❌ Firebase error', e));
   }
 });
+
+jsPsych.data.addProperties({ external_id: external_id });
 
 
 const respondent_id = jsPsych.randomization.randomID(10);
