@@ -1932,7 +1932,7 @@ timeline.push({
     stimulus: false
   },
     on_finish: function() {
-    window.location.href = "https://www.surveymonkey.com/r/W3PQ82J";
+    window.location.href =`https://sample.savanta.com/v2/c/?id=${external_id}`;
   }
 });
 
