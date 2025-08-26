@@ -1992,7 +1992,8 @@ timeline.push({
       padding: 5vh 5vw;
     ">
       <p>🎉 Thank you for participating!</p>
-      <p> Please keep this window open until you are redirected.</p>
+      <p> Please keep this window open </p>
+      <p> until you are redirected.</p>
     </div>
   `,
   choices: "NO_KEYS",
