@@ -1027,10 +1027,10 @@ const multi_pretest_intro = respondentIsMobile
 : [multiImplicitIntroTrial];
 
 timeline.push({
-timeline: multi_pretest_intro,
-timeline_variables: pretest_trials_multiple,
-randomize_order: true
-});
+timeline: multi_pretest_intro});
+// timeline_variables: pretest_trials_multiple,
+// randomize_order: true
+// });
 
 //------------------------------------------------------------------------------------------------------
 //Multiple Implicit Pretest Images Trial 
