@@ -989,13 +989,13 @@ const multiImplicitIntroTrial = {
   type: respondentIsMobile ? jsPsychHtmlButtonResponse : jsPsychHtmlKeyboardResponse,
   stimulus: `
     <div style="text-align: center; font-size: 2rem; font-weight: 500;">
-      <p>Next, we will begin with a pretest</p>
-      <p>to set a baseline for our</p>
-      <p>Multiple Implicit portion.</p>
+      <p>Next, we will begin with a pretest to set a baseline for our Multiple Implicit portion.</p>
+      <p></p>
+     
       ${
         respondentIsMobile
           ? '' // Mobile uses button
-          : '<p style="font-size: 1.5rem; color: #666;">Press any key to continue.</p>'
+          : ' <p>Please place both hands on the keyboard with index and middle fingers on the A, S, K, and L keys.</p> <p style="font-size: 1.5rem; color: #666;">Press any key to continue.</p>'
       }
     </div>
   `,
@@ -1022,6 +1022,15 @@ const multiImplicitIntroTrial = {
     stimulus: false
   }
 };
+const multi_pretest_intro = respondentIsMobile
+? [multiImplicitIntroTrial, mobileBreakerTrial]
+: [multiImplicitIntroTrial];
+
+timeline.push({
+timeline: multi_pretest_intro,
+timeline_variables: pretest_trials_multiple,
+randomize_order: true
+});
 
 //------------------------------------------------------------------------------------------------------
 //Multiple Implicit Pretest Images Trial 
