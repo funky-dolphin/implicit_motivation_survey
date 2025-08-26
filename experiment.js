@@ -14,17 +14,18 @@ const external_id = getQueryParam("id") || "UNKNOWN";
 
 
 
-const jsPsych = initJsPsych({
-  on_finish: function () {
-    // jsPsych.data.get().localSave('csv', 'miat_results.csv');
-    const allData = jsPsych.data.get().values();
-    database
-      .ref(`miat_results/${survey_name}`)
-      .push(allData)
-      .then(() => console.log('✅ Written to Firebase'))
-      .catch(e => console.error('❌ Firebase error', e));
-  }
-});
+const jsPsych = initJsPsych();
+//   {
+//   on_finish: function () {
+//     // jsPsych.data.get().localSave('csv', 'miat_results.csv');
+//     const allData = jsPsych.data.get().values();
+//     database
+//       .ref(`miat_results/${survey_name}`)
+//       .push(allData)
+//       .then(() => console.log('✅ Written to Firebase'))
+//       .catch(e => console.error('❌ Firebase error', e));
+//   }
+// });
 
 jsPsych.data.addProperties({ external_id: external_id });
 
@@ -1913,6 +1914,63 @@ timeline.push({
 //------------------------------------------------------------------------------------------------------
 // Completion Message
 //------------------------------------------------------------------------------------------------------
+// timeline.push({
+//   type: jsPsychHtmlKeyboardResponse,
+//   stimulus: `
+//     <div style="
+//       text-align: center;
+//       font-size: clamp(2rem, 5vw, 4rem);
+//       font-weight: 600;
+//       color: #111;
+//       padding: 5vh 5vw;
+//     ">
+//       <p>🎉 Thank you for participating!</p>
+//     </div>
+//   `,
+//   choices: "NO_KEYS",
+//   trial_duration: 500, // Optional: Slightly more than 1000ms if you'd like it to linger
+//   save_trial_parameters: {
+//     stimulus: false
+//   },
+//     on_finish: function() {
+//     window.location.href =`https://sample.savanta.com/v2/c/?id=${external_id}`;
+//   }
+// });
+
+// timeline.push({
+//   type: jsPsychHtmlKeyboardResponse,
+//   stimulus: `
+//     <div style="
+//       text-align: center;
+//       font-size: clamp(2rem, 5vw, 4rem);
+//       font-weight: 600;
+//       color: #111;
+//       padding: 5vh 5vw;
+//     ">
+//       <p>🎉 Thank you for participating!</p>
+//     </div>
+//   `,
+//   choices: "NO_KEYS",
+//   trial_duration: 1000, // Linger briefly before redirect
+//   on_finish: function() {
+//     const allData = jsPsych.data.get().values();
+
+//     database
+//       .ref(`miat_results/${survey_name}`)
+//       .push(allData)
+//       .then((snapshot) => {
+//         console.log("✅ Data stored at key:", snapshot.key);
+//         window.location.href = `https://sample.savanta.com/v2/c/?id=${external_id}`;
+//       })
+//       .catch(e => {
+//         console.error('❌ Firebase error before redirect:', e);
+//         // Still redirect to avoid breaking survey chain
+//         setTimeout(() => {
+//           // window.location.href = `https://sample.savanta.com/v2/c/?id=${external_id}`;
+//         }, 5000);
+//       });
+//   }
+// });
 timeline.push({
   type: jsPsychHtmlKeyboardResponse,
   stimulus: `
@@ -1927,12 +1985,30 @@ timeline.push({
     </div>
   `,
   choices: "NO_KEYS",
-  trial_duration: 500, // Optional: Slightly more than 1000ms if you'd like it to linger
-  save_trial_parameters: {
-    stimulus: false
-  },
-    on_finish: function() {
-    window.location.href =`https://sample.savanta.com/v2/c/?id=${external_id}`;
+  trial_duration: 1000,
+  on_finish: async function () {
+    const allData = jsPsych.data.get().values();
+
+    try {
+      const snapshot = await database
+        .ref(`miat_results/${survey_name}`)
+        .push(allData);
+
+      console.log("✅ Firebase write successful. Key:", snapshot.key);
+
+      // Optional: log the key or trigger another write
+      // await database.ref(`audit_log/${snapshot.key}`).set({ ... });
+
+      // Safe redirect after confirmed write
+      window.location.href = `https://sample.savanta.com/v2/c/?id=${external_id}`;
+    } catch (e) {
+      console.error("❌ Firebase write failed:", e);
+
+      // Optional: fallback delay before redirect
+      setTimeout(() => {
+        window.location.href = `https://sample.savanta.com/v2/c/?id=${external_id}`;
+      }, 3000);
+    }
   }
 });
 
