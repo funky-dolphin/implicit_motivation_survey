@@ -170,7 +170,8 @@ const preload = {
    'pretest_img/pretest_fire.png',
    'pretest_img/pretest_driving.png',
    'pretest_img/pretest_icecube.png',
-   'img/FCBNY_Logo.png'
+   'img/FCBNY_Logo.png',
+   'img/Audi.png'
   ]
 }
 

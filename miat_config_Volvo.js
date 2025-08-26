@@ -5,7 +5,8 @@ const brands = [
     {name: "Mercedes", img: "img/Mercedes.png" },
     {name: "Subaru", img: "img/Subaru.png" },
     {name: "Tesla", img: "img/Tesla.png" },
-    {name:"VolksWagen", img: "img/VW.png" }
+    {name:"VolksWagen", img: "img/VW.png" },
+    {name: "Audi", img: "img/Audi.png" }
 ];
 
 const category = "Luxury Cars";
