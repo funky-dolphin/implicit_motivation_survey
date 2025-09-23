@@ -2,6 +2,9 @@ function isMobileDevice() {
   return /Android|iPhone|iPad|iPod|Mobile|Tablet/i.test(navigator.userAgent);
 }
 
+const minRT = 300;
+const maxRT = 3000;
+
 const respondentIsMobile = isMobileDevice();
 console.log(respondentIsMobile)
 
@@ -35,7 +38,7 @@ jsPsych.data.addProperties({ external_id: external_id });
 const respondent_id = jsPsych.randomization.randomID(10);
 const timeline = [];
 
-///--------------------------------------------------GENERATE FLAT TRIALS SINGLE--------------------------------------------------------------------------------------
+///--------------------------------------------------GENERATE FLAT SIAT TEST--------------------------------------------------------------------------------------
 function generateFlatTrials(trialVars, respondentId, partLabel) {
   const trials = [];
 
@@ -117,6 +120,9 @@ function generateFlatTrials(trialVars, respondentId, partLabel) {
         if (vars.is_correct !== undefined) {
           data.accurate = (label === (vars.is_correct ? "Fits" : "Does not fit"));
         }
+        if (data.rt < minRT) data.rt_flag = "too_fast";
+        if (data.rt > maxRT) data.rt_flag = "too_slow";
+        if (data.rt >= minRT && data.rt <= maxRT) data.rt_flag = "valid";
       }
     };
 
@@ -136,7 +142,7 @@ function generateFlatTrials(trialVars, respondentId, partLabel) {
   return trials;
 }
 //----------------------------------------------------------------------------------------------------------------------------------------------
-//--------------------------------------------Generate Flat MIA Trials--------------------------------------------------------------------------------------------------------------
+//--------------------------------------------Generate Flat MIA Trials TRIAL AND TEST--------------------------------------------------------------------------------------------------------------
 function generateFlatMultiBrandTrials(trialVars, respondentId, partLabel) {
   const trials = [];
 
@@ -238,9 +244,8 @@ function generateFlatMultiBrandTrials(trialVars, respondentId, partLabel) {
   return trials;
 }
 
+  //--------------------------------------------Generate Flat Pre Test--------------------------------------------------------------------------------------------------------------
 
-  //--------------------------------------------Generate Flat MIA Trials--------------------------------------------------------------------------------------------------------------
-  
 // 🔧 Generate pretest trials as flat array
 function generatePretestTrials(images, attributes, respondentId) {
   const trials = [];
@@ -470,9 +475,99 @@ function generateCompleteBrandAttributeTrials(attributes, brands) {
   return trials;
 }
 const multi_brand_trials = generateCompleteBrandAttributeTrials(attributes, brands);
-console.log(multi_brand_trials)
+// console.log(multi_brand_trials)
+
+
+//----------------------------------------------------LOOP TO TRACK RESPONSE TIME------------------------------------------------------------------------------
+function wrapTrialWithRTCheck(trial) {
+  return {
+    timeline: [
+      trial,
+      {
+        type: jsPsychHtmlKeyboardResponse,
+        stimulus: function () {
+          const last = jsPsych.data.get().last(1).values()[0];
+          if (last.rt < minRT) {
+            return `<p style="font-size:2rem; color:red;">
+                      ⚡ Too fast! Please slow down.<br>
+                      Press any key to repeat the same trial.
+                    </p>`;
+          }
+          if (last.rt > maxRT) {
+            return `<p style="font-size:2rem; color:red;">
+                      🐢 Too slow! Please respond faster.<br>
+                      Press any key to repeat the same trial.
+                    </p>`;
+          }
+          return ""; // ✅ just an empty string, never "null"
+        },
+        choices: "ALL_KEYS",
+        trial_duration: function () {
+          const last = jsPsych.data.get().last(1).values()[0];
+          return (last.rt < minRT || last.rt > maxRT) ? null : 0;
+          // ✅ if valid → 0ms duration, trial ends instantly (no click)
+        },
+        on_finish: function (data) {
+          data.is_feedback = true;
+        }
+      }
+    ],
+    loop_function: function () {
+      const last = jsPsych.data.get().last(2).values()[0];
+      const tooFast = last.rt < minRT;
+      const tooSlow = last.rt > maxRT;
+      return (tooFast || tooSlow);
+    }
+  };
+}
 
 //--------------------------------------------------------------------------------------------------------------------------------------------------------
+//------------------------------------------LOOP TO TRACK PRETEST ACCURACY--------------------------------------------------------------------------------
+function wrapPretestBlock(trials, minCorrect, partLabel) {
+  return {
+    timeline: [
+      {
+        timeline: trials
+      },
+      {
+        type: jsPsychHtmlKeyboardResponse,
+        stimulus: function() {
+          // ✅ Grab only the last block that was just run
+          const blockData = jsPsych.data.get().last(trials.length);
+
+          const correctCount = blockData.filter({accurate: true}).count();
+          const totalCount   = blockData.count();
+
+          if (correctCount >= minCorrect) {
+            return `<p style="font-size:2rem; color:green;">
+                      ✅ You got ${correctCount} out of ${totalCount} correct.<br>
+                      Great! Moving on.
+                    </p>`;
+          } else {
+            return `<p style="font-size:2rem; color:red;">
+                      ❌ You only got ${correctCount} out of ${totalCount} correct.<br>
+                      Please try again.
+                    </p>`;
+          }
+        },
+        choices: "ALL_KEYS",
+        on_finish: function(data) {
+          data.is_feedback = true;
+        }
+      }
+    ],
+    loop_function: function() {
+      const blockData = jsPsych.data.get().last(trials.length);
+      const correctCount = blockData.filter({accurate: true}).count();
+
+      return correctCount < minCorrect; // ✅ repeat if accuracy too low
+    }
+  };
+}
+
+
+//---------------------------------------------------------------------------------------------------------------------------------------------------------
+
 //UPLOAD IMAGES FOR PRELOAD HERE
 ////--------------------------------------------------------------------------------------------------------------------------------------------------------
 const preload = {
@@ -705,164 +800,167 @@ timeline.push({
 
 //-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 //--------ADDING SINGLE PRE-TEST TRIALS TO TIMELINE------------------------------------------------------------------------------------------------
-timeline.push(...pretest_trials);
+
+const pretestBlock = wrapPretestBlock(pretest_trials, 15 , "pretest_single_implicit");
+timeline.push(pretestBlock);
 //------------------------------------------------------------------------------------------------------
 
-const singleImplicitTrial = {
-  type: respondentIsMobile ? jsPsychHtmlButtonResponse : jsPsychHtmlKeyboardResponse,
-  stimulus: function () {
-    const imgSrc = jsPsych.timelineVariable('img_src');
-    const attr   = jsPsych.timelineVariable('attribute');
-    const cat    = jsPsych.timelineVariable('img_name');
+// const singleImplicitTrial = {
+//   type: respondentIsMobile ? jsPsychHtmlButtonResponse : jsPsychHtmlKeyboardResponse,
+//   stimulus: function () {
+//     const imgSrc = jsPsych.timelineVariable('img_src');
+//     const attr   = jsPsych.timelineVariable('attribute');
+//     const cat    = jsPsych.timelineVariable('img_name');
 
-    return `<div style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; width: 100%;">
+//     return `<div style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; width: 100%;">
 
-  <!-- IMAGE BOX -->
-  <div style="
-    background-color: rgb(216, 212, 212);
-    border-radius: 8px;
-    padding: 1.5vh 2.5vw;
-    margin-bottom: 2vh;
-    width: 80%;
-    max-width: 700px;
-    text-align: center;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  ">
-    <p style="font-size: clamp(1rem, 2.5vw, 1.3rem); color: #999; margin-bottom: 1vh;">Stim</p>
-    <img src="${imgSrc}" 
-         alt="${cat}" 
-         style="
-           width: auto;
-           max-width: 100%;
-           height: clamp(30vh, 50vh, 60vh);
-           object-fit: contain;
-           margin-bottom: 1vh;
-         " />
-  </div>
+//   <!-- IMAGE BOX -->
+//   <div style="
+//     background-color: rgb(216, 212, 212);
+//     border-radius: 8px;
+//     padding: 1.5vh 2.5vw;
+//     margin-bottom: 2vh;
+//     width: 80%;
+//     max-width: 700px;
+//     text-align: center;
+//     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+//   ">
+//     <p style="font-size: clamp(1rem, 2.5vw, 1.3rem); color: #999; margin-bottom: 1vh;">Stim</p>
+//     <img src="${imgSrc}" 
+//          alt="${cat}" 
+//          style="
+//            width: auto;
+//            max-width: 100%;
+//            height: clamp(30vh, 50vh, 60vh);
+//            object-fit: contain;
+//            margin-bottom: 1vh;
+//          " />
+//   </div>
 
-  <!-- ATTRIBUTE BOX -->
-  <div style="
-    background-color: #ffffff;
-    border-radius: 10px;
-    padding: 1.5vh 2.5vw;
-    margin-bottom: 3vh;
-    width: 80%;
-    max-width: 400px;
-    text-align: center;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  ">
-    <p style="
-      font-size: clamp(2rem, 5.5vw, 4rem); 
-      font-weight: 700; 
-      color: #111; 
-      margin: 0;
-      line-height: 1;
-      text-align: center;
-      word-wrap: break-word;
-      overflow-wrap: break-word;
-      width: 100%;
-    ">
-      ${attr}
-    </p>
-  </div>
+//   <!-- ATTRIBUTE BOX -->
+//   <div style="
+//     background-color: #ffffff;
+//     border-radius: 10px;
+//     padding: 1.5vh 2.5vw;
+//     margin-bottom: 3vh;
+//     width: 80%;
+//     max-width: 400px;
+//     text-align: center;
+//     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+//   ">
+//     <p style="
+//       font-size: clamp(2rem, 5.5vw, 4rem); 
+//       font-weight: 700; 
+//       color: #111; 
+//       margin: 0;
+//       line-height: 1;
+//       text-align: center;
+//       word-wrap: break-word;
+//       overflow-wrap: break-word;
+//       width: 100%;
+//     ">
+//       ${attr}
+//     </p>
+//   </div>
 
-</div>
+// </div>
 
 
-    ${
-      respondentIsMobile
-        ? '' // buttons will be rendered by jsPsychHtmlButtonResponse
-        : `
-        <!-- DESKTOP INSTRUCTIONS -->
-        <div style="display: flex; justify-content: center; gap: 120px; font-size: 20px;">
-          <div style="text-align: center;">
-            <div style="
-              background-color: rgb(32, 150, 11);
-              border-radius: 12px;
-              padding: 15px 25px;
-              width: 250px;
-              box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            ">
-              <div style="font-weight: bold;">[E]</div>
-              <div>Fits</div>
-            </div>
-          </div>
-          <div style="text-align: center;">
-            <div style="
-              background-color: rgb(105, 135, 236);
-              border-radius: 12px;
-              padding: 15px 25px;
-              width: 250px;
-              box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            ">
-              <div style="font-weight: bold;">[I]</div>
-              <div>Does not fit</div>
-            </div>
-          </div>
-        </div>`
-    }
+//     ${
+//       respondentIsMobile
+//         ? '' // buttons will be rendered by jsPsychHtmlButtonResponse
+//         : `
+//         <!-- DESKTOP INSTRUCTIONS -->
+//         <div style="display: flex; justify-content: center; gap: 120px; font-size: 20px;">
+//           <div style="text-align: center;">
+//             <div style="
+//               background-color: rgb(32, 150, 11);
+//               border-radius: 12px;
+//               padding: 15px 25px;
+//               width: 250px;
+//               box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+//             ">
+//               <div style="font-weight: bold;">[E]</div>
+//               <div>Fits</div>
+//             </div>
+//           </div>
+//           <div style="text-align: center;">
+//             <div style="
+//               background-color: rgb(105, 135, 236);
+//               border-radius: 12px;
+//               padding: 15px 25px;
+//               width: 250px;
+//               box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+//             ">
+//               <div style="font-weight: bold;">[I]</div>
+//               <div>Does not fit</div>
+//             </div>
+//           </div>
+//         </div>`
+//     }
 
-  </div>`;
-  },
+//   </div>`;
+//   },
 
-  // Choices
-  choices: respondentIsMobile ? ['Fits', 'Does not fit'] : ['e', 'i'],
+//   // Choices
+//   choices: respondentIsMobile ? ['Fits', 'Does not fit'] : ['e', 'i'],
 
-  // Side-by-side BIG MOBILE BUTTONS
-  button_html: respondentIsMobile
-    ? (choice, index) => {
-        return `
-          <button style="
-            font-size: clamp(2rem, 6.0vw, 6.0rem);
-            font-weight: 600;
-            padding: 3vh 2vw;
-            border-radius: 2vw;
-            border: none;
-            background-color: ${index === 0 ? 'rgb(32, 150, 11)' : 'rgb(105, 135, 236)'};
-            color: white;
-            box-shadow: 0 0.5vw 1.5vw rgba(0,0,0,0.2);
-            cursor: pointer;
-            width: 40vw;
-          ">${choice}</button>`;
-      }
-    : undefined,
+//   // Side-by-side BIG MOBILE BUTTONS
+//   button_html: respondentIsMobile
+//     ? (choice, index) => {
+//         return `
+//           <button style="
+//             font-size: clamp(2rem, 6.0vw, 6.0rem);
+//             font-weight: 600;
+//             padding: 3vh 2vw;
+//             border-radius: 2vw;
+//             border: none;
+//             background-color: ${index === 0 ? 'rgb(32, 150, 11)' : 'rgb(105, 135, 236)'};
+//             color: white;
+//             box-shadow: 0 0.5vw 1.5vw rgba(0,0,0,0.2);
+//             cursor: pointer;
+//             width: 40vw;
+//           ">${choice}</button>`;
+//       }
+//     : undefined,
 
-  data: {
-    part: "pretest_single_implicit",
-    respondent_id: respondent_id,
-    img_src: jsPsych.timelineVariable('img_src'),
-    attribute: jsPsych.timelineVariable('attribute'),
-    category_name: jsPsych.timelineVariable('img_name'),
-    is_correct: jsPsych.timelineVariable('is_correct')
-  },
+//   data: {
+//     part: "pretest_single_implicit",
+//     respondent_id: respondent_id,
+//     img_src: jsPsych.timelineVariable('img_src'),
+//     attribute: jsPsych.timelineVariable('attribute'),
+//     category_name: jsPsych.timelineVariable('img_name'),
+//     is_correct: jsPsych.timelineVariable('is_correct')
+//   },
 
-  on_finish: function(data) {
-    let userSaysFits;
-    if (respondentIsMobile) {
-      userSaysFits = data.response === 0;
-    } else {
-      userSaysFits = data.response === 'e';
-    }
-    data.user_answer = userSaysFits ? "Fits" : "Does not fit";
-    data.correct_answer = data.is_correct ? "Fits" : "Does not fit";
-    data.accurate = (userSaysFits === data.is_correct);
-  }
-};
+//   on_finish: function(data) {
+//     let userSaysFits;
+//     if (respondentIsMobile) {
+//       userSaysFits = data.response === 0;
+//     } else {
+//       userSaysFits = data.response === 'e';
+//     }
+//     data.user_answer = userSaysFits ? "Fits" : "Does not fit";
+//     data.correct_answer = data.is_correct ? "Fits" : "Does not fit";
+//     data.accurate = (userSaysFits === data.is_correct);
+//   }
+// };
 
-const mobileBreakerTrial = {
-  type: jsPsychHtmlKeyboardResponse,
-  stimulus: '',
-  choices: "NO_KEYS",
-  trial_duration: 20,
-  data: { trial_category: 'mobile_breaker' },
-  on_finish: function(data){
-    // Optional: clear out fields so it's obvious to drop
-    data.trial_type = 'mobile_breaker';
-  }
-};
+// const mobileBreakerTrial = {
+//   type: jsPsychHtmlKeyboardResponse,
+//   stimulus: '',
+//   choices: "NO_KEYS",
+//   trial_duration: 20,
+//   data: { trial_category: 'mobile_breaker' },
+//   on_finish: function(data){
+//     // Optional: clear out fields so it's obvious to drop
+//     data.trial_type = 'mobile_breaker';
+//   }
+// };
 
 const categoryFit_flat = generateFlatTrials(category_fit_trials, respondent_id, "Single Category IAT");
-timeline.push(...categoryFit_flat);
+const singleTrialsWithCheck = categoryFit_flat.map(t => wrapTrialWithRTCheck(t));
+timeline.push(...singleTrialsWithCheck);
 
 
 
@@ -1019,7 +1117,10 @@ timeline: multi_pretest_intro});
 //Multiple Implicit Pretest Images Trial 
 //------------------------------------------------------------------------------------------------------
 const multi_pretest_flat = generateFlatMultiBrandTrials(pretest_trials_multiple, respondent_id, "Multiple Pretest");
-timeline.push(...multi_pretest_flat);
+const multipretestBlock = wrapPretestBlock(multi_pretest_flat, 7, "pretest_single_implicit");
+timeline.push(multipretestBlock);
+
+
 
 
 //-------------------------------------------------------------------------------------------------------------------
@@ -1076,7 +1177,8 @@ timeline.push({
 // Multiple Implicit Brand Test
 //------------------------------------------------------------------------------------------------------
 const multi_main_flat = generateFlatMultiBrandTrials(multi_brand_trials, respondent_id, "Multiple IAT");
-timeline.push(...multi_main_flat);
+const multiple_brand_trials_with_check = multi_main_flat.map(t => wrapTrialWithRTCheck(t));
+timeline.push(...multiple_brand_trials_with_check);
 
 
 timeline.push({
