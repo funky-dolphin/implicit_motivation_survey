@@ -14,7 +14,9 @@ const external_id = getQueryParam("id") || "UNKNOWN";
 
 
 
-const jsPsych = initJsPsych();
+const jsPsych = initJsPsych({
+  show_progress_bar: true,
+});
 //   {
 //   on_finish: function () {
 //     // jsPsych.data.get().localSave('csv', 'miat_results.csv');
@@ -397,11 +399,11 @@ const singleImplicitTrial = {
   <!-- IMAGE BOX -->
   <div style="
     background-color: rgb(216, 212, 212);
-    border-radius: 12px;
-    padding: 3vh 5vw;
-    margin-bottom: 4vh;
-    width: 90%;
-    max-width: 800px;
+    border-radius: 8px;
+    padding: 1.5vh 2.5vw;
+    margin-bottom: 2vh;
+    width: 80%;
+    max-width: 700px;
     text-align: center;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   ">
@@ -420,11 +422,11 @@ const singleImplicitTrial = {
   <!-- ATTRIBUTE BOX -->
   <div style="
     background-color: #ffffff;
-    border-radius: 12px;
-    padding: 3vh 5vw;
-    margin-bottom: 4vh;
-    width: 90%;
-    max-width: 500px;
+    border-radius: 10px;
+    padding: 1.5vh 2.5vw;
+    margin-bottom: 3vh;
+    width: 80%;
+    max-width: 400px;
     text-align: center;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   ">
@@ -433,7 +435,7 @@ const singleImplicitTrial = {
       font-weight: 700; 
       color: #111; 
       margin: 0;
-      line-height: 1.2;
+      line-height: 1;
       text-align: center;
       word-wrap: break-word;
       overflow-wrap: break-word;
@@ -538,15 +540,76 @@ const mobileBreakerTrial = {
   }
 };
 
-const singleImplicitTimeline = respondentIsMobile 
-  ? [singleImplicitTrial, mobileBreakerTrial]
-  : [singleImplicitTrial];
+// const singleImplicitTimeline = respondentIsMobile 
+//   ? [singleImplicitTrial, mobileBreakerTrial]
+//   : [singleImplicitTrial];
 
-timeline.push({
-  timeline: singleImplicitTimeline,
+// timeline.push({
+//   timeline: singleImplicitTimeline,
+//   timeline_variables: pretest_trials,
+//   randomize_order: true
+// });
+//----------------------------------------------RETRY BLOCK-------------------------------------------------------------------------------------------------------------------------------------------------------------------
+// Track whether to retry
+let wantsToRetry = false;
+
+// 🔁 Get last valid pretest
+function getLastValidPretestRun() {
+  return jsPsych.data.get()
+    .filter({ part: "pretest_single_implicit" })
+    .filter(trial => trial.skip_upload !== true)
+    .last(pretest_trials.length);
+}
+
+// 🧪 Pretest block (mobile/desktop aware)
+const pretestBlock = {
+  timeline: respondentIsMobile 
+    ? [singleImplicitTrial, mobileBreakerTrial]
+    : [singleImplicitTrial],
   timeline_variables: pretest_trials,
-  randomize_order: true
-});
+  randomize_order: true,
+};
+
+// ⏸️ Break screen after every pretest run — shows count but neutral
+const postPretestBreakScreen = {
+  type: jsPsychHtmlKeyboardResponse,
+  stimulus: function () {
+    const lastRun = getLastValidPretestRun();
+    const incorrect = lastRun.filter({ accurate: false }).count();
+
+    return `
+      <div style="text-align:center">
+        <p>You just completed the pre-test.</p>
+        <p>You got <strong>${incorrect}</strong> wrong.</p>
+        <p>If you got 3 or more wrong, you will have to try again.</p>
+        <p>If you got less than 3 wrong, you will proceed to the main test.</p>
+        <p>Press any key to continue.</p>
+      </div>
+    `;
+  },
+  choices: "ALL_KEYS"
+};
+
+// 🔁 Loop the pretest block
+const fullPretestLoop = {
+  timeline: [pretestBlock, postPretestBreakScreen],
+  loop_function: function () {
+    const lastRun = getLastValidPretestRun();
+    const incorrect = lastRun.filter({ accurate: false }).count();
+
+    if (incorrect >= 3) {
+      lastRun.values().forEach(trial => trial.skip_upload = true);  // mark to exclude
+      return true;  // retry loop
+    }
+
+    return false;  // continue to main experiment
+  }
+};
+
+timeline.push(fullPretestLoop);
+
+
+
 
 
 //-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
