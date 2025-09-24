@@ -2,7 +2,7 @@ function isMobileDevice() {
   return /Android|iPhone|iPad|iPod|Mobile|Tablet/i.test(navigator.userAgent);
 }
 
-const minRT = 300;
+const minRT = 30;
 const maxRT = 3000;
 
 const respondentIsMobile = isMobileDevice();
@@ -143,11 +143,110 @@ function generateFlatTrials(trialVars, respondentId, partLabel) {
 }
 //----------------------------------------------------------------------------------------------------------------------------------------------
 //--------------------------------------------Generate Flat MIA Trials TRIAL AND TEST--------------------------------------------------------------------------------------------------------------
-function generateFlatMultiBrandTrials(trialVars, respondentId, partLabel) {
+// function generateFlatMultiBrandTrials(trialVars, respondentId, partLabel) {
+//   const trials = [];
+
+//   trialVars.forEach(vars => {
+//     // Support both shapes
+//     const imageNames = vars.image_names || vars.brand_options;
+//     const imagePaths = vars.image_paths || vars.brand_images;
+
+//     const trial = {
+//       type: respondentIsMobile ? jsPsychHtmlButtonResponse : jsPsychHtmlKeyboardResponse,
+//       stimulus: () => {
+//         const attr = vars.attribute;
+//         const brandImgs = imagePaths;
+//         const brandKeys = ['A', 'S', 'K', 'L'];
+//         const brandKeyColors = [
+//           "rgb(32, 150, 11)",
+//           "rgb(60, 145, 237)",
+//           "rgb(237, 80, 80)",
+//           "rgb(236, 221, 57)"
+//         ];
+
+//         if (!respondentIsMobile) {
+//           const imageBlocks = brandImgs.map((img, i) => `
+//             <div style="background:#fff; border-radius:12px; padding:25px; width:220px; 
+//                         text-align:center; box-shadow:0 6px 16px rgba(0,0,0,0.1); 
+//                         display:flex; flex-direction:column; align-items:center; gap:15px;">
+//               <img src="${img}" height="150" style="object-fit:contain;" />
+//               <div style="background:${brandKeyColors[i]}; border-radius:8px; padding:8px 10px; 
+//                           font-weight:bold; font-family:'Courier New', monospace; font-size:18px;">
+//                 [${brandKeys[i]}]
+//               </div>
+//             </div>`).join("");
+
+//           return `
+//             <div style="display:flex; flex-direction:column; align-items:center; padding:4vh 4vw; width:100%;">
+//               <div style="background:#ddd; border-radius:16px; padding:3vh 5vw; max-width:700px; text-align:center; margin-bottom:4vh;">
+//                 <p style="font-size:1.5rem; color:#666;">Which image best represents:</p>
+//                 <p style="font-size:2.2rem; font-weight:700; color:#111;">${attr}</p>
+//               </div>
+//               <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:60px; max-width:1100px;">
+//                 ${imageBlocks}
+//               </div>
+//             </div>`;
+//         }
+
+//         // Mobile
+//         return `
+//           <div style="text-align:center; padding:4vh 5vw;">
+//             <p style="font-size:1.2rem; color:#999;">Which brand best represents:</p>
+//             <p style="font-size:1.6rem; font-weight:700; color:#111; margin-bottom:4vh;">${attr}</p>
+//           </div>`;
+//       },
+//       choices: respondentIsMobile ? ['0', '1', '2', '3'] : ['a', 's', 'k', 'l'],
+//       button_html: respondentIsMobile
+//         ? (choice, index) => {
+//             const img = imagePaths[index];
+//             return `
+//               <button style="background:none; border:none; width:47%; aspect-ratio:1/1; 
+//                              border-radius:12px; box-shadow:0 4px 12px rgba(0,0,0,0.15); overflow:hidden;">
+//                 <img src="${img}" style="width:100%; height:100%; object-fit:contain;" />
+//               </button>`;
+//           }
+//         : undefined,
+//       data: {
+//         part: partLabel,
+//         respondent_id: respondentId,
+//         attribute: vars.attribute,
+//         image_names: imageNames,
+//         image_paths: imagePaths,
+//         correct_image: vars.correct_image || null
+//       },
+//       on_finish: function(data) {
+//         if (respondentIsMobile) {
+//           data.selected_image = imageNames[data.response];
+//         } else {
+//           const keyToIndex = { 'a': 0, 's': 1, 'k': 2, 'l': 3 };
+//           const idx = keyToIndex[data.response];
+//           data.selected_image = imageNames[idx];
+//         }
+//         if (vars.correct_image) {
+//           data.correct = data.selected_image === vars.correct_image;
+//         }
+//       }
+//     };
+
+//     trials.push(trial);
+
+//     if (respondentIsMobile) {
+//       trials.push({
+//         type: jsPsychHtmlKeyboardResponse,
+//         stimulus: '',
+//         choices: "NO_KEYS",
+//         trial_duration: 20,
+//         data: { trial_category: 'mobile_breaker' }
+//       });
+//     }
+//   });
+
+//   return trials;
+// }
+function generateFlatMultiBrandTrials(trialVars, respondentId, partLabel, isPretest=false) {
   const trials = [];
 
   trialVars.forEach(vars => {
-    // Support both shapes
     const imageNames = vars.image_names || vars.brand_options;
     const imagePaths = vars.image_paths || vars.brand_images;
 
@@ -195,7 +294,7 @@ function generateFlatMultiBrandTrials(trialVars, respondentId, partLabel) {
             <p style="font-size:1.6rem; font-weight:700; color:#111; margin-bottom:4vh;">${attr}</p>
           </div>`;
       },
-      choices: respondentIsMobile ? ['0', '1', '2', '3'] : ['a', 's', 'k', 'l'],
+      choices: respondentIsMobile ? ['0','1','2','3'] : ['a','s','k','l'],
       button_html: respondentIsMobile
         ? (choice, index) => {
             const img = imagePaths[index];
@@ -212,20 +311,29 @@ function generateFlatMultiBrandTrials(trialVars, respondentId, partLabel) {
         attribute: vars.attribute,
         image_names: imageNames,
         image_paths: imagePaths,
-        correct_image: vars.correct_image || null
+        // ✅ preserve correct_image only for pretest
+        correct_image: isPretest ? vars.correct_image : null
       },
       on_finish: function(data) {
+        let selectedImage;
+
         if (respondentIsMobile) {
-          data.selected_image = imageNames[data.response];
+          selectedImage = data.image_names[data.response];
         } else {
           const keyToIndex = { 'a': 0, 's': 1, 'k': 2, 'l': 3 };
           const idx = keyToIndex[data.response];
-          data.selected_image = imageNames[idx];
+          selectedImage = data.image_names[idx];
         }
+
+        data.selected_image = selectedImage;
+
+        // ✅ Mark accuracy for pretests
         if (vars.correct_image) {
-          data.correct = data.selected_image === vars.correct_image;
+          data.correct_image = vars.correct_image;  // make sure it stays visible
+          data.accurate = (selectedImage === vars.correct_image);
         }
       }
+
     };
 
     trials.push(trial);
@@ -1116,7 +1224,7 @@ timeline: multi_pretest_intro});
 //------------------------------------------------------------------------------------------------------
 //Multiple Implicit Pretest Images Trial 
 //------------------------------------------------------------------------------------------------------
-const multi_pretest_flat = generateFlatMultiBrandTrials(pretest_trials_multiple, respondent_id, "Multiple Pretest");
+const multi_pretest_flat = generateFlatMultiBrandTrials(pretest_trials_multiple, respondent_id, "pretest_multiple_implicit", true);
 const multipretestBlock = wrapPretestBlock(multi_pretest_flat, 7, "pretest_single_implicit");
 timeline.push(multipretestBlock);
 
