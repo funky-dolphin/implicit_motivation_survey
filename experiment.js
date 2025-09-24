@@ -2,7 +2,7 @@ function isMobileDevice() {
   return /Android|iPhone|iPad|iPod|Mobile|Tablet/i.test(navigator.userAgent);
 }
 
-const minRT = 30;
+const minRT = 300;
 const maxRT = 3000;
 
 const respondentIsMobile = isMobileDevice();
