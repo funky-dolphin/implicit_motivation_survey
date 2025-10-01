@@ -355,141 +355,249 @@ function generateFlatMultiBrandTrials(trialVars, respondentId, partLabel, isPret
   //--------------------------------------------Generate Flat Pre Test--------------------------------------------------------------------------------------------------------------
 
 // 🔧 Generate pretest trials as flat array
-function generatePretestTrials(images, attributes, respondentId) {
+// function generatePretestTrials(images, attributes, respondentId) {
+//   const trials = [];
+//   const trialPairs = [];
+
+
+//   images.forEach(img => {
+//     attributes.forEach(attr => {
+//       // Build a trial object directly, not timelineVariables
+//       const trial = {
+//         type: respondentIsMobile ? jsPsychHtmlButtonResponse : jsPsychHtmlKeyboardResponse,
+//         stimulus: () => {
+//           return `
+//             <div style="display:flex; flex-direction:column; align-items:center; justify-content:center; height:100%; width:100%;">
+//               <!-- IMAGE BOX -->
+//               <div style="
+//                 background-color: rgb(216,212,212);
+//                 border-radius: 8px;
+//                 padding: 1.5vh 2.5vw;
+//                 margin-bottom: 2vh;
+//                 width: 80%;
+//                 max-width: 700px;
+//                 text-align: center;
+//                 box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+//               ">
+//                 <p style="font-size: clamp(1rem, 2.5vw, 1.3rem); color: #999; margin-bottom: 1vh;">Stim</p>
+//                 <img src="${img.img}" alt="${img.name}" style="
+//                   width:auto; max-width:100%;
+//                   height: clamp(30vh, 50vh, 60vh);
+//                   object-fit:contain;
+//                   margin-bottom:1vh;
+//                 "/>
+//               </div>
+
+//               <!-- ATTRIBUTE BOX -->
+//               <div style="
+//                 background-color: #fff;
+//                 border-radius: 10px;
+//                 padding: 1.5vh 2.5vw;
+//                 margin-bottom: 3vh;
+//                 width: 80%;
+//                 max-width: 400px;
+//                 text-align:center;
+//                 box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+//               ">
+//                 <p style="font-size: clamp(2rem, 5.5vw, 4rem);
+//                           font-weight: 700;
+//                           color: #111;
+//                           margin: 0;
+//                           line-height:1;">
+//                   ${attr}
+//                 </p>
+//               </div>
+
+//               ${
+//                 respondentIsMobile
+//                   ? ''
+//                   : `
+//                     <div style="display:flex; justify-content:center; gap:120px; font-size:20px;">
+//                       <div style="text-align:center;">
+//                         <div style="background-color:rgb(32,150,11); border-radius:12px; padding:15px 25px; width:250px;">
+//                           <div style="font-weight:bold;">[E]</div>
+//                           <div>Fits</div>
+//                         </div>
+//                       </div>
+//                       <div style="text-align:center;">
+//                         <div style="background-color:rgb(105,135,236); border-radius:12px; padding:15px 25px; width:250px;">
+//                           <div style="font-weight:bold;">[I]</div>
+//                           <div>Does not fit</div>
+//                         </div>
+//                       </div>
+//                     </div>
+//                   `
+//               }
+//             </div>
+//           `;
+//         },
+//         choices: respondentIsMobile ? ['Fits', 'Does not fit'] : ['e', 'i'],
+//         button_html: respondentIsMobile
+//           ? (choice, index) => `
+//               <button style="
+//                 font-size: clamp(2rem, 6vw, 6rem);
+//                 font-weight:600;
+//                 padding:3vh 2vw;
+//                 border-radius:2vw;
+//                 border:none;
+//                 background-color:${index===0 ? 'rgb(32,150,11)' : 'rgb(105,135,236)'};
+//                 color:white;
+//                 box-shadow:0 0.5vw 1.5vw rgba(0,0,0,0.2);
+//                 width:40vw;
+//               ">${choice}</button>`
+//           : undefined,
+//         data: {
+//           part: "pretest_single_implicit",
+//           respondent_id: respondentId,
+//           img_src: img.img,
+//           category_name: img.name,
+//           attribute: attr,
+//           is_correct: img.correct.includes(attr)
+//         },
+//         on_finish: function (data) {
+//           let userSaysFits;
+//           if (respondentIsMobile) {
+//             userSaysFits = data.response === 0;
+//           } else {
+//             userSaysFits = data.response === 'e';
+//           }
+//           data.user_answer = userSaysFits ? "Fits" : "Does not fit";
+//           data.correct_answer = data.is_correct ? "Fits" : "Does not fit";
+//           data.accurate = (userSaysFits === data.is_correct);
+//         },
+//         show_progress_bar: true  // ✅ progress bar updates every trial
+//       };
+
+//      const pair = [trial];
+
+//       if (respondentIsMobile) {
+//         pair.push({
+//           type: jsPsychHtmlKeyboardResponse,
+//           stimulus: '',
+//           choices: "NO_KEYS",
+//           trial_duration: 20,
+//           data: { trial_category: 'mobile_breaker' }
+//         });
+//       }
+
+//       trialPairs.push(pair);
+//     });
+//   });
+
+//   // Shuffle the trial+breaker pairs
+//   return jsPsych.randomization.shuffle(trialPairs).flat();
+// }
+
+// // ✅ Build once
+// const pretest_trials = generatePretestTrials(pretest_images, pretest_attributes, respondent_id);
+
+function generatePretestTrials(images, attributes, respondentId, mode="balanced") {
+  // mode can be "correct_only", "balanced", or "extended"
   const trials = [];
   const trialPairs = [];
 
-
   images.forEach(img => {
-    attributes.forEach(attr => {
-      // Build a trial object directly, not timelineVariables
-      const trial = {
-        type: respondentIsMobile ? jsPsychHtmlButtonResponse : jsPsychHtmlKeyboardResponse,
-        stimulus: () => {
-          return `
-            <div style="display:flex; flex-direction:column; align-items:center; justify-content:center; height:100%; width:100%;">
-              <!-- IMAGE BOX -->
-              <div style="
-                background-color: rgb(216,212,212);
-                border-radius: 8px;
-                padding: 1.5vh 2.5vw;
-                margin-bottom: 2vh;
-                width: 80%;
-                max-width: 700px;
-                text-align: center;
-                box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-              ">
-                <p style="font-size: clamp(1rem, 2.5vw, 1.3rem); color: #999; margin-bottom: 1vh;">Stim</p>
-                <img src="${img.img}" alt="${img.name}" style="
-                  width:auto; max-width:100%;
-                  height: clamp(30vh, 50vh, 60vh);
-                  object-fit:contain;
-                  margin-bottom:1vh;
-                "/>
-              </div>
+    // Correct attributes
+    const correctAttrs = img.correct;
 
-              <!-- ATTRIBUTE BOX -->
-              <div style="
-                background-color: #fff;
-                border-radius: 10px;
-                padding: 1.5vh 2.5vw;
-                margin-bottom: 3vh;
-                width: 80%;
-                max-width: 400px;
-                text-align:center;
-                box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-              ">
-                <p style="font-size: clamp(2rem, 5.5vw, 4rem);
-                          font-weight: 700;
-                          color: #111;
-                          margin: 0;
-                          line-height:1;">
-                  ${attr}
-                </p>
-              </div>
+    if (mode === "correct_only") {
+      // Only correct attributes
+      correctAttrs.forEach(attr => {
+        trialPairs.push(makeTrial(img, attr, respondentId));
+      });
 
-              ${
-                respondentIsMobile
-                  ? ''
-                  : `
-                    <div style="display:flex; justify-content:center; gap:120px; font-size:20px;">
-                      <div style="text-align:center;">
-                        <div style="background-color:rgb(32,150,11); border-radius:12px; padding:15px 25px; width:250px;">
-                          <div style="font-weight:bold;">[E]</div>
-                          <div>Fits</div>
-                        </div>
-                      </div>
-                      <div style="text-align:center;">
-                        <div style="background-color:rgb(105,135,236); border-radius:12px; padding:15px 25px; width:250px;">
-                          <div style="font-weight:bold;">[I]</div>
-                          <div>Does not fit</div>
-                        </div>
-                      </div>
-                    </div>
-                  `
-              }
-            </div>
-          `;
-        },
-        choices: respondentIsMobile ? ['Fits', 'Does not fit'] : ['e', 'i'],
-        button_html: respondentIsMobile
-          ? (choice, index) => `
-              <button style="
-                font-size: clamp(2rem, 6vw, 6rem);
-                font-weight:600;
-                padding:3vh 2vw;
-                border-radius:2vw;
-                border:none;
-                background-color:${index===0 ? 'rgb(32,150,11)' : 'rgb(105,135,236)'};
-                color:white;
-                box-shadow:0 0.5vw 1.5vw rgba(0,0,0,0.2);
-                width:40vw;
-              ">${choice}</button>`
-          : undefined,
-        data: {
-          part: "pretest_single_implicit",
-          respondent_id: respondentId,
-          img_src: img.img,
-          category_name: img.name,
-          attribute: attr,
-          is_correct: img.correct.includes(attr)
-        },
-        on_finish: function (data) {
-          let userSaysFits;
-          if (respondentIsMobile) {
-            userSaysFits = data.response === 0;
-          } else {
-            userSaysFits = data.response === 'e';
-          }
-          data.user_answer = userSaysFits ? "Fits" : "Does not fit";
-          data.correct_answer = data.is_correct ? "Fits" : "Does not fit";
-          data.accurate = (userSaysFits === data.is_correct);
-        },
-        show_progress_bar: true  // ✅ progress bar updates every trial
-      };
+    } else {
+      // For balanced/extended, include distractors
+      const distractors = attributes.filter(a => !correctAttrs.includes(a));
+      const numDistractors = (mode === "balanced") ? 1 : 2;
 
-     const pair = [trial];
+      correctAttrs.forEach(attr => {
+        // Always include the correct one
+        trialPairs.push(makeTrial(img, attr, respondentId));
+      });
 
-      if (respondentIsMobile) {
-        pair.push({
-          type: jsPsychHtmlKeyboardResponse,
-          stimulus: '',
-          choices: "NO_KEYS",
-          trial_duration: 20,
-          data: { trial_category: 'mobile_breaker' }
-        });
-      }
-
-      trialPairs.push(pair);
-    });
+      // Add random distractors
+      const sampled = jsPsych.randomization.sampleWithoutReplacement(distractors, numDistractors);
+      sampled.forEach(attr => {
+        trialPairs.push(makeTrial(img, attr, respondentId));
+      });
+    }
   });
 
-  // Shuffle the trial+breaker pairs
+  // Shuffle and flatten (mobile breaker support stays the same)
   return jsPsych.randomization.shuffle(trialPairs).flat();
 }
 
-// ✅ Build once
-const pretest_trials = generatePretestTrials(pretest_images, pretest_attributes, respondent_id);
+function makeTrial(img, attr, respondentId) {
+  const trial = {
+    type: respondentIsMobile ? jsPsychHtmlButtonResponse : jsPsychHtmlKeyboardResponse,
+    stimulus: () => `
+     
+  <div style="display:flex; flex-direction:column; align-items:center; justify-content:center; height:70vh;">
+    <!-- IMAGE -->
+    <div style="background:#ddd; border-radius:12px; padding:3vh 4vw; margin-bottom:4vh; text-align:center;">
+      <img src="${img.img}" alt="${img.name}" style="max-height:40vh; object-fit:contain;" />
+    </div>
+
+    <!-- ATTRIBUTE -->
+    <div style="background:#fff; border-radius:12px; padding:3vh 4vw; margin-bottom:4vh; text-align:center; box-shadow:0 4px 12px rgba(0,0,0,0.1);">
+      <p style="font-size:2rem; font-weight:700; color:#111;">${attr}</p>
+    </div>
+
+    <!-- DESKTOP FAKE BUTTONS -->
+    <div style="display:flex; justify-content:center; gap:120px; font-size:20px;">
+      <div style="text-align:center;">
+        <div style="background:rgb(32,150,11); border-radius:12px; padding:15px 25px; width:200px; box-shadow:0 4px 12px rgba(0,0,0,0.1);">
+          <div style="font-weight:bold;">[E]</div>
+          <div>Fits</div>
+        </div>
+      </div>
+      <div style="text-align:center;">
+        <div style="background:rgb(105,135,236); border-radius:12px; padding:15px 25px; width:200px; box-shadow:0 4px 12px rgba(0,0,0,0.1);">
+          <div style="font-weight:bold;">[I]</div>
+          <div>Does not fit</div>
+        </div>
+      </div>
+    </div>
+  </div>
+`  ,  choices: respondentIsMobile ? ['Fits', 'Does not fit'] : ['e', 'i'],
+
+    button_html: respondentIsMobile ? (choice, index) => `
+      <button style="
+        font-size:clamp(2rem,6vw,6rem);
+        font-weight:600;
+        padding:3vh 2vw;
+        border-radius:2vw;
+        border:none;
+        background-color:${index===0 ? 'rgb(32,150,11)' : 'rgb(105,135,236)'};
+        color:white;
+        width:40vw;
+        box-shadow:0 0.5vw 1.5vw rgba(0,0,0,0.2);
+      ">${choice}</button>` : undefined,
+
+    data: {
+      part: "pretest_single_implicit",
+      respondent_id: respondentId,
+      img_src: img.img,
+      category_name: img.name,
+      attribute: attr,
+      is_correct: img.correct.includes(attr)
+    },
+    on_finish: function(data) {
+      let userSaysFits;
+      if (respondentIsMobile) {
+        userSaysFits = data.response === 0;
+      } else {
+        userSaysFits = data.response === 'e';
+      }
+      data.user_answer = userSaysFits ? "Fits" : "Does not fit";
+      data.correct_answer = data.is_correct ? "Fits" : "Does not fit";
+      data.accurate = (userSaysFits === data.is_correct);
+    }
+  };
+return trial};
+
+const pretest_trials = generatePretestTrials(pretest_images, pretest_attributes, respondent_id, 'balanced');
 
 // ✅ Flatten directly into main timeline
 
@@ -909,7 +1017,7 @@ timeline.push({
 //-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 //--------ADDING SINGLE PRE-TEST TRIALS TO TIMELINE------------------------------------------------------------------------------------------------
 
-const pretestBlock = wrapPretestBlock(pretest_trials, 15 , "pretest_single_implicit");
+const pretestBlock = wrapPretestBlock(pretest_trials, 6 , "pretest_single_implicit");
 timeline.push(pretestBlock);
 //------------------------------------------------------------------------------------------------------
 
