@@ -38,7 +38,301 @@ jsPsych.data.addProperties({ external_id: external_id });
 const respondent_id = jsPsych.randomization.randomID(10);
 const timeline = [];
 
-///--------------------------------------------------GENERATE FLAT SIAT TEST--------------------------------------------------------------------------------------
+
+///--------------------------------------------------ATTENTION QUESTIONS--------------------------------------------------------------------------------------------------
+///-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+const attentionCheck1 = {
+  type:respondentIsMobile ? jsPsychHtmlButtonResponse : jsPsychHtmlKeyboardResponse,
+  stimulus: () => {
+    return ` <div style="display:flex; flex-direction:column; align-items:center; justify-content:center; height:70vh;">
+    <p style="font-size:3rem; text-align:center; font-weight:bold;">What is 3 x 2</p>
+    ${respondentIsMobile 
+      ? ''
+      :`<div style="display:flex; justify-content:center; gap:120px; font-size:20px;">
+                <div style="text-align:center;">
+                  <div style="background:rgb(32,150,11); border-radius:12px; padding:15px 25px; width:200px; box-shadow:0 4px 12px rgba(0,0,0,0.1);">
+                    <div style="font-weight:bold; padding:8px 12px">[E]</div>
+                    <div style="font-size: 2rem; font-weight:bold">6</div>
+                  </div>
+                </div>
+                <div style="text-align:center;">
+                  <div style="background:rgb(105,135,236); border-radius:12px; padding:15px 25px; width:200px; box-shadow:0 4px 12px rgba(0,0,0,0.1);">
+                    <div style="font-weight:bold; padding: 8px 12px">[I]</div>
+                    <div style="font-size:2rem; font-weight: bold"> 9 </div>
+                  </div>
+                </div>
+              </div>
+            ` }`
+  },
+  choices: respondentIsMobile
+    ? ['6', '9']
+    : ['e','i'],
+  button_html: respondentIsMobile
+  ? (choice, index) => `
+        <button style="
+          font-size: clamp(1.5rem, 5vw, 2.5rem);
+          font-weight: 600;
+          padding: 2vh 2vw;
+          border-radius: 1vw;
+          border: none;
+          margin: 1vh;
+          background-color: ${index === 0 ? 'rgb(32,150,11)' : 'rgb(105,135,236)'};
+          color: white;
+          box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+          width: 30vw;
+        ">${choice}</button>`
+    : undefined,
+
+    data:{
+      part:"attention_check",
+      question: "3 x 2",
+      correct_answer: "6"
+    },
+    on_finish: function(data) {
+      if (respondentIsMobile){
+        data.user_answer = data.response !== null ? data.choices[data.response] : null;
+      } else {
+        const keyToAnswer = {'e': '6', 'i': '9'};
+        data.user_answer = keyToAnswer[data.response];
+      }
+      data.accurate = (data.user_answer === data.correct_answer);
+      }
+    };
+
+const attentionCheck2 = {
+  type:respondentIsMobile ? jsPsychHtmlButtonResponse : jsPsychHtmlKeyboardResponse,
+  stimulus: () => {
+    return ` <div style="display:flex; flex-direction:column; align-items:center; justify-content:center; height:70vh;">
+    <p style="font-size:3rem; text-align:center; font-weight:bold;">What is 11 - 3</p>
+    ${respondentIsMobile 
+      ? ''
+      :`<div style="display:flex; justify-content:center; gap:120px; font-size:20px;">
+                <div style="text-align:center;">
+                  <div style="background:rgb(32,150,11); border-radius:12px; padding:15px 25px; width:200px; box-shadow:0 4px 12px rgba(0,0,0,0.1);">
+                    <div style="font-weight:bold; padding:8px 12px">[E]</div>
+                    <div style="font-size: 2rem; font-weight:bold">6</div>
+                  </div>
+                </div>
+                <div style="text-align:center;">
+                  <div style="background:rgb(105,135,236); border-radius:12px; padding:15px 25px; width:200px; box-shadow:0 4px 12px rgba(0,0,0,0.1);">
+                    <div style="font-weight:bold; padding: 8px 12px">[I]</div>
+                    <div style="font-size:2rem; font-weight: bold"> 8 </div>
+                  </div>
+                </div>
+              </div>
+            ` }`
+  },
+  choices: respondentIsMobile
+    ? ['6', '8']
+    : ['e','i'],
+  button_html: respondentIsMobile
+  ? (choice, index) => `
+        <button style="
+          font-size: clamp(1.5rem, 5vw, 2.5rem);
+          font-weight: 600;
+          padding: 2vh 2vw;
+          border-radius: 1vw;
+          border: none;
+          margin: 1vh;
+          background-color: ${index === 0 ? 'rgb(32,150,11)' : 'rgb(105,135,236)'};
+          color: white;
+          box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+          width: 30vw;
+        ">${choice}</button>`
+    : undefined,
+
+    data:{
+      part:"attention_check",
+      question: "11 - 3",
+      correct_answer: "8"
+    },
+    on_finish: function(data) {
+      if (respondentIsMobile){
+        data.user_answer = data.response !== null ? data.choices[data.response] : null;
+      } else {
+        const keyToAnswer = {'e': '6', 'i': '8'};
+        data.user_answer = keyToAnswer[data.response];
+      }
+      data.accurate = (data.user_answer === data.correct_answer);
+      }
+    };
+
+const attentionCheck3 = {
+  type: respondentIsMobile ? jsPsychHtmlButtonResponse : jsPsychHtmlKeyboardResponse,
+  stimulus: () => {
+  return `
+    <div style="display:flex; flex-direction:column; align-items:center; justify-content:center; height:70vh;">
+      <p style="font-size:3rem; text-align:center; font-weight:bold; margin-bottom:4vh;">What is 5 + 7?</p>
+      
+      ${respondentIsMobile ? '' : `
+        <div style="
+          display:grid; 
+          grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+          gap: 40px; 
+          justify-items:center;
+          max-width:900px;
+          width:100%;
+          margin:0 auto;
+        ">
+          <div style="background:rgb(32,150,11); border-radius:12px; padding:20px; box-shadow:0 4px 12px rgba(0,0,0,0.1); text-align:center;">
+            <div style="font-weight:bold; margin-bottom:8px;">[A]</div>
+            <div style="font-size:1.8rem; font-weight:bold;">10</div>
+          </div>
+          <div style="background:rgb(60,145,237); border-radius:12px; padding:20px; box-shadow:0 4px 12px rgba(0,0,0,0.1); text-align:center;">
+            <div style="font-weight:bold; margin-bottom:8px;">[S]</div>
+            <div style="font-size:1.8rem; font-weight:bold;">11</div>
+          </div>
+          <div style="background:rgb(237,80,80); border-radius:12px; padding:20px; box-shadow:0 4px 12px rgba(0,0,0,0.1); text-align:center;">
+            <div style="font-weight:bold; margin-bottom:8px;">[K]</div>
+            <div style="font-size:1.8rem; font-weight:bold;">12</div>
+          </div>
+          <div style="background:rgb(236,221,57); border-radius:12px; padding:20px; box-shadow:0 4px 12px rgba(0,0,0,0.1); text-align:center;">
+            <div style="font-weight:bold; margin-bottom:8px;">[L]</div>
+            <div style="font-size:1.8rem; font-weight:bold;">13</div>
+          </div>
+        </div>
+      `}
+    </div>
+  `;
+},
+
+
+  choices: respondentIsMobile
+    ? ['10', '11', '12', '13']
+    : ['a','s','k','l'],
+
+  button_html: respondentIsMobile
+    ? (choice, index) => {
+        const colors = [
+          "rgb(32,150,11)",   // green
+          "rgb(60,145,237)",  // blue
+          "rgb(237,80,80)",   // red
+          "rgb(236,221,57)"   // yellow
+        ];
+        return `
+          <button style="
+            font-size: clamp(1.5rem, 5vw, 2.5rem);
+            font-weight: 600;
+            padding: 2vh 2vw;
+            border-radius: 1vw;
+            border: none;
+            margin: 1vh;
+            background-color: ${colors[index]};
+            color: white;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            width: 40vw;
+          ">${choice}</button>`;
+      }
+    : undefined,
+
+  data: {
+    part: "attention_check",
+    question: "5+7",
+    correct_answer: "12"
+  },
+
+  on_finish: function(data) {
+    if (respondentIsMobile) {
+      data.user_answer = data.response !== null ? data.choices[data.response] : null;
+    } else {
+      const keyToAnswer = { 'a': '10', 's': '11', 'k': '12', 'l': '13' };
+      data.user_answer = keyToAnswer[data.response];
+    }
+    data.accurate = (data.user_answer === data.correct_answer);
+  }
+};
+
+
+const attentionCheck4 = {
+  type: respondentIsMobile ? jsPsychHtmlButtonResponse : jsPsychHtmlKeyboardResponse,
+  stimulus: () => {
+  return `
+    <div style="display:flex; flex-direction:column; align-items:center; justify-content:center; height:70vh;">
+      <p style="font-size:3rem; text-align:center; font-weight:bold; margin-bottom:4vh;">What is 4 × 6?</p>
+      
+      ${respondentIsMobile ? '' : `
+        <div style="
+          display:grid; 
+          grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+          gap: 40px; 
+          justify-items:center;
+          max-width:900px;
+          width:100%;
+          margin:0 auto;
+        ">
+          <div style="background:rgb(32,150,11); border-radius:12px; padding:20px; box-shadow:0 4px 12px rgba(0,0,0,0.1); text-align:center;">
+            <div style="font-weight:bold; margin-bottom:8px;">[A]</div>
+            <div style="font-size:1.8rem; font-weight:bold;">18</div>
+          </div>
+          <div style="background:rgb(60,145,237); border-radius:12px; padding:20px; box-shadow:0 4px 12px rgba(0,0,0,0.1); text-align:center;">
+            <div style="font-weight:bold; margin-bottom:8px;">[S]</div>
+            <div style="font-size:1.8rem; font-weight:bold;">24</div>
+          </div>
+          <div style="background:rgb(237,80,80); border-radius:12px; padding:20px; box-shadow:0 4px 12px rgba(0,0,0,0.1); text-align:center;">
+            <div style="font-weight:bold; margin-bottom:8px;">[K]</div>
+            <div style="font-size:1.8rem; font-weight:bold;">36</div>
+          </div>
+          <div style="background:rgb(236,221,57); border-radius:12px; padding:20px; box-shadow:0 4px 12px rgba(0,0,0,0.1); text-align:center;">
+            <div style="font-weight:bold; margin-bottom:8px;">[L]</div>
+            <div style="font-size:1.8rem; font-weight:bold;">48</div>
+          </div>
+        </div>
+      `}
+    </div>
+  `;
+},
+
+
+  choices: respondentIsMobile
+    ? ['18', '24', '36', '48']
+    : ['a','s','k','l'],
+
+  button_html: respondentIsMobile
+    ? (choice, index) => {
+        const colors = [
+          "rgb(32,150,11)",   // green
+          "rgb(60,145,237)",  // blue
+          "rgb(237,80,80)",   // red
+          "rgb(236,221,57)"   // yellow
+        ];
+        return `
+          <button style="
+            font-size: clamp(1.5rem, 5vw, 2.5rem);
+            font-weight: 600;
+            padding: 2vh 2vw;
+            border-radius: 1vw;
+            border: none;
+            margin: 1vh;
+            background-color: ${colors[index]};
+            color: white;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            width: 40vw;
+          ">${choice}</button>`;
+      }
+    : undefined,
+
+  data: {
+    part: "attention_check",
+    question: "4 × 6",
+    correct_answer: "24"
+  },
+
+  on_finish: function(data) {
+    if (respondentIsMobile) {
+      data.user_answer = data.response !== null ? data.choices[data.response] : null;
+    } else {
+      const keyToAnswer = { 'a': '18', 's': '24', 'k': '36', 'l': '48' };
+      data.user_answer = keyToAnswer[data.response];
+    }
+    data.accurate = (data.user_answer === data.correct_answer);
+  }
+};
+
+
+///--------------------------------------------------ATTENTION QUESTIONS--------------------------------------------------------------------------------------------------
+///-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+///--------------------------------------------------GENERATE FLAT SIAT TEST-----------------------------------------------------------------------------------------------
 function generateFlatTrials(trialVars, respondentId, partLabel) {
   const trials = [];
 
@@ -265,35 +559,63 @@ function generateFlatMultiBrandTrials(trialVars, respondentId, partLabel, isPret
 
         if (!respondentIsMobile) {
           const imageBlocks = brandImgs.map((img, i) => `
-            <div style="background:#fff; border-radius:12px; padding:25px; width:220px; 
-                        text-align:center; box-shadow:0 6px 16px rgba(0,0,0,0.1); 
-                        display:flex; flex-direction:column; align-items:center; gap:15px;">
-              <img src="${img}" height="150" style="object-fit:contain;" />
-              <div style="background:${brandKeyColors[i]}; border-radius:8px; padding:8px 10px; 
-                          font-weight:bold; font-family:'Courier New', monospace; font-size:18px;">
-                [${brandKeys[i]}]
-              </div>
-            </div>`).join("");
+    <div
+      style="
+        background:#fff;
+        border-radius:12px;
+        padding:20px;
+        width:clamp(180px, 22vw, 240px);        /* fluid card width */
+        text-align:center;
+        box-shadow:0 6px 16px rgba(0,0,0,0.1);
+        display:flex; flex-direction:column; align-items:center; gap:12px;
+      ">
+      <img
+        src="${img}"
+        style="
+          width:100%; height:auto;               /* responsive image */
+          aspect-ratio:1/1; object-fit:contain;  /* keeps it neat at any size */
+        "
+      />
+      <div
+        style="
+          background:${brandKeyColors[i]};
+          border-radius:8px; padding:8px 10px;
+          font-weight:bold; font-family:'Courier New', monospace; font-size:18px;
+        ">
+        [${brandKeys[i]}]
+      </div>
+    </div>
+  `).join("");
 
-          return `
-            <div style="display:flex; flex-direction:column; align-items:center; padding:4vh 4vw; width:100%;">
-              <div style="background:#ddd; border-radius:16px; padding:3vh 5vw; max-width:700px; text-align:center; margin-bottom:4vh;">
-                <p style="font-size:1.5rem; color:#666;">Which image best represents:</p>
-                <p style="font-size:2.2rem; font-weight:700; color:#111;">${attr}</p>
-              </div>
-              <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:60px; max-width:1100px;">
-                ${imageBlocks}
-              </div>
-            </div>`;
-        }
+  return `
+    <div style="
+      display:flex; flex-direction:column; align-items:center;
+      padding:4vh 4vw; width:100%;
+    ">
+      <div style="
+        background:#ddd; border-radius:16px; padding:3vh 5vw;
+        width:min(800px, 90vw);                  /* center & responsive */
+        text-align:center; margin:0 auto 4vh;
+      ">
+        <p style="font-size:1.5rem; color:#666;">Which image best represents:</p>
+        <p style="font-size:2.2rem; font-weight:700; color:#111;">${attr}</p>
+      </div>
 
-        // Mobile
-        return `
-          <div style="text-align:center; padding:4vh 5vw;">
-            <p style="font-size:1.2rem; color:#999;">Which brand best represents:</p>
-            <p style="font-size:1.6rem; font-weight:700; color:#111; margin-bottom:4vh;">${attr}</p>
-          </div>`;
-      },
+      <div
+        style="
+          display:grid;
+          grid-template-columns:repeat(auto-fit, minmax(clamp(180px, 22vw, 240px), 1fr));
+          gap:clamp(20px, 3vw, 48px);
+          width:min(1100px, 96vw);            
+          margin-inline:auto;
+          justify-items:center;                 
+          align-items:start;
+          place-content:center;                 
+        ">
+        ${imageBlocks}
+      </div>
+    </div>`
+      }},
       choices: respondentIsMobile ? ['0','1','2','3'] : ['a','s','k','l'],
       button_html: respondentIsMobile
         ? (choice, index) => {
@@ -789,21 +1111,21 @@ function wrapPretestBlock(trials, minCorrect, partLabel) {
 const preload = {
   type: jsPsychPreload,
   images : 
-  ['img/BMW.png',
-    'img/Lexus.png',
-    'img/Mercedes.png',
-    'img/Subaru.png',
-    'img/Tesla.png',
-    'img/VW.png',
-    'img/Volvo.png',
+  [
    'img/SingleImplicitMotivationimage.png',
+   'img/MIAT_image.png',
    'pretest_img/pretest_cat.png',
    'pretest_img/pretest_fire.png',
    'pretest_img/pretest_driving.png',
    'pretest_img/pretest_icecube.png',
+   'pretest_img/pretest_ocean.png',
+   'pretest_img/pretest_clock.png',
    'img/FCBNY_Logo.png',
-   'img/Audi.png'
-  ]
+   'img/doritos1.png',
+   'img/lays1.png',
+   'img/pringles1.png',
+   'img/takis1.png',
+   'img/ritz1.png']
 }
 
 timeline.push(preload);
@@ -1175,6 +1497,10 @@ timeline.push(pretestBlock);
 // };
 
 const categoryFit_flat = generateFlatTrials(category_fit_trials, respondent_id, "Single Category IAT");
+
+const insertSingeAttentionTests = Math.floor(categoryFit_flat.length / 2);
+categoryFit_flat.splice(insertSingeAttentionTests, 0, attentionCheck1, attentionCheck2);
+
 const singleTrialsWithCheck = categoryFit_flat.map(t => wrapTrialWithRTCheck(t));
 timeline.push(...singleTrialsWithCheck);
 
@@ -1292,7 +1618,12 @@ const multiImplicitIntroTrial = {
       ${
         respondentIsMobile
           ? '' // Mobile uses button
-          : ' <p>Please place both hands on the keyboard with index and middle fingers on the A, S, K, and L keys.</p> <p style="font-size: 1.5rem; color: #666;">Press any key to continue.</p>'
+          :  `
+  <p>Please place both hands on the keyboard with index and middle fingers on the A, S, K, and L keys.</p> 
+  <p style="font-size: 1.5rem; color: #666;">Press any key to continue.</p> 
+  <img src="img/MIAT_image.png" 
+       style="max-width:40%; width:100%; height:auto; margin-top:1rem;"/>
+`
       }
     </div>
   `,
@@ -1393,6 +1724,9 @@ timeline.push({
 // Multiple Implicit Brand Test
 //------------------------------------------------------------------------------------------------------
 const multi_main_flat = generateFlatMultiBrandTrials(multi_brand_trials, respondent_id, "Multiple IAT");
+const insertMultiAttentionTests = Math.floor(multi_main_flat.length / 2);
+multi_main_flat.splice(insertMultiAttentionTests, 0, attentionCheck3, attentionCheck4);
+
 const multiple_brand_trials_with_check = multi_main_flat.map(t => wrapTrialWithRTCheck(t));
 timeline.push(...multiple_brand_trials_with_check);
 
