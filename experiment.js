@@ -865,7 +865,7 @@ function makeTrial(img, attr, respondentId) {
     <div style="background:#fff; border-radius:12px; padding:3vh 4vw; margin-bottom:4vh; text-align:center; box-shadow:0 4px 12px rgba(0,0,0,0.1);">
       <p style="font-size:2rem; font-weight:700; color:#111;">${attr}</p>
     </div>
-
+    ${respondentIsMobile ? '' : `
     <!-- DESKTOP FAKE BUTTONS -->
     <div style="display:flex; justify-content:center; gap:120px; font-size:20px;">
       <div style="text-align:center;">
@@ -881,7 +881,7 @@ function makeTrial(img, attr, respondentId) {
         </div>
       </div>
     </div>
-  </div>
+  </div>`}
 `  ,  choices: respondentIsMobile ? ['Fits', 'Does not fit'] : ['e', 'i'],
 
     button_html: respondentIsMobile ? (choice, index) => `
@@ -917,6 +917,19 @@ function makeTrial(img, attr, respondentId) {
       data.accurate = (userSaysFits === data.is_correct);
     }
   };
+  if (respondentIsMobile) {
+    return [
+      trial,
+      {
+        type: jsPsychHtmlKeyboardResponse,
+        stimulus: '',
+        choices: "NO_KEYS",
+        trial_duration: 20,
+        data: { trial_category: 'mobile_breaker', part: "Breaker" }
+      }
+    ];
+  }
+
 return trial};
 
 const pretest_trials = generatePretestTrials(pretest_images, pretest_attributes, respondent_id, 'balanced');
@@ -1068,40 +1081,68 @@ function wrapPretestBlock(trials, minCorrect, partLabel) {
         timeline: trials
       },
       {
-        type: jsPsychHtmlKeyboardResponse,
+        type: respondentIsMobile ? jsPsychHtmlButtonResponse : jsPsychHtmlKeyboardResponse,
         stimulus: function() {
-          // ✅ Grab only the last block that was just run
-          const blockData = jsPsych.data.get().last(trials.length);
+          // ✅ Only count the last block’s trials, ignoring breakers
+          const blockData = jsPsych.data.get().last(trials.length)
+            .filter(d => d.part === partLabel && d.trial_category !== "mobile_breaker");
 
           const correctCount = blockData.filter({accurate: true}).count();
           const totalCount   = blockData.count();
 
           if (correctCount >= minCorrect) {
-            return `<p style="font-size:2rem; color:green;">
-                      ✅ You got ${correctCount} out of ${totalCount} correct.<br>
-                      Great! Moving on.
-                    </p>`;
+            return `
+              <div style="text-align:center; font-size:2rem; font-weight:500;">
+                <p>✅ You got ${correctCount} out of ${totalCount} correct.</p>
+                <p>Great! Moving on.</p>
+                ${respondentIsMobile ? '' : '<p>Press any key to continue</p>'}
+              </div>
+            `;
           } else {
-            return `<p style="font-size:2rem; color:red;">
-                      ❌ You only got ${correctCount} out of ${totalCount} correct.<br>
-                      Please try again.
-                    </p>`;
+            return `
+              <div style="text-align:center; font-size:2rem; font-weight:500;">
+                <p>❌ You only got ${correctCount} out of ${totalCount} correct.</p>
+                <p>Please try again.</p>
+                ${respondentIsMobile ? '' : '<p>Press any key to continue</p>'}
+              </div>
+            `;
           }
         },
-        choices: "ALL_KEYS",
+        choices: respondentIsMobile ? ['Continue'] : "ALL_KEYS",
+        button_html: respondentIsMobile
+          ? (choice, index) => `
+              <button style="
+                font-size: clamp(2rem, 6vw, 6rem); 
+                font-weight: 500;
+                padding: 2.5vh 6vw;
+                margin-top: 4vh;
+                border-radius: 2vw;
+                border: none;
+                background-color: rgba(62,126,245,0.91);
+                color: white;
+                box-shadow: 0 0.5vw 1.5vw rgba(0,0,0,0.2);
+                cursor: pointer;
+                width: 80vw;
+                max-width: 500px;
+              ">${choice}</button>`
+          : undefined,
         on_finish: function(data) {
           data.is_feedback = true;
         }
       }
     ],
     loop_function: function() {
-      const blockData = jsPsych.data.get().last(trials.length);
-      const correctCount = blockData.filter({accurate: true}).count();
+      const blockData = jsPsych.data.get().last(trials.length)
+        .filter(d => d.part === partLabel && d.trial_category !== "mobile_breaker");
 
-      return correctCount < minCorrect; // ✅ repeat if accuracy too low
+      const correctCount = blockData.filter({accurate: true}).count();
+      return correctCount < minCorrect;
     }
   };
 }
+
+
+
 
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -1484,17 +1525,17 @@ timeline.push(pretestBlock);
 //   }
 // };
 
-// const mobileBreakerTrial = {
-//   type: jsPsychHtmlKeyboardResponse,
-//   stimulus: '',
-//   choices: "NO_KEYS",
-//   trial_duration: 20,
-//   data: { trial_category: 'mobile_breaker' },
-//   on_finish: function(data){
-//     // Optional: clear out fields so it's obvious to drop
-//     data.trial_type = 'mobile_breaker';
-//   }
-// };
+const mobileBreakerTrial = {
+  type: jsPsychHtmlKeyboardResponse,
+  stimulus: '',
+  choices: "NO_KEYS",
+  trial_duration: 20,
+  data: { trial_category: 'mobile_breaker' },
+  on_finish: function(data){
+    // Optional: clear out fields so it's obvious to drop
+    data.trial_type = 'mobile_breaker';
+  }
+};
 
 const categoryFit_flat = generateFlatTrials(category_fit_trials, respondent_id, "Single Category IAT");
 
