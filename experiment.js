@@ -38,66 +38,87 @@ jsPsych.data.addProperties({ external_id: external_id });
 const respondent_id = jsPsych.randomization.randomID(10);
 const timeline = [];
 
+const mobileBreakerTrial = {
+  type: jsPsychHtmlKeyboardResponse,
+  stimulus: '',
+  choices: "NO_KEYS",
+  trial_duration: 20,
+  data: { trial_category: 'mobile_breaker' },
+  on_finish: function(data){
+    // Optional: clear out fields so it's obvious to drop
+    data.trial_type = 'mobile_breaker';
+  }
+};
+
 
 ///--------------------------------------------------ATTENTION QUESTIONS--------------------------------------------------------------------------------------------------
 ///-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 const attentionCheck1 = {
-  type:respondentIsMobile ? jsPsychHtmlButtonResponse : jsPsychHtmlKeyboardResponse,
-  stimulus: () => {
-    return ` <div style="display:flex; flex-direction:column; align-items:center; justify-content:center; height:70vh;">
-    <p style="font-size:3rem; text-align:center; font-weight:bold;">What is 3 x 2</p>
-    ${respondentIsMobile 
-      ? ''
-      :`<div style="display:flex; justify-content:center; gap:120px; font-size:20px;">
-                <div style="text-align:center;">
-                  <div style="background:rgb(32,150,11); border-radius:12px; padding:15px 25px; width:200px; box-shadow:0 4px 12px rgba(0,0,0,0.1);">
-                    <div style="font-weight:bold; padding:8px 12px">[E]</div>
-                    <div style="font-size: 2rem; font-weight:bold">6</div>
-                  </div>
-                </div>
-                <div style="text-align:center;">
-                  <div style="background:rgb(105,135,236); border-radius:12px; padding:15px 25px; width:200px; box-shadow:0 4px 12px rgba(0,0,0,0.1);">
-                    <div style="font-weight:bold; padding: 8px 12px">[I]</div>
-                    <div style="font-size:2rem; font-weight: bold"> 9 </div>
-                  </div>
-                </div>
-              </div>
-            ` }`
-  },
-  choices: respondentIsMobile
-    ? ['6', '9']
-    : ['e','i'],
-  button_html: respondentIsMobile
-  ? (choice, index) => `
-        <button style="
-          font-size: clamp(1.5rem, 5vw, 2.5rem);
-          font-weight: 600;
-          padding: 2vh 2vw;
-          border-radius: 1vw;
-          border: none;
-          margin: 1vh;
-          background-color: ${index === 0 ? 'rgb(32,150,11)' : 'rgb(105,135,236)'};
-          color: white;
-          box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-          width: 30vw;
-        ">${choice}</button>`
-    : undefined,
+  timeline: [
+    ...(respondentIsMobile ? [mobileBreakerTrial] : []), // BEFORE
 
-    data:{
-      part:"attention_check",
-      question: "3 x 2",
-      correct_answer: "6"
+    {
+      type: respondentIsMobile ? jsPsychHtmlButtonResponse : jsPsychHtmlKeyboardResponse,
+      stimulus: () => {
+        return `
+          <div style="display:flex; flex-direction:column; align-items:center; justify-content:center; height:70vh;">
+            <p style="font-size:3rem; text-align:center; font-weight:bold;">What is 3 × 2?</p>
+            ${
+              respondentIsMobile 
+                ? ''
+                : `
+                  <div style="display:flex; justify-content:center; gap:120px; font-size:20px;">
+                    <div style="background:rgb(32,150,11); border-radius:12px; padding:15px 25px; width:200px; text-align:center; box-shadow:0 4px 12px rgba(0,0,0,0.1);">
+                      <div style="font-weight:bold;">[E]</div>
+                      <div style="font-size:2rem; font-weight:bold;">6</div>
+                    </div>
+                    <div style="background:rgb(105,135,236); border-radius:12px; padding:15px 25px; width:200px; text-align:center; box-shadow:0 4px 12px rgba(0,0,0,0.1);">
+                      <div style="font-weight:bold;">[I]</div>
+                      <div style="font-size:2rem; font-weight:bold;">9</div>
+                    </div>
+                  </div>
+                `
+            }
+          </div>
+        `;
+      },
+      choices: respondentIsMobile ? ['6', '9'] : ['e','i'],
+      button_html: respondentIsMobile
+        ? (choice, index) => `
+          <button style="
+            font-size: clamp(1.5rem, 5vw, 2.5rem);
+            font-weight: 600;
+            padding: 2vh 2vw;
+            border-radius: 1vw;
+            border: none;
+            margin: 1vh;
+            background-color: ${index === 0 ? 'rgb(32,150,11)' : 'rgb(105,135,236)'};
+            color: white;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            width: 60vw;
+            max-width: 350px;
+          ">${choice}</button>`
+        : undefined,
+      data: {
+        part: "attention_check",
+        question: "3 × 2",
+        correct_answer: "6"
+      },
+      on_finish: function(data) {
+        if (respondentIsMobile) {
+          const opts = ['6','9'];
+          data.user_answer = (data.response !== null) ? opts[data.response] : null;
+        } else {
+          const keyToAnswer = { e: '6', i: '9' };
+          data.user_answer = keyToAnswer[data.response];
+        }
+        data.accurate = (data.user_answer === data.correct_answer);
+      }
     },
-    on_finish: function(data) {
-      if (respondentIsMobile){
-        data.user_answer = data.response !== null ? data.choices[data.response] : null;
-      } else {
-        const keyToAnswer = {'e': '6', 'i': '9'};
-        data.user_answer = keyToAnswer[data.response];
-      }
-      data.accurate = (data.user_answer === data.correct_answer);
-      }
-    };
+
+    ...(respondentIsMobile ? [mobileBreakerTrial] : []) // AFTER
+  ]
+};
 
 const attentionCheck2 = {
   type:respondentIsMobile ? jsPsychHtmlButtonResponse : jsPsychHtmlKeyboardResponse,
@@ -1030,47 +1051,252 @@ const multi_brand_trials = generateCompleteBrandAttributeTrials(attributes, bran
 
 
 //----------------------------------------------------LOOP TO TRACK RESPONSE TIME------------------------------------------------------------------------------
+// function wrapTrialWithRTCheck(trial) {
+//   return {
+//     timeline: [
+//       trial,
+//       {
+//         type: jsPsychHtmlKeyboardResponse,
+//         stimulus: function () {
+//           const last = jsPsych.data.get().last(1).values()[0];
+//           if (last.rt < minRT) {
+//             return `<p style="font-size:2rem; color:red;">
+//                       ⚡ Too fast! Please slow down.<br>
+//                       Press any key to repeat the same trial.
+//                     </p>`;
+//           }
+//           if (last.rt > maxRT) {
+//             return `<p style="font-size:2rem; color:red;">
+//                       🐢 Too slow! Please respond faster.<br>
+//                       Press any key to repeat the same trial.
+//                     </p>`;
+//           }
+//           return ""; // ✅ just an empty string, never "null"
+//         },
+//         choices: "ALL_KEYS",
+//         trial_duration: function () {
+//           const last = jsPsych.data.get().last(1).values()[0];
+//           return (last.rt < minRT || last.rt > maxRT) ? null : 0;
+//           // ✅ if valid → 0ms duration, trial ends instantly (no click)
+//         },
+//         on_finish: function (data) {
+//           data.is_feedback = true;
+//         }
+//       }
+//     ],
+//     loop_function: function () {
+//       const last = jsPsych.data.get().last(2).values()[0];
+//       const tooFast = last.rt < minRT;
+//       const tooSlow = last.rt > maxRT;
+//       return (tooFast || tooSlow);
+//     }
+//   };
+// }
+// function wrapTrialWithRTCheck(trial) {
+//   return {
+//     timeline: [
+//       trial,
+//       {
+//         timeline: [
+//           {
+//             type: respondentIsMobile ? jsPsychHtmlButtonResponse : jsPsychHtmlKeyboardResponse,
+//             stimulus: function () {
+//               // 🔎 Find last non-breaker trial
+//               const all = jsPsych.data.get().values();
+//               let lastReal;
+//               for (let i = all.length - 1; i >= 0; i--) {
+//                 if (all[i].trial_category !== 'mobile_breaker' && !all[i].is_feedback) {
+//                   lastReal = all[i];
+//                   break;
+//                 }
+//               }
+//               if (!lastReal) return "";
+
+//               if (lastReal.rt < minRT) {
+//                 return `<p style="font-size:2rem; color:red;">
+//                           ⚡ Too fast! Please slow down.<br>
+//                           ${respondentIsMobile ? "" : "Press any key to repeat."}
+//                         </p>`;
+//               }
+//               if (lastReal.rt > maxRT) {
+//                 return `<p style="font-size:2rem; color:red;">
+//                           🐢 Too slow! Please respond faster.<br>
+//                           ${respondentIsMobile ? "" : "Press any key to repeat."}
+//                         </p>`;
+//               }
+//               return ""; // valid RT → instant skip
+//             },
+//             choices: respondentIsMobile ? ["Continue"] : "ALL_KEYS",
+//             button_html: respondentIsMobile
+//               ? () => `
+//                 <button style="
+//                   font-size: clamp(2rem, 6vw, 6rem);
+//                   font-weight: 600;
+//                   padding: 2.5vh 6vw;
+//                   margin-top: 4vh;
+//                   border-radius: 2vw;
+//                   border: none;
+//                   background-color: rgba(237,80,80,0.9);
+//                   color: white;
+//                   width: 80vw;
+//                   max-width: 500px;
+//                 ">Continue</button>`
+//               : undefined,
+//             trial_duration: function () {
+//               // ⏱ valid → auto-skip
+//               const all = jsPsych.data.get().values();
+//               let lastReal;
+//               for (let i = all.length - 1; i >= 0; i--) {
+//                 if (all[i].trial_category !== 'mobile_breaker' && !all[i].is_feedback) {
+//                   lastReal = all[i];
+//                   break;
+//                 }
+//               }
+//               if (!lastReal) return 0;
+//               return (lastReal.rt < minRT || lastReal.rt > maxRT) ? null : 0;
+//             },
+//             on_finish: function (data) {
+//               data.is_feedback = true;
+//             }
+//           },
+//           // 📱 Mobile breaker AFTER feedback, clears screen before repeat
+//           {
+//             type: jsPsychHtmlKeyboardResponse,
+//             stimulus: "",
+//             choices: "NO_KEYS",
+//             trial_duration: 50,
+//             data: { trial_category: "mobile_breaker" },
+//             conditional_function: function () {
+//               // Only insert breaker if feedback ran
+//               const last = jsPsych.data.get().last(1).values()[0];
+//               return last && last.is_feedback;
+//             }
+//           }
+//         ]
+//       }
+//     ],
+//     loop_function: function () {
+//       // 🔎 Use last non-breaker trial for RT check
+//       const all = jsPsych.data.get().values();
+//       let lastReal;
+//       for (let i = all.length - 1; i >= 0; i--) {
+//         if (all[i].trial_category !== 'mobile_breaker' && !all[i].is_feedback) {
+//           lastReal = all[i];
+//           break;
+//         }
+//       }
+//       if (!lastReal) return false;
+//       return (lastReal.rt < minRT || lastReal.rt > maxRT);
+//     }
+//   };
+// }
+
+// function getLastRealTrial() {
+//   const all = jsPsych.data.get().values();
+//   for (let i = all.length - 1; i >= 0; i--) {
+//     if (all[i].trial_category !== 'mobile_breaker' && !all[i].is_feedback) {
+//       return all[i];
+//     }
+//   }
+//   return null;
+// }
+function getLastRealTrial() {
+  const all = jsPsych.data.get().values();
+  for (let i = all.length - 1; i >= 0; i--) {
+    if (all[i].trial_category !== 'mobile_breaker' && !all[i].is_feedback) {
+      return all[i];
+    }
+  }
+  return null;
+}
+
 function wrapTrialWithRTCheck(trial) {
   return {
     timeline: [
       trial,
-      {
+
+      // 📱 breaker BEFORE feedback (mobile only)
+      ...(respondentIsMobile ? [{
         type: jsPsychHtmlKeyboardResponse,
+        stimulus: "",
+        choices: "NO_KEYS",
+        trial_duration: 30,
+        data: { trial_category: "mobile_breaker" }
+      }] : []),
+
+      {
+        type: respondentIsMobile ? jsPsychHtmlButtonResponse : jsPsychHtmlKeyboardResponse,
         stimulus: function () {
-          const last = jsPsych.data.get().last(1).values()[0];
-          if (last.rt < minRT) {
+          const lastReal = getLastRealTrial();
+          if (!lastReal) return "";
+
+          if (lastReal.rt < minRT) {
             return `<p style="font-size:2rem; color:red;">
                       ⚡ Too fast! Please slow down.<br>
-                      Press any key to repeat the same trial.
+                      ${respondentIsMobile ? "" : "Press any key to repeat."}
                     </p>`;
           }
-          if (last.rt > maxRT) {
+          if (lastReal.rt > maxRT) {
             return `<p style="font-size:2rem; color:red;">
                       🐢 Too slow! Please respond faster.<br>
-                      Press any key to repeat the same trial.
+                      ${respondentIsMobile ? "" : "Press any key to repeat."}
                     </p>`;
           }
-          return ""; // ✅ just an empty string, never "null"
+          return "";
         },
-        choices: "ALL_KEYS",
+        choices: respondentIsMobile ? ["Continue"] : "ALL_KEYS",
+        button_html: respondentIsMobile
+          ? () => `
+            <button style="
+              font-size: clamp(2rem, 6vw, 6rem);
+              font-weight: 600;
+              padding: 2.5vh 6vw;
+              margin-top: 4vh;
+              border-radius: 2vw;
+              border: none;
+              background-color: rgba(237,80,80,0.9);
+              color: white;
+              width: 80vw;
+              max-width: 500px;
+            ">Continue</button>`
+          : undefined,
         trial_duration: function () {
-          const last = jsPsych.data.get().last(1).values()[0];
-          return (last.rt < minRT || last.rt > maxRT) ? null : 0;
-          // ✅ if valid → 0ms duration, trial ends instantly (no click)
+          const lastReal = getLastRealTrial();
+          if (!lastReal) return 0;
+          return (lastReal.rt < minRT || lastReal.rt > maxRT) ? null : 0; // null = wait for click, 0 = skip
         },
         on_finish: function (data) {
           data.is_feedback = true;
         }
-      }
+      },
+
+      // 📱 breaker AFTER feedback (mobile only)
+      ...(respondentIsMobile ? [{
+        type: jsPsychHtmlKeyboardResponse,
+        stimulus: "",
+        choices: "NO_KEYS",
+        trial_duration: 30,
+        data: { trial_category: "mobile_breaker" },
+        conditional_function: function () {
+          const last = jsPsych.data.get().last(1).values()[0];
+          return last && last.is_feedback;
+        }
+      }] : [])
     ],
+
     loop_function: function () {
-      const last = jsPsych.data.get().last(2).values()[0];
-      const tooFast = last.rt < minRT;
-      const tooSlow = last.rt > maxRT;
-      return (tooFast || tooSlow);
+      const lastReal = getLastRealTrial();
+      if (!lastReal) return false;
+      return (lastReal.rt < minRT || lastReal.rt > maxRT);
     }
   };
 }
+
+
+
+
+
+
 
 //--------------------------------------------------------------------------------------------------------------------------------------------------------
 //------------------------------------------LOOP TO TRACK PRETEST ACCURACY--------------------------------------------------------------------------------
@@ -1080,12 +1306,19 @@ function wrapPretestBlock(trials, minCorrect, partLabel) {
       {
         timeline: trials
       },
+       ...(respondentIsMobile ? [{
+        type: jsPsychHtmlKeyboardResponse,
+        stimulus: "",
+        choices: "NO_KEYS",
+        trial_duration: 30,
+        data: { trial_category: "mobile_breaker" }
+      }] : []),
       {
         type: respondentIsMobile ? jsPsychHtmlButtonResponse : jsPsychHtmlKeyboardResponse,
         stimulus: function() {
           // ✅ Only count the last block’s trials, ignoring breakers
           const blockData = jsPsych.data.get().last(trials.length)
-            .filter(d => d.part === partLabel && d.trial_category !== "mobile_breaker");
+            .filter(d => d.part === partLabel && d.trial_category !== "mobile_breaker" || d.part === "Breaker");
 
           const correctCount = blockData.filter({accurate: true}).count();
           const totalCount   = blockData.count();
@@ -1129,8 +1362,16 @@ function wrapPretestBlock(trials, minCorrect, partLabel) {
         on_finish: function(data) {
           data.is_feedback = true;
         }
-      }
+      },
+      
     ],
+    ...(respondentIsMobile ? [{
+        type: jsPsychHtmlKeyboardResponse,
+        stimulus: "",
+        choices: "NO_KEYS",
+        trial_duration: 30,
+        data: { trial_category: "mobile_breaker" }
+      }] : []),
     loop_function: function() {
       const blockData = jsPsych.data.get().last(trials.length)
         .filter(d => d.part === partLabel && d.trial_category !== "mobile_breaker");
@@ -1525,22 +1766,13 @@ timeline.push(pretestBlock);
 //   }
 // };
 
-const mobileBreakerTrial = {
-  type: jsPsychHtmlKeyboardResponse,
-  stimulus: '',
-  choices: "NO_KEYS",
-  trial_duration: 20,
-  data: { trial_category: 'mobile_breaker' },
-  on_finish: function(data){
-    // Optional: clear out fields so it's obvious to drop
-    data.trial_type = 'mobile_breaker';
-  }
-};
+
 
 const categoryFit_flat = generateFlatTrials(category_fit_trials, respondent_id, "Single Category IAT");
 
 const insertSingeAttentionTests = Math.floor(categoryFit_flat.length / 2);
 categoryFit_flat.splice(insertSingeAttentionTests, 0, attentionCheck1, attentionCheck2);
+console.log(categoryFit_flat);
 
 const singleTrialsWithCheck = categoryFit_flat.map(t => wrapTrialWithRTCheck(t));
 timeline.push(...singleTrialsWithCheck);
