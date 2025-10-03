@@ -144,7 +144,7 @@ const attentionCheck2 = {
                     </div>
                     <div style="background:rgb(105,135,236); border-radius:12px; padding:15px 25px; width:200px; text-align:center; box-shadow:0 4px 12px rgba(0,0,0,0.1);">
                       <div style="font-weight:bold;">[I]</div>
-                      <div style="font-size:2rem; font-weight:bold;">9</div>
+                      <div style="font-size:2rem; font-weight:bold;">8</div>
                     </div>
                   </div>
                 `
@@ -179,7 +179,7 @@ const attentionCheck2 = {
           const opts = ['5','8'];
           data.user_answer = (data.response !== null) ? opts[data.response] : null;
         } else {
-          const keyToAnswer = { e: '5', i: '8' };
+          const keyToAnswer = { e: '6', i: '8' };
           data.user_answer = keyToAnswer[data.response];
         }
         data.accurate = (data.user_answer === data.correct_answer);
