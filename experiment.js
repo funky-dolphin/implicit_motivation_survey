@@ -6,6 +6,9 @@ const minRT = 350;
 const maxRT = 5000;
 
 const respondentIsMobile = isMobileDevice();
+
+
+
 console.log(respondentIsMobile)
 
 function getQueryParam(param) {
@@ -32,7 +35,8 @@ const jsPsych = initJsPsych({
 //   }
 // });
 
-jsPsych.data.addProperties({ external_id: external_id });
+jsPsych.data.addProperties({ external_id: external_id, moble: respondentIsMobile });
+
 
 
 const respondent_id = jsPsych.randomization.randomID(10);
@@ -119,73 +123,85 @@ const attentionCheck1 = {
     ...(respondentIsMobile ? [mobileBreakerTrial] : []) // AFTER
   ]
 };
-
 const attentionCheck2 = {
-  type:respondentIsMobile ? jsPsychHtmlButtonResponse : jsPsychHtmlKeyboardResponse,
-  stimulus: () => {
-    return ` <div style="display:flex; flex-direction:column; align-items:center; justify-content:center; height:70vh;">
-    <p style="font-size:3rem; text-align:center; font-weight:bold;">What is 11 - 3</p>
-    ${respondentIsMobile 
-      ? ''
-      :`<div style="display:flex; justify-content:center; gap:120px; font-size:20px;">
-                <div style="text-align:center;">
-                  <div style="background:rgb(32,150,11); border-radius:12px; padding:15px 25px; width:200px; box-shadow:0 4px 12px rgba(0,0,0,0.1);">
-                    <div style="font-weight:bold; padding:8px 12px">[E]</div>
-                    <div style="font-size: 2rem; font-weight:bold">6</div>
-                  </div>
-                </div>
-                <div style="text-align:center;">
-                  <div style="background:rgb(105,135,236); border-radius:12px; padding:15px 25px; width:200px; box-shadow:0 4px 12px rgba(0,0,0,0.1);">
-                    <div style="font-weight:bold; padding: 8px 12px">[I]</div>
-                    <div style="font-size:2rem; font-weight: bold"> 8 </div>
-                  </div>
-                </div>
-              </div>
-            ` }`
-  },
-  choices: respondentIsMobile
-    ? ['6', '8']
-    : ['e','i'],
-  button_html: respondentIsMobile
-  ? (choice, index) => `
-        <button style="
-          font-size: clamp(1.5rem, 5vw, 2.5rem);
-          font-weight: 600;
-          padding: 2vh 2vw;
-          border-radius: 1vw;
-          border: none;
-          margin: 1vh;
-          background-color: ${index === 0 ? 'rgb(32,150,11)' : 'rgb(105,135,236)'};
-          color: white;
-          box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-          width: 30vw;
-        ">${choice}</button>`
-    : undefined,
+  timeline: [
+    ...(respondentIsMobile ? [mobileBreakerTrial] : []), // BEFORE
 
-    data:{
-      part:"attention_check",
-      question: "11 - 3",
-      correct_answer: "8"
+    {
+      type: respondentIsMobile ? jsPsychHtmlButtonResponse : jsPsychHtmlKeyboardResponse,
+      stimulus: () => {
+        return `
+          <div style="display:flex; flex-direction:column; align-items:center; justify-content:center; height:70vh;">
+            <p style="font-size:3rem; text-align:center; font-weight:bold;">What is 11-3?</p>
+            ${
+              respondentIsMobile 
+                ? ''
+                : `
+                  <div style="display:flex; justify-content:center; gap:120px; font-size:20px;">
+                    <div style="background:rgb(32,150,11); border-radius:12px; padding:15px 25px; width:200px; text-align:center; box-shadow:0 4px 12px rgba(0,0,0,0.1);">
+                      <div style="font-weight:bold;">[E]</div>
+                      <div style="font-size:2rem; font-weight:bold;">6</div>
+                    </div>
+                    <div style="background:rgb(105,135,236); border-radius:12px; padding:15px 25px; width:200px; text-align:center; box-shadow:0 4px 12px rgba(0,0,0,0.1);">
+                      <div style="font-weight:bold;">[I]</div>
+                      <div style="font-size:2rem; font-weight:bold;">9</div>
+                    </div>
+                  </div>
+                `
+            }
+          </div>
+        `;
+      },
+      choices: respondentIsMobile ? ['5', '8'] : ['e','i'],
+      button_html: respondentIsMobile
+        ? (choice, index) => `
+          <button style="
+            font-size: clamp(1.5rem, 5vw, 2.5rem);
+            font-weight: 600;
+            padding: 2vh 2vw;
+            border-radius: 1vw;
+            border: none;
+            margin: 1vh;
+            background-color: ${index === 0 ? 'rgb(32,150,11)' : 'rgb(105,135,236)'};
+            color: white;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            width: 60vw;
+            max-width: 350px;
+          ">${choice}</button>`
+        : undefined,
+      data: {
+        part: "attention_check",
+        question: "11 - 3",
+        correct_answer: "8"
+      },
+      on_finish: function(data) {
+        if (respondentIsMobile) {
+          const opts = ['5','8'];
+          data.user_answer = (data.response !== null) ? opts[data.response] : null;
+        } else {
+          const keyToAnswer = { e: '5', i: '8' };
+          data.user_answer = keyToAnswer[data.response];
+        }
+        data.accurate = (data.user_answer === data.correct_answer);
+      }
     },
-    on_finish: function(data) {
-      if (respondentIsMobile){
-        data.user_answer = data.response !== null ? data.choices[data.response] : null;
-      } else {
-        const keyToAnswer = {'e': '6', 'i': '8'};
-        data.user_answer = keyToAnswer[data.response];
-      }
-      data.accurate = (data.user_answer === data.correct_answer);
-      }
-    };
+
+    ...(respondentIsMobile ? [mobileBreakerTrial] : []) // AFTER
+  ]
+};
+
 
 const attentionCheck3 = {
   type: respondentIsMobile ? jsPsychHtmlButtonResponse : jsPsychHtmlKeyboardResponse,
-  stimulus: () => {
-  return `
+
+  stimulus: () => `
     <div style="display:flex; flex-direction:column; align-items:center; justify-content:center; height:70vh;">
       <p style="font-size:3rem; text-align:center; font-weight:bold; margin-bottom:4vh;">What is 5 + 7?</p>
       
-      ${respondentIsMobile ? '' : `
+      ${
+        respondentIsMobile
+          ? '' // mobile buttons handled separately
+          : `
         <div style="
           display:grid; 
           grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
@@ -214,14 +230,14 @@ const attentionCheck3 = {
         </div>
       `}
     </div>
-  `;
-},
+  `,
 
-
+  // Choices = labels for buttons or keypresses
   choices: respondentIsMobile
     ? ['10', '11', '12', '13']
     : ['a','s','k','l'],
 
+  // Mobile button renderer
   button_html: respondentIsMobile
     ? (choice, index) => {
         const colors = [
@@ -252,57 +268,64 @@ const attentionCheck3 = {
     correct_answer: "12"
   },
 
-  on_finish: function(data) {
-    if (respondentIsMobile) {
-      data.user_answer = data.response !== null ? data.choices[data.response] : null;
+  on_finish: function(data){
+  if (respondentIsMobile){
+    // Fallback to trial definition choices
+    const trialChoices = ['10', '11', '12', '13'];
+    if (data.response !== null && data.response < trialChoices.length) {
+      data.user_answer = trialChoices[data.response];
     } else {
-      const keyToAnswer = { 'a': '10', 's': '11', 'k': '12', 'l': '13' };
-      data.user_answer = keyToAnswer[data.response];
+      data.user_answer = null;
     }
-    data.accurate = (data.user_answer === data.correct_answer);
+  } else {
+    const keyToAnswer = { 'a': '10', 's': '11', 'k': '12', 'l': '13' };
+    data.user_answer = keyToAnswer[data.response] || null;
   }
+
+  data.accurate = (data.user_answer === data.correct_answer);
+}
 };
+
 
 
 const attentionCheck4 = {
   type: respondentIsMobile ? jsPsychHtmlButtonResponse : jsPsychHtmlKeyboardResponse,
   stimulus: () => {
-  return `
-    <div style="display:flex; flex-direction:column; align-items:center; justify-content:center; height:70vh;">
-      <p style="font-size:3rem; text-align:center; font-weight:bold; margin-bottom:4vh;">What is 4 × 6?</p>
-      
-      ${respondentIsMobile ? '' : `
-        <div style="
-          display:grid; 
-          grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-          gap: 40px; 
-          justify-items:center;
-          max-width:900px;
-          width:100%;
-          margin:0 auto;
-        ">
-          <div style="background:rgb(32,150,11); border-radius:12px; padding:20px; box-shadow:0 4px 12px rgba(0,0,0,0.1); text-align:center;">
-            <div style="font-weight:bold; margin-bottom:8px;">[A]</div>
-            <div style="font-size:1.8rem; font-weight:bold;">18</div>
+    return `
+      <div style="display:flex; flex-direction:column; align-items:center; justify-content:center; height:70vh;">
+        <p style="font-size:3rem; text-align:center; font-weight:bold; margin-bottom:4vh;">What is 4 × 6?</p>
+        
+        ${respondentIsMobile ? '' : `
+          <div style="
+            display:grid; 
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 40px; 
+            justify-items:center;
+            max-width:900px;
+            width:100%;
+            margin:0 auto;
+          ">
+            <div style="background:rgb(32,150,11); border-radius:12px; padding:20px; box-shadow:0 4px 12px rgba(0,0,0,0.1); text-align:center;">
+              <div style="font-weight:bold; margin-bottom:8px;">[A]</div>
+              <div style="font-size:1.8rem; font-weight:bold;">18</div>
+            </div>
+            <div style="background:rgb(60,145,237); border-radius:12px; padding:20px; box-shadow:0 4px 12px rgba(0,0,0,0.1); text-align:center;">
+              <div style="font-weight:bold; margin-bottom:8px;">[S]</div>
+              <div style="font-size:1.8rem; font-weight:bold;">24</div>
+            </div>
+            <div style="background:rgb(237,80,80); border-radius:12px; padding:20px; box-shadow:0 4px 12px rgba(0,0,0,0.1); text-align:center;">
+              <div style="font-weight:bold; margin-bottom:8px;">[K]</div>
+              <div style="font-size:1.8rem; font-weight:bold;">36</div>
+            </div>
+            <div style="background:rgb(236,221,57); border-radius:12px; padding:20px; box-shadow:0 4px 12px rgba(0,0,0,0.1); text-align:center;">
+              <div style="font-weight:bold; margin-bottom:8px;">[L]</div>
+              <div style="font-size:1.8rem; font-weight:bold;">48</div>
+            </div>
           </div>
-          <div style="background:rgb(60,145,237); border-radius:12px; padding:20px; box-shadow:0 4px 12px rgba(0,0,0,0.1); text-align:center;">
-            <div style="font-weight:bold; margin-bottom:8px;">[S]</div>
-            <div style="font-size:1.8rem; font-weight:bold;">24</div>
-          </div>
-          <div style="background:rgb(237,80,80); border-radius:12px; padding:20px; box-shadow:0 4px 12px rgba(0,0,0,0.1); text-align:center;">
-            <div style="font-weight:bold; margin-bottom:8px;">[K]</div>
-            <div style="font-size:1.8rem; font-weight:bold;">36</div>
-          </div>
-          <div style="background:rgb(236,221,57); border-radius:12px; padding:20px; box-shadow:0 4px 12px rgba(0,0,0,0.1); text-align:center;">
-            <div style="font-weight:bold; margin-bottom:8px;">[L]</div>
-            <div style="font-size:1.8rem; font-weight:bold;">48</div>
-          </div>
-        </div>
-      `}
-    </div>
-  `;
-},
-
+        `}
+      </div>
+    `;
+  },
 
   choices: respondentIsMobile
     ? ['18', '24', '36', '48']
@@ -340,14 +363,21 @@ const attentionCheck4 = {
 
   on_finish: function(data) {
     if (respondentIsMobile) {
-      data.user_answer = data.response !== null ? data.choices[data.response] : null;
+      // ✅ Use explicit fallback to prevent undefined errors
+      const trialChoices = ['18', '24', '36', '48'];
+      if (data.response !== null && data.response < trialChoices.length) {
+        data.user_answer = trialChoices[data.response];
+      } else {
+        data.user_answer = null;
+      }
     } else {
       const keyToAnswer = { 'a': '18', 's': '24', 'k': '36', 'l': '48' };
-      data.user_answer = keyToAnswer[data.response];
+      data.user_answer = keyToAnswer[data.response] || null;
     }
     data.accurate = (data.user_answer === data.correct_answer);
   }
 };
+
 
 
 ///--------------------------------------------------ATTENTION QUESTIONS--------------------------------------------------------------------------------------------------
@@ -568,7 +598,7 @@ function generateFlatMultiBrandTrials(trialVars, respondentId, partLabel, isPret
     const trial = {
       type: respondentIsMobile ? jsPsychHtmlButtonResponse : jsPsychHtmlKeyboardResponse,
       stimulus: () => {
-        const attr = vars.attribute;
+        const attr = vars.attribute;  // ✅ no vars.data
         const brandImgs = imagePaths;
         const brandKeys = ['A', 'S', 'K', 'L'];
         const brandKeyColors = [
@@ -580,86 +610,58 @@ function generateFlatMultiBrandTrials(trialVars, respondentId, partLabel, isPret
 
         if (!respondentIsMobile) {
           const imageBlocks = brandImgs.map((img, i) => `
-    <div
-      style="
-        background:#fff;
-        border-radius:12px;
-        padding:20px;
-        width:clamp(180px, 22vw, 240px);        /* fluid card width */
-        text-align:center;
-        box-shadow:0 6px 16px rgba(0,0,0,0.1);
-        display:flex; flex-direction:column; align-items:center; gap:12px;
-      ">
-      <img
-        src="${img}"
-        style="
-          width:100%; height:auto;               /* responsive image */
-          aspect-ratio:1/1; object-fit:contain;  /* keeps it neat at any size */
-        "
-      />
-      <div
-        style="
-          background:${brandKeyColors[i]};
-          border-radius:8px; padding:8px 10px;
-          font-weight:bold; font-family:'Courier New', monospace; font-size:18px;
-        ">
-        [${brandKeys[i]}]
-      </div>
-    </div>
-  `).join("");
+            <div style="background:#fff; border-radius:12px; padding:20px;
+                        width:clamp(180px, 22vw, 240px);
+                        text-align:center; box-shadow:0 6px 16px rgba(0,0,0,0.1);
+                        display:flex; flex-direction:column; align-items:center; gap:12px;">
+              <img src="${img}" style="width:100%; aspect-ratio:1/1; object-fit:contain;" />
+              <div style="background:${brandKeyColors[i]};
+                          border-radius:8px; padding:8px 10px;
+                          font-weight:bold; font-family:'Courier New', monospace; font-size:18px;">
+                [${brandKeys[i]}]
+              </div>
+            </div>`).join("");
 
-  return `
-    <div style="
-      display:flex; flex-direction:column; align-items:center;
-      padding:4vh 4vw; width:100%;
-    ">
-      <div style="
-        background:#ddd; border-radius:16px; padding:3vh 5vw;
-        width:min(800px, 90vw);                  /* center & responsive */
-        text-align:center; margin:0 auto 4vh;
-      ">
-        <p style="font-size:1.5rem; color:#666;">Which image best represents:</p>
-        <p style="font-size:2.2rem; font-weight:700; color:#111;">${attr}</p>
-      </div>
+          return `
+            <div style="display:flex; flex-direction:column; align-items:center; padding:4vh 4vw; width:100%;">
+              <div style="background:#ddd; border-radius:16px; padding:3vh 5vw;
+                          width:min(800px, 90vw); text-align:center; margin:0 auto 4vh;">
+                <p style="font-size:1.5rem; color:#666;">Which image best represents:</p>
+                <p style="font-size:2.2rem; font-weight:700; color:#111;">${attr}</p>
+              </div>
+              <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(clamp(180px, 22vw, 240px), 1fr));
+                          gap:clamp(20px, 3vw, 48px); width:min(1100px, 96vw); margin-inline:auto; justify-items:center;">
+                ${imageBlocks}
+              </div>
+            </div>`;
+        }
 
-      <div
-        style="
-          display:grid;
-          grid-template-columns:repeat(auto-fit, minmax(clamp(180px, 22vw, 240px), 1fr));
-          gap:clamp(20px, 3vw, 48px);
-          width:min(1100px, 96vw);            
-          margin-inline:auto;
-          justify-items:center;                 
-          align-items:start;
-          place-content:center;                 
-        ">
-        ${imageBlocks}
-      </div>
-    </div>`
-      }},
+        // 📱 Mobile layout
+        return `<div style="text-align:center; padding:4vh 5vw;">
+                  <p style="font-size:1.2rem; color:#999;">Which brand best represents:</p>
+                  <p style="font-size:1.6rem; font-weight:700; color:#111; margin-bottom:4vh;">${attr}</p>
+                </div>`;
+      },
       choices: respondentIsMobile ? ['0','1','2','3'] : ['a','s','k','l'],
       button_html: respondentIsMobile
         ? (choice, index) => {
             const img = imagePaths[index];
-            return `
-              <button style="background:none; border:none; width:47%; aspect-ratio:1/1; 
-                             border-radius:12px; box-shadow:0 4px 12px rgba(0,0,0,0.15); overflow:hidden;">
-                <img src="${img}" style="width:100%; height:100%; object-fit:contain;" />
-              </button>`;
+            return `<button style="background:none; border:none; width:47%; aspect-ratio:1/1;
+                                    border-radius:12px; box-shadow:0 4px 12px rgba(0,0,0,0.15); overflow:hidden;">
+                      <img src="${img}" style="width:100%; height:100%; object-fit:contain;" />
+                    </button>`;
           }
         : undefined,
       data: {
         part: partLabel,
         respondent_id: respondentId,
-        attribute: vars.attribute,
+        attribute: vars.attribute,  // ✅ correct
         image_names: imageNames,
         image_paths: imagePaths,
-        // ✅ preserve correct_image only for pretest
         correct_image: isPretest ? vars.correct_image : null
       },
       on_finish: function(data) {
         let selectedImage;
-
         if (respondentIsMobile) {
           selectedImage = data.image_names[data.response];
         } else {
@@ -667,16 +669,12 @@ function generateFlatMultiBrandTrials(trialVars, respondentId, partLabel, isPret
           const idx = keyToIndex[data.response];
           selectedImage = data.image_names[idx];
         }
-
         data.selected_image = selectedImage;
-
-        // ✅ Mark accuracy for pretests
         if (vars.correct_image) {
-          data.correct_image = vars.correct_image;  // make sure it stays visible
+          data.correct_image = vars.correct_image;
           data.accurate = (selectedImage === vars.correct_image);
         }
       }
-
     };
 
     trials.push(trial);
@@ -694,6 +692,7 @@ function generateFlatMultiBrandTrials(trialVars, respondentId, partLabel, isPret
 
   return trials;
 }
+
 
   //--------------------------------------------Generate Flat Pre Test--------------------------------------------------------------------------------------------------------------
 
@@ -986,6 +985,8 @@ function generateMultiplePretestTrials(attributes, images) {
   return jsPsych.randomization.shuffle(trials);
 }
 const pretest_trials_multiple = generateMultiplePretestTrials(pretest_attributes_multiple, pretest_images_multiple)
+
+console.log(pretest_trials_multiple);
 
 
 
@@ -1300,25 +1301,110 @@ function wrapTrialWithRTCheck(trial) {
 
 //--------------------------------------------------------------------------------------------------------------------------------------------------------
 //------------------------------------------LOOP TO TRACK PRETEST ACCURACY--------------------------------------------------------------------------------
+// function wrapPretestBlock(trials, minCorrect, partLabel) {
+//   return {
+//     timeline: [
+//       {
+//         timeline: trials
+//       },
+//        ...(respondentIsMobile ? [{
+//         type: jsPsychHtmlKeyboardResponse,
+//         stimulus: "",
+//         choices: "NO_KEYS",
+//         trial_duration: 30,
+//         data: { trial_category: "mobile_breaker" }
+//       }] : []),
+//       {
+//         type: respondentIsMobile ? jsPsychHtmlButtonResponse : jsPsychHtmlKeyboardResponse,
+//         stimulus: function() {
+//           // ✅ Only count the last block’s trials, ignoring breakers
+//           const blockData = jsPsych.data.get().last(trials.length)
+//             .filter(d => d.part === partLabel && d.trial_category !== "mobile_breaker" || d.part === "Breaker");
+
+//           const correctCount = blockData.filter({accurate: true}).count();
+//           const totalCount   = blockData.count();
+
+//           if (correctCount >= minCorrect) {
+//             return `
+//               <div style="text-align:center; font-size:2rem; font-weight:500;">
+//                 <p>✅ You got ${correctCount} correct.</p>
+//                 <p>Great! Moving on.</p>
+//                 ${respondentIsMobile ? '' : '<p>Press any key to continue</p>'}
+//               </div>
+//             `;
+//           } else {
+//             return `
+//               <div style="text-align:center; font-size:2rem; font-weight:500;">
+//                 <p>❌ You only got ${correctCount} correct.</p>
+//                 <p>Please try again.</p>
+//                 ${respondentIsMobile ? '' : '<p>Press any key to continue</p>'}
+//               </div>
+//             `;
+//           }
+//         },
+//         choices: respondentIsMobile ? ['Continue'] : "ALL_KEYS",
+//         button_html: respondentIsMobile
+//           ? (choice, index) => `
+//               <button style="
+//                 font-size: clamp(2rem, 6vw, 6rem); 
+//                 font-weight: 500;
+//                 padding: 2.5vh 6vw;
+//                 margin-top: 4vh;
+//                 border-radius: 2vw;
+//                 border: none;
+//                 background-color: rgba(62,126,245,0.91);
+//                 color: white;
+//                 box-shadow: 0 0.5vw 1.5vw rgba(0,0,0,0.2);
+//                 cursor: pointer;
+//                 width: 80vw;
+//                 max-width: 500px;
+//               ">${choice}</button>`
+//           : undefined,
+//         on_finish: function(data) {
+//           data.is_feedback = true;
+//         }
+//       },
+      
+//     ],
+//     ...(respondentIsMobile ? [{
+//         type: jsPsychHtmlKeyboardResponse,
+//         stimulus: "",
+//         choices: "NO_KEYS",
+//         trial_duration: 30,
+//         data: { trial_category: "mobile_breaker" }
+//       }] : []),
+//     loop_function: function() {
+//       const blockData = jsPsych.data.get().last(trials.length)
+//         .filter(d => d.part === partLabel && d.trial_category !== "mobile_breaker");
+
+//       const correctCount = blockData.filter({accurate: true}).count();
+//       return correctCount < minCorrect;
+//     }
+//   };
+// }
+
 function wrapPretestBlock(trials, minCorrect, partLabel) {
+  const mobileBreakerTrial = {
+    type: jsPsychHtmlKeyboardResponse,
+    stimulus: "",
+    choices: "NO_KEYS",
+    trial_duration: 30,
+    data: { trial_category: "mobile_breaker" }
+  };
+
   return {
     timeline: [
-      {
-        timeline: trials
-      },
-       ...(respondentIsMobile ? [{
-        type: jsPsychHtmlKeyboardResponse,
-        stimulus: "",
-        choices: "NO_KEYS",
-        trial_duration: 30,
-        data: { trial_category: "mobile_breaker" }
-      }] : []),
+      { timeline: trials },
+
+      // 📱 breaker BEFORE feedback
+      ...(respondentIsMobile ? [mobileBreakerTrial] : []),
+
+      // feedback screen
       {
         type: respondentIsMobile ? jsPsychHtmlButtonResponse : jsPsychHtmlKeyboardResponse,
         stimulus: function() {
-          // ✅ Only count the last block’s trials, ignoring breakers
           const blockData = jsPsych.data.get().last(trials.length)
-            .filter(d => d.part === partLabel && d.trial_category !== "mobile_breaker" || d.part === "Breaker");
+            .filter(d => d.part === partLabel && d.trial_category !== "mobile_breaker");
 
           const correctCount = blockData.filter({accurate: true}).count();
           const totalCount   = blockData.count();
@@ -1326,7 +1412,7 @@ function wrapPretestBlock(trials, minCorrect, partLabel) {
           if (correctCount >= minCorrect) {
             return `
               <div style="text-align:center; font-size:2rem; font-weight:500;">
-                <p>✅ You got ${correctCount} out of ${totalCount} correct.</p>
+                <p>✅ You got ${correctCount} correct.</p>
                 <p>Great! Moving on.</p>
                 ${respondentIsMobile ? '' : '<p>Press any key to continue</p>'}
               </div>
@@ -1334,7 +1420,7 @@ function wrapPretestBlock(trials, minCorrect, partLabel) {
           } else {
             return `
               <div style="text-align:center; font-size:2rem; font-weight:500;">
-                <p>❌ You only got ${correctCount} out of ${totalCount} correct.</p>
+                <p>❌ You only got ${correctCount} correct.</p>
                 <p>Please try again.</p>
                 ${respondentIsMobile ? '' : '<p>Press any key to continue</p>'}
               </div>
@@ -1363,15 +1449,11 @@ function wrapPretestBlock(trials, minCorrect, partLabel) {
           data.is_feedback = true;
         }
       },
-      
+
+      // 📱 breaker AFTER feedback
+      ...(respondentIsMobile ? [mobileBreakerTrial] : [])
     ],
-    ...(respondentIsMobile ? [{
-        type: jsPsychHtmlKeyboardResponse,
-        stimulus: "",
-        choices: "NO_KEYS",
-        trial_duration: 30,
-        data: { trial_category: "mobile_breaker" }
-      }] : []),
+
     loop_function: function() {
       const blockData = jsPsych.data.get().last(trials.length)
         .filter(d => d.part === partLabel && d.trial_category !== "mobile_breaker");
@@ -1508,7 +1590,7 @@ timeline.push({
 timeline.push({
   type: respondentIsMobile ? jsPsychHtmlButtonResponse : jsPsychHtmlKeyboardResponse,
   stimulus: `<div>
-    <h2 style = "font-size: 2.5rem"> Please prepare for the test. </h2>
+    <h2 style = "font-size: 2.5rem"> This test measures response time.  There are no wrong answers. </h2>
   </div>
   ${
     respondentIsMobile 
@@ -1766,20 +1848,6 @@ timeline.push(pretestBlock);
 //   }
 // };
 
-
-
-const categoryFit_flat = generateFlatTrials(category_fit_trials, respondent_id, "Single Category IAT");
-
-const insertSingeAttentionTests = Math.floor(categoryFit_flat.length / 2);
-categoryFit_flat.splice(insertSingeAttentionTests, 0, attentionCheck1, attentionCheck2);
-console.log(categoryFit_flat);
-
-const singleTrialsWithCheck = categoryFit_flat.map(t => wrapTrialWithRTCheck(t));
-timeline.push(...singleTrialsWithCheck);
-
-
-
-//----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 timeline.push({
   type: respondentIsMobile ? jsPsychHtmlButtonResponse : jsPsychHtmlKeyboardResponse,
   stimulus: `
@@ -1817,6 +1885,34 @@ timeline.push({
     stimulus: false
   }
 });
+
+timeline.push({
+  type: jsPsychHtmlKeyboardResponse,
+  stimulus: '',
+  choices: "NO_KEYS",
+  trial_duration: 20,
+  data: { trial_category: 'mobile_breaker' },
+  on_finish: function(data){
+    // Optional: clear out fields so it's obvious to drop
+    data.trial_type = 'mobile_breaker'}  // 200ms pause
+});
+
+
+//--------------------------------------------------------------------------------------------------------------------------------------------------------
+
+const categoryFit_flat = generateFlatTrials(category_fit_trials, respondent_id, "Single Category IAT");
+
+const insertSingeAttentionTests = Math.floor(categoryFit_flat.length / 2);
+categoryFit_flat.splice(insertSingeAttentionTests, 0, attentionCheck1, attentionCheck2);
+console.log(categoryFit_flat);
+
+const singleTrialsWithCheck = categoryFit_flat.map(t => wrapTrialWithRTCheck(t));
+timeline.push(...singleTrialsWithCheck);
+
+
+
+//----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
 //-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 timeline.push({
   type: jsPsychHtmlKeyboardResponse,
@@ -1937,6 +2033,7 @@ timeline: multi_pretest_intro});
 //Multiple Implicit Pretest Images Trial 
 //------------------------------------------------------------------------------------------------------
 const multi_pretest_flat = generateFlatMultiBrandTrials(pretest_trials_multiple, respondent_id, "pretest_multiple_implicit", true);
+console.log(multi_pretest_flat);
 const multipretestBlock = wrapPretestBlock(multi_pretest_flat, 7, "pretest_single_implicit");
 timeline.push(multipretestBlock);
 
@@ -1998,7 +2095,7 @@ timeline.push({
 //------------------------------------------------------------------------------------------------------
 const multi_main_flat = generateFlatMultiBrandTrials(multi_brand_trials, respondent_id, "Multiple IAT");
 const insertMultiAttentionTests = Math.floor(multi_main_flat.length / 2);
-multi_main_flat.splice(insertMultiAttentionTests, 0, attentionCheck3, attentionCheck4);
+multi_main_flat.splice(insertMultiAttentionTests, 0, attentionCheck3, mobileBreakerTrial, attentionCheck4, mobileBreakerTrial);
 
 const multiple_brand_trials_with_check = multi_main_flat.map(t => wrapTrialWithRTCheck(t));
 timeline.push(...multiple_brand_trials_with_check);
@@ -2022,7 +2119,25 @@ timeline.push({
   choices: "NO_KEYS",
   trial_duration: 1000,
   on_finish: async function () {
-    const allData = jsPsych.data.get().values();
+    const allData = jsPsych.data.get().values()
+  .filter(d => 
+    d.trial_type !== "preload" &&            // 🚫 drop preload/meta
+    d.trial_category !== "mobile_breaker" && // 🚫 drop breakers
+    d.trial_type !== "mobile_breaker" &&     // 🚫 catch if it’s stored in trial_type
+    d.part !== "Breaker" &&                  // 🚫 drop "Breaker" part
+    d.stimulus?.toString().trim() !== "" &&  // 🚫 drop blanks
+    !d.is_feedback                           // 🚫 drop feedback
+  )
+  .map(d => ({
+    ...d,
+    mobile: respondentIsMobile   // ✅ add your mobile flag
+  }));
+
+console.log("✅ Final filtered length:", allData.length);
+
+console.log(allData[1]);
+console.log("✅ Cleaned trials count:", allData.length);
+
 
     try {
       const snapshot = await database
@@ -2031,15 +2146,9 @@ timeline.push({
 
       console.log("✅ Firebase write successful. Key:", snapshot.key);
 
-      // Optional: log the key or trigger another write
-      // await database.ref(`audit_log/${snapshot.key}`).set({ ... });
-
-      // Safe redirect after confirmed write
       window.location.href = `https://sample.savanta.com/v2/c/?id=${external_id}`;
     } catch (e) {
       console.error("❌ Firebase write failed:", e);
-
-      // Optional: fallback delay before redirect
       setTimeout(() => {
         window.location.href = `https://sample.savanta.com/v2/c/?id=${external_id}`;
       }, 3000);
