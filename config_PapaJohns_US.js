@@ -1,7 +1,7 @@
 const brands = [
     { name: "Papa Johns", img: "img/Papa_Johns_logo.png" },
-    { name: "Papa Murphy", img: "img/PapaMutphylogo.jpg" }, 
-    { name: "Pizza Hut", img:"img/pizza-hut.png"}, 
+    { name: "Papa Murphy", img: "img/PapaMurphylogo.jpg" }, 
+    { name: "Pizza Hut", img:"img/pizzahut.png"}, 
     { name: "Marco's Pizza", img:"img/Marcos_Pizza_Logo.png"},
     { name: "Little Caesars", img: "img/Little-Caesars-Logo.png"},
     { name: "Domino's", img: "img/Dominos.png"}

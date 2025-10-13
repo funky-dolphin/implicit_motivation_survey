@@ -1490,7 +1490,7 @@ const preload = {
    'img/Marcos_Pizza_Logo.png',
    'img/Papa_Johns_logo.png',
    'img/PapaMurphylogo.jpg',
-   'pizza-hut.png']
+   'img/pizzahut.png']
 }
 
 timeline.push(preload);
