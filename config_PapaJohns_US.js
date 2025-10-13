@@ -9,7 +9,7 @@ const brands = [
 
 const category = "Pizza Delivery"
 
-const attributes = ["Improve myself", "protection", "self-confidence", "relief", "comfort", "peace of mind", "doing my best", "caring", "efficiency", "be at ease with myself", "avoid", "embarrassment", "be practical", "safety", "acceptance by others", "control", "success", "discipline", "simplicity", "security", "joy", "perfection", "zest for life", "pride", "empowerment", "optimisim", "achievement", "closeness", "vitality", "carefreeness", "energy", "freedom", "precision", "stimulation", "dynamic", "courage", "inspiration", "reason", "excitement", "open-mindedness", "sensuality", "recognition", "expertise", "change", "be savvy", "adventure", "discovery", "spoil myself", "fighting spirit", "impulsiveness", "exploration", "be unconventional"]
+const attributes =["adventure", "freedom", "courage", "impulsiveness", "discovery", "escape", "Be unconventional", "Dynamic", "recognition", "perfection", "pride", "success", "empowerment", "independence", "Doing my best", "self-confidence", "discipline", "control", "reason", "efficiency", "expertise", "Be practical", "Be savvy", "simplicity", "joy", "carefreeness", "spoil myself", "sensuality", "indulgence", "naturalness", "relief", "satisfaction", "excitement", "zest for life", "inspiration", "Individuality", "exploration", "fun", "creativity", "playfulness", "safety", "security", "caring", "closeness", "belonging", "peace of mind", "Feel at home", "togetherness"]
 
 
 const pretest_attributes = [
