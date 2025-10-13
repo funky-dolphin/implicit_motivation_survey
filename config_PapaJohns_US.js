@@ -1,12 +1,13 @@
 const brands = [
-    { name: "", img: "" },
-    { name: "", img: "" }, 
-    { name: "", img:""}, 
-    { name: "", img:""},
-    { name: "", img: ""}
+    { name: "Papa Johns", img: "img/Papa_Johns_logo.png" },
+    { name: "Papa Murphy", img: "img/PapaMutphylogo.jpg" }, 
+    { name: "Pizza Hut", img:"img/pizza-hut.png"}, 
+    { name: "Marco's Pizza", img:"img/Marcos_Pizza_Logo.png"},
+    { name: "Little Caesars", img: "img/Little-Caesars-Logo.png"},
+    { name: "Domino's", img: "img/Dominos.png"}
   ];
 
-const category = ""
+const category = "Pizza Delivery"
 
 const attributes = ["Improve myself", "protection", "self-confidence", "relief", "comfort", "peace of mind", "doing my best", "caring", "efficiency", "be at ease with myself", "avoid", "embarrassment", "be practical", "safety", "acceptance by others", "control", "success", "discipline", "simplicity", "security", "joy", "perfection", "zest for life", "pride", "empowerment", "optimisim", "achievement", "closeness", "vitality", "carefreeness", "energy", "freedom", "precision", "stimulation", "dynamic", "courage", "inspiration", "reason", "excitement", "open-mindedness", "sensuality", "recognition", "expertise", "change", "be savvy", "adventure", "discovery", "spoil myself", "fighting spirit", "impulsiveness", "exploration", "be unconventional"]
 
@@ -39,4 +40,4 @@ const pretest_images_multiple = [
 ]
 
 
-const survey_name = ""
+const survey_name = "Papa_Johns_us"
