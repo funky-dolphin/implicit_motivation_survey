@@ -1485,11 +1485,14 @@ const preload = {
    'pretest_img/pretest_ocean.png',
    'pretest_img/pretest_clock.png',
    'img/FCBNY_Logo.png',
-   'img/doritos1.png',
-   'img/lays1.png',
-   'img/pringles1.png',
-   'img/takis1.png',
-   'img/ritz1.png']
+   'img/Aquafresh.png',
+   'img/Colgate.png',
+   'img/Corsodyl.png',
+   'img/dentyl.png',
+   'img/Listerine.png',
+   'img/OralB.png',
+   'img/Sensodyne.png',
+   'img/tepe.png']
 }
 
 timeline.push(preload);
