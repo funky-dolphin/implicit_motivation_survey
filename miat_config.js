@@ -38,4 +38,4 @@ const pretest_images_multiple = [
 ]
 
 
-const survey_name = "Pringles Re-Trial"
+const survey_name = "Pringles Trial FCBNY"
