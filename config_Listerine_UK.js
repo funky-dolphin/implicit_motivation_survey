@@ -1,12 +1,15 @@
 const brands = [
-    { name: "", img: "" },
-    { name: "", img: "" }, 
-    { name: "", img:""}, 
-    { name: "", img:""},
-    { name: "", img: ""}
+    { name: "Listerine", img: "img/Listerine.png" },
+    { name: "Aquafresh", img: "img/Aquafresh.png" }, 
+    { name: "Colgate", img:"img/Colgate.png"}, 
+    { name: "Corsodyl", img:"img/Corsodyl.png"},
+    { name: "Dentyl", img: "img/dentyl.png"},
+    { name: "Oral-B", img: "img/OralB.png"},
+    { name: "Sensodyne", img: "img/Sensodyne.png"},
+    { name: "TePe", img: "img/tepe.png"}
   ];
 
-const category = ""
+const category = "Mouthwash"
 
 const attributes = ["Improve myself", "protection", "self-confidence", "relief", "comfort", "peace of mind", "doing my best", "caring", "efficiency", "be at ease with myself", "avoid", "embarrassment", "be practical", "safety", "acceptance by others", "control", "success", "discipline", "simplicity", "security", "joy", "perfection", "zest for life", "pride", "empowerment", "optimisim", "achievement", "closeness", "vitality", "carefreeness", "energy", "freedom", "precision", "stimulation", "dynamic", "courage", "inspiration", "reason", "excitement", "open-mindedness", "sensuality", "recognition", "expertise", "change", "be savvy", "adventure", "discovery", "spoil myself", "fighting spirit", "impulsiveness", "exploration", "be unconventional"]
 
@@ -39,4 +42,4 @@ const pretest_images_multiple = [
 ]
 
 
-const survey_name = ""
+const survey_name = "Listerine_UK"
