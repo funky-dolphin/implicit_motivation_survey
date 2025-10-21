@@ -29,7 +29,7 @@ const pretest_images = [
   {name: "Icecube", img: "pretest_img/pretest_icecube.png", correct:["冷", "清爽"]}
 ]
 
-const pretest_attributes_multiple = ["热", "冷", "危险", "清爽", "可爱", "柔软", "旅行", "兴奋", "精确", "时间", "深  ", "湿"]
+const pretest_attributes_multiple = ["热", "冷", "危险", "清爽", "可爱", "柔软", "旅行", "兴奋", "精确", "时间", "深", "湿"]
 
 const pretest_images_multiple = [
   {name: "Cat", img: "pretest_img/pretest_cat.png", correct: ["可爱", "柔软"]},

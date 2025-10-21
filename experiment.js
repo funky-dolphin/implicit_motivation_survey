@@ -1245,7 +1245,7 @@ function wrapTrialWithRTCheck(trial) {
           }
           return "";
         },
-        choices: respondentIsMobile ? ["Continue"] : "ALL_KEYS",
+        choices: respondentIsMobile ? ["继续"] : "ALL_KEYS",
         button_html: respondentIsMobile
           ? () => `
             <button style="
@@ -1427,7 +1427,7 @@ function wrapPretestBlock(trials, minCorrect, partLabel) {
             `;
           }
         },
-        choices: respondentIsMobile ? ['Continue'] : "ALL_KEYS",
+        choices: respondentIsMobile ? ['继续'] : "ALL_KEYS",
         button_html: respondentIsMobile
           ? (choice, index) => `
               <button style="
@@ -1538,7 +1538,7 @@ timeline.push({
       ${
         respondentIsMobile
           ? ""
-          : '<p style="font-size: clamp(1rem, 3vw, 1.3rem); margin-bottom: 3vh;">Press space to continue.</p>'
+          : '<p style="font-size: clamp(1rem, 3vw, 1.3rem); margin-bottom: 3vh;">按空格键继续.</p>'
       }
       <p style="color: white; font-size: clamp(0.8rem, 2.5vw, 1rem); margin-top: 5vh;">
         Program built by Nicholas Brereton
@@ -1567,7 +1567,7 @@ timeline.push({
           ">${choice}</button>`;
       }
     : undefined,
-  choices: respondentIsMobile ? ['Begin'] : [' ']
+  choices: respondentIsMobile ? ['继续'] : [' ']
 });
 
 
@@ -1634,7 +1634,7 @@ timeline.push({
           ">${choice}</button>`;
       }
     : undefined,
-  choices: respondentIsMobile ? ['Ready'] : "ALL_KEYS",
+  choices: respondentIsMobile ? ['继续'] : "ALL_KEYS",
 });
 
 
@@ -1684,7 +1684,7 @@ timeline.push({
           ">${choice}</button>`;
       }
     : undefined,
-  choices: respondentIsMobile ? ['Begin Pre-Test'] : "ALL_KEYS",
+  choices: respondentIsMobile ? ['开始预试'] : "ALL_KEYS",
 });
 
 //------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -1879,7 +1879,7 @@ timeline.push({
           ">${choice}</button>`;
       }
     : undefined,
-  choices: respondentIsMobile ? ['Begin'] : 'ALL_KEYS',
+  choices: respondentIsMobile ? ['开始'] : 'ALL_KEYS',
 
   save_trial_parameters: {
     stimulus: false
@@ -1961,7 +1961,7 @@ const single_implicit_completition_trial = {
           ">${choice}</button>`;
       }
     : undefined,
-  choices: respondentIsMobile ? ['Continue'] : 'ALL_KEYS',
+  choices: respondentIsMobile ? ['继续'] : 'ALL_KEYS',
   save_trial_parameters: {
     stimulus: false
   }
@@ -2014,7 +2014,7 @@ const multiImplicitIntroTrial = {
           ">${choice}</button>`;
       }
     : undefined,
-  choices: respondentIsMobile ? ['Continue'] : 'ALL_KEYS',
+  choices: respondentIsMobile ? ['继续'] : 'ALL_KEYS',
   save_trial_parameters: {
     stimulus: false
   }
@@ -2075,7 +2075,7 @@ const multiple_pretest_completion_trial = {
           ">${choice}</button>`;
       }
     : undefined,
-  choices: respondentIsMobile ? ['Continue'] : 'ALL_KEYS',
+  choices: respondentIsMobile ? ['继续'] : 'ALL_KEYS',
   save_trial_parameters: {
     stimulus: false
   }
