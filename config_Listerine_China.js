@@ -1,12 +1,8 @@
 const brands = [
     { name: "Listerine", img: "img/Listerine.png" },
-    { name: "Aquafresh", img: "img/Aquafresh.png" }, 
-    { name: "Colgate", img:"img/Colgate.png"}, 
-    { name: "Corsodyl", img:"img/Corsodyl.png"},
-    { name: "Dentyl", img: "img/dentyl.png"},
-    { name: "Oral-B", img: "img/OralB.png"},
-    { name: "Sensodyne", img: "img/Sensodyne.png"},
-    { name: "TePe", img: "img/tepe.png"}
+    {name:"Therabreath", img:"img/Therabreath.png"},
+    {name:"Ecoobix", img:"img/Ecoobix.png"},
+    {nam:"BOP", img:"img/BOP.png"},
   ];
 
 const category = "漱口水"
