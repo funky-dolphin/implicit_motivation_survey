@@ -37,4 +37,4 @@ const pretest_images_multiple = [
 ]
 
 
-const survey_name = "Listerine_China_"
+const survey_name = "Listerine_China"
