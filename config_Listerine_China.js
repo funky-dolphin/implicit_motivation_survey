@@ -1,8 +1,8 @@
 const brands = [
-    { name: "Listerine", img: "img/Listerine.png" },
+    {name: "Listerine", img: "img/Listerine.png" },
     {name:"Therabreath", img:"img/Therabreath.png"},
     {name:"Ecoobix", img:"img/Ecoobix.png"},
-    {nam:"BOP", img:"img/BOP.png"},
+    {name:"BOP", img:"img/BOP.png"},
   ];
 
 const category = "漱口水"
