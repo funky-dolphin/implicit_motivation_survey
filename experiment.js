@@ -1492,7 +1492,7 @@ const preload = {
    'img/nivea.png',
    'img/natura.png',
    'img/Vichy.png',
-   'img/avaon.png',
+   'img/avon.png',
 ]
 }
 

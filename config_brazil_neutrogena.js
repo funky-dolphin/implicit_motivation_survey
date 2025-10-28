@@ -7,7 +7,6 @@ const brands = [
     { name: "Natura", img: "img/natura.png"},
     { name: "Vichy", img: "img/Vichy.png"},
     { name: "Avon", img: "img/avon.png"},
-
   ];
 
 const category = "Cuidados Com a Pele"
