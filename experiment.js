@@ -1590,7 +1590,7 @@ timeline.push({
 timeline.push({
   type: respondentIsMobile ? jsPsychHtmlButtonResponse : jsPsychHtmlKeyboardResponse,
   stimulus: `<div>
-    <h2 style = "font-size: 2.5rem"> This test measures response time.  There are no wrong answers. </h2>
+    <h2 style = "font-size: 2.5rem"> Dieser Test misst die Reaktionszeit. Es gibt keine falschen Antworten. </h2>
   </div>
   ${
     respondentIsMobile 

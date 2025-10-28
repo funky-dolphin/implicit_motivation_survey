@@ -10,8 +10,56 @@ const brands = [
 
 const category = "Hautpflegeprodukte"
 
-const attributes = ["Improve myself", "protection", "self-confidence", "relief", "comfort", "peace of mind", "doing my best", "caring", "efficiency", "be at ease with myself", "avoid embarrassment", "be practical", "safety", "acceptance by others", "control", "success", "discipline", "simplicity", "security", "joy", "perfection", "zest for life", "pride", "empowerment", "optimisim", "achievement", "closeness", "vitality", "carefreeness", "energy", "freedom", "precision", "stimulation", "dynamic", "courage", "inspiration", "reason", "excitement", "open-mindedness", "sensuality", "recognition", "expertise", "change", "be savvy", "adventure", "discovery", "spoil myself", "fighting spirit", "impulsiveness", "exploration", "be unconventional"]
-
+//const attributes = ["Improve myself", "protection", "self-confidence", "relief", "comfort", "peace of mind", "doing my best", "caring", "efficiency", "be at ease with myself", "avoid embarrassment", "be practical", "safety", "acceptance by others", "control", "success", "discipline", "simplicity", "security", "joy", "perfection", "zest for life", "pride", "empowerment", "optimisim", "achievement", "closeness", "vitality", "carefreeness", "energy", "freedom", "precision", "stimulation", "dynamic", "courage", "inspiration", "reason", "excitement", "open-mindedness", "sensuality", "recognition", "expertise", "change", "be savvy", "adventure", "discovery", "spoil myself", "fighting spirit", "impulsiveness", "exploration", "be unconventional"]
+const attributes = [
+  "Abenteuer",
+"Freiheit",
+"Mut",
+"Impulsivität",
+"Entdeckung",
+"Kampfgeist",
+"Dynamisch", 
+"Stolz",
+"Perfektion",
+"Anerkennung",
+"Erfolg",
+"Kultiviertheit", 
+"Mein Bestes geben",
+"Selbstbewusstsein", 
+"Selbstbestimmung",
+"Mich verbessern",
+"Disziplin",
+"Kontrolle",
+"Verstand",
+"Effizienz", 
+"Einfachheit", 
+"Expertise", 
+"Clever sein",
+"Geborgenheit",
+"Sicherheit",
+"Fürsorglichkeit",
+"Nähe",
+"Schutz",
+"Seelenfrieden",
+"Von anderen akzeptiert werden",
+"Peinlichkeiten vermeiden",
+"Freude",
+"Mich verwöhnen",
+"Sinnlichkeit",
+"Sorglosigkeit",
+"Vergnügen",
+"Komfort", 
+"Optimismus", 
+"Natürlichkeit",
+"im Einklang mit sich sein", 
+"Aufregung",
+"Lebenshunger",
+"Inspiration",
+"Vitalität",
+"Spaß",
+"Im Trend",
+"Verjüngend",
+"Erfrischung"]
 
 const pretest_attributes = [
   "Heiß", 
