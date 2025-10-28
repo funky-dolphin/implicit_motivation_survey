@@ -6,7 +6,7 @@ const brands = [
     { name: "Nivea", img: "img/nivea.png"},
     { name: "Natura", img: "img/natura.png"},
     { name: "Vichy", img: "img/Vichy.png"},
-    { name: "Avon", img: "img/avaon.png"},
+    { name: "Avon", img: "img/avon.png"},
 
   ];
 
@@ -61,8 +61,8 @@ const attributes = [
 "diversão",
 "ser tendência",
 "rejuvenescimento",
-"refresco"
-]
+"refresco",
+];
 
 const pretest_attributes = [
   "Quente", 
