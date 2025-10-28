@@ -66,7 +66,7 @@ const attentionCheck1 = {
       stimulus: () => {
         return `
           <div style="display:flex; flex-direction:column; align-items:center; justify-content:center; height:70vh;">
-            <p style="font-size:3rem; text-align:center; font-weight:bold;">What is 3 × 2?</p>
+            <p style="font-size:3rem; text-align:center; font-weight:bold;">Was ist 3 × 2?</p>
             ${
               respondentIsMobile 
                 ? ''
@@ -132,7 +132,7 @@ const attentionCheck2 = {
       stimulus: () => {
         return `
           <div style="display:flex; flex-direction:column; align-items:center; justify-content:center; height:70vh;">
-            <p style="font-size:3rem; text-align:center; font-weight:bold;">What is 11-3?</p>
+            <p style="font-size:3rem; text-align:center; font-weight:bold;">Was ist 11-3??</p>
             ${
               respondentIsMobile 
                 ? ''
@@ -196,7 +196,7 @@ const attentionCheck3 = {
 
   stimulus: () => `
     <div style="display:flex; flex-direction:column; align-items:center; justify-content:center; height:70vh;">
-      <p style="font-size:3rem; text-align:center; font-weight:bold; margin-bottom:4vh;">What is 5 + 7?</p>
+      <p style="font-size:3rem; text-align:center; font-weight:bold; margin-bottom:4vh;">Was ist 5 + 7??</p>
       
       ${
         respondentIsMobile
@@ -293,7 +293,7 @@ const attentionCheck4 = {
   stimulus: () => {
     return `
       <div style="display:flex; flex-direction:column; align-items:center; justify-content:center; height:70vh;">
-        <p style="font-size:3rem; text-align:center; font-weight:bold; margin-bottom:4vh;">What is 4 × 6?</p>
+        <p style="font-size:3rem; text-align:center; font-weight:bold; margin-bottom:4vh;">Was ist 4 × 6?</p>
         
         ${respondentIsMobile ? '' : `
           <div style="
@@ -396,7 +396,7 @@ function generateFlatTrials(trialVars, respondentId, partLabel) {
           <!-- CATEGORY -->
           ${vars.category ? `
             <div style="background:#ddd; border-radius:12px; padding:3vh 4vw; margin-bottom:4vh; text-align:center;">
-              <p style="font-size:1.2rem; color:#666;">Category</p>
+              <p style="font-size:1.2rem; color:#666;">Kategorie</p>
               <p style="font-size:2rem; font-weight:600; color:#222;">${vars.category}</p>
             </div>` : ''}
 
@@ -420,20 +420,20 @@ function generateFlatTrials(trialVars, respondentId, partLabel) {
                 <div style="text-align:center;">
                   <div style="background:rgb(32,150,11); border-radius:12px; padding:15px 25px; width:200px; box-shadow:0 4px 12px rgba(0,0,0,0.1);">
                     <div style="font-weight:bold;">[E]</div>
-                    <div>Fits</div>
+                    <div>Passt</div>
                   </div>
                 </div>
                 <div style="text-align:center;">
                   <div style="background:rgb(105,135,236); border-radius:12px; padding:15px 25px; width:200px; box-shadow:0 4px 12px rgba(0,0,0,0.1);">
                     <div style="font-weight:bold;">[I]</div>
-                    <div>Does not fit</div>
+                    <div>Passt nicht</div>
                   </div>
                 </div>
               </div>`
           }
         </div>
       `,
-      choices: respondentIsMobile ? ['Fits', 'Does not fit'] : ['e', 'i'],
+      choices: respondentIsMobile ? ['Passt', 'Passt nicht'] : ['e', 'i'],
       button_html: respondentIsMobile
         ? (choice, index) => `
           <button style="
@@ -456,14 +456,14 @@ function generateFlatTrials(trialVars, respondentId, partLabel) {
       on_finish: function(data) {
         let label;
         if (respondentIsMobile) {
-          label = data.response === 0 ? "Fits" : "Does not fit";
+          label = data.response === 0 ? "Passt" : "Passt nicht";
         } else {
-          label = data.response === 'e' ? "Fits" : "Does not fit";
+          label = data.response === 'e' ? "Passt" : "Passt nicht";
         }
         data.selected_label = label;
 
         if (vars.is_correct !== undefined) {
-          data.accurate = (label === (vars.is_correct ? "Fits" : "Does not fit"));
+          data.accurate = (label === (vars.is_correct ? "Passt" : "Passt nicht"));
         }
         if (data.rt < minRT) data.rt_flag = "too_fast";
         if (data.rt > maxRT) data.rt_flag = "too_slow";
@@ -891,18 +891,18 @@ function makeTrial(img, attr, respondentId) {
       <div style="text-align:center;">
         <div style="background:rgb(32,150,11); border-radius:12px; padding:15px 25px; width:200px; box-shadow:0 4px 12px rgba(0,0,0,0.1);">
           <div style="font-weight:bold;">[E]</div>
-          <div>Fits</div>
+          <div>Passt</div>
         </div>
       </div>
       <div style="text-align:center;">
         <div style="background:rgb(105,135,236); border-radius:12px; padding:15px 25px; width:200px; box-shadow:0 4px 12px rgba(0,0,0,0.1);">
           <div style="font-weight:bold;">[I]</div>
-          <div>Does not fit</div>
+          <div>Passt nicht</div>
         </div>
       </div>
     </div>
   </div>`}
-`  ,  choices: respondentIsMobile ? ['Fits', 'Does not fit'] : ['e', 'i'],
+`  ,  choices: respondentIsMobile ? ['Passt', 'Passt nicht'] : ['e', 'i'],
 
     button_html: respondentIsMobile ? (choice, index) => `
       <button style="
@@ -932,8 +932,8 @@ function makeTrial(img, attr, respondentId) {
       } else {
         userSaysFits = data.response === 'e';
       }
-      data.user_answer = userSaysFits ? "Fits" : "Does not fit";
-      data.correct_answer = data.is_correct ? "Fits" : "Does not fit";
+      data.user_answer = userSaysFits ? "Passt" : "Passt nicht";
+      data.correct_answer = data.is_correct ? "Passt" : "Passt nicht";
       data.accurate = (userSaysFits === data.is_correct);
     }
   };
@@ -1233,19 +1233,19 @@ function wrapTrialWithRTCheck(trial) {
 
           if (lastReal.rt < minRT) {
             return `<p style="font-size:2rem; color:red;">
-                      ⚡ Too fast! Please slow down.<br>
-                      ${respondentIsMobile ? "" : "Press any key to repeat."}
+                      ⚡ Zu schnell! Bitte langsamer fahren.<br>
+                      ${respondentIsMobile ? "" : "Drücken Sie eine beliebige Taste, um zu wiederholen."}
                     </p>`;
           }
           if (lastReal.rt > maxRT) {
             return `<p style="font-size:2rem; color:red;">
-                      🐢 Too slow! Please respond faster.<br>
-                      ${respondentIsMobile ? "" : "Press any key to repeat."}
+                      🐢 Zu langsam! Bitte antworte schneller.<br>
+                      ${respondentIsMobile ? "" : "Drücken Sie eine beliebige Taste, um zu wiederholen."}
                     </p>`;
           }
           return "";
         },
-        choices: respondentIsMobile ? ["Continue"] : "ALL_KEYS",
+        choices: respondentIsMobile ? ["Weiter"] : "ALL_KEYS",
         button_html: respondentIsMobile
           ? () => `
             <button style="
@@ -1259,7 +1259,7 @@ function wrapTrialWithRTCheck(trial) {
               color: white;
               width: 80vw;
               max-width: 500px;
-            ">Continue</button>`
+            ">Weiter</button>`
           : undefined,
         trial_duration: function () {
           const lastReal = getLastRealTrial();
@@ -1412,22 +1412,22 @@ function wrapPretestBlock(trials, minCorrect, partLabel) {
           if (correctCount >= minCorrect) {
             return `
               <div style="text-align:center; font-size:2rem; font-weight:500;">
-                <p>✅ You got ${correctCount} correct.</p>
-                <p>Great! Moving on.</p>
-                ${respondentIsMobile ? '' : '<p>Press any key to continue</p>'}
+                <p>✅ Du hast ${correctCount} richtig.</p>
+                <p> Super! Weiter geht’s.</p>
+                ${respondentIsMobile ? '' : '<p>Drücken sie eine beliebige taste, um fortzufahren.</p>'} 
               </div>
             `;
           } else {
             return `
               <div style="text-align:center; font-size:2rem; font-weight:500;">
-                <p>❌ You only got ${correctCount} correct.</p>
-                <p>Please try again.</p>
-                ${respondentIsMobile ? '' : '<p>Press any key to continue</p>'}
+                <p>❌ Sie haben nur ${correctCount} richtig eingegeben.</p>
+                <p>Bitte versuchen Sie es erneut.</p>
+                ${respondentIsMobile ? '' : '<p>Drücken sie eine beliebige taste, um fortzufahren.</p>'}
               </div>
             `;
           }
         },
-        choices: respondentIsMobile ? ['Continue'] : "ALL_KEYS",
+        choices: respondentIsMobile ? ['Weiter'] : "ALL_KEYS",
         button_html: respondentIsMobile
           ? (choice, index) => `
               <button style="
@@ -1530,15 +1530,15 @@ timeline.push({
         margin-bottom: 4vh;
       "/>
       <p1 style="font-size: clamp(1.6rem, 4.0vw, 2rem); font-weight: 600; margin-bottom: 2vh;">
-        Welcome to our Implicit Association Survey!
+       Willkommen zu unserer umfrage zur impliziten assoziation!
       </p>
       <p style="font-size: clamp(1.4rem, 4.5vw, 2rem); margin-bottom: 1vh;">
-        Thank you for your time!
+        Vielen dank für ihre zeit!
       </p>
       ${
         respondentIsMobile
           ? ""
-          : '<p style="font-size: clamp(1rem, 3vw, 1.3rem); margin-bottom: 3vh;">Press space to continue.</p>'
+          : '<p style="font-size: clamp(1rem, 3vw, 1.3rem); margin-bottom: 3vh;"> Drücken sie die leertaste, um fortzufahren.</p>'
       }
       <p style="color: white; font-size: clamp(0.8rem, 2.5vw, 1rem); margin-top: 5vh;">
         Program built by Nicholas Brereton
@@ -1597,7 +1597,8 @@ timeline.push({
       ? "" 
       : `
         <h3 style="font-size: clamp(1.2rem, 2.5vw, 2rem); margin-bottom: 2vh;">
-          Press any key to continue
+          Drücken sie eine beliebige taste, um fortzufahren.
+
         </h3>
         <img 
           src='img/SingleImplicitMotivationimage.png' 
@@ -1656,12 +1657,12 @@ timeline.push({
 timeline.push({
   type: respondentIsMobile ? jsPsychHtmlButtonResponse : jsPsychHtmlKeyboardResponse,
   stimulus: `<div>
-  <h2 style = "font-size: 2.0rem" > We will begin with a pretest to establish a baseline. </h2>
+  <h2 style = "font-size: 2.0rem" > Wir beginnen mit einem vortest, um eine basislinie zu. </h2>
   </div>
   ${
     respondentIsMobile
     ? ""
-    : "<p style='font-size: 18px> ;'>Press any key to begin </p>"
+    : "<p style='font-size: 18px> ;'>Drücken sie eine beliebige taste, um fortzufahren.</p>"
   }`,
   save_trial_parameters: {
     simulus: false
@@ -1852,12 +1853,12 @@ timeline.push({
   type: respondentIsMobile ? jsPsychHtmlButtonResponse : jsPsychHtmlKeyboardResponse,
   stimulus: `
     <div style="text-align:center; font-size: 2rem; font-weight: 500;">
-      <p>Thank you.</p>
-      <p>The real test will begin after this.</p>
+      <p>Danke schön.</p>
+      <p>Der eigentliche test beginnt als nächstes</p>
       ${
         respondentIsMobile
           ? ''  // No keyboard text on mobile
-          : '<p>Press any key to begin</p>'
+          : '<p>Drücken sie eine beliebige taste, um fortzufahren.</p>'
       }
     </div>
   `,
@@ -1935,11 +1936,11 @@ const single_implicit_completition_trial = {
   type: respondentIsMobile ? jsPsychHtmlButtonResponse : jsPsychHtmlKeyboardResponse,
   stimulus: `
     <div style="text-align:center;">
-      <p style="font-size: 3rem;">Part 1 Complete!</p>
+      <p style="font-size: 3rem;">Teil 1 abgeschlossen!</p>
       ${
         respondentIsMobile
           ? '' // mobile will have a button
-          : '<p>Press any key to continue to part 2.</p>'
+          : '<p>Drücken sie eine beliebige taste, um mit teil 2 fortzufahren.</p>'
       }
     </div>
   `,
@@ -1961,7 +1962,7 @@ const single_implicit_completition_trial = {
           ">${choice}</button>`;
       }
     : undefined,
-  choices: respondentIsMobile ? ['Continue'] : 'ALL_KEYS',
+  choices: respondentIsMobile ? ['Weiter'] : 'ALL_KEYS',
   save_trial_parameters: {
     stimulus: false
   }
@@ -1981,15 +1982,15 @@ const multiImplicitIntroTrial = {
   type: respondentIsMobile ? jsPsychHtmlButtonResponse : jsPsychHtmlKeyboardResponse,
   stimulus: `
     <div style="text-align: center; font-size: 2rem; font-weight: 500;">
-      <p>Next, we will begin with a pretest to set a baseline for our Multiple Implicit portion.</p>
+      <p>Als nächstes beginnen wir mit einem vortest, um eine basislinie für unseren Multiple-Implicit-Teil festzulegen.</p>
       <p></p>
      
       ${
         respondentIsMobile
           ? '' // Mobile uses button
           :  `
-  <p>Please place both hands on the keyboard with index and middle fingers on the A, S, K, and L keys.</p> 
-  <p style="font-size: 1.5rem; color: #666;">Press any key to continue.</p> 
+  <p>Bitte legen sie beide hände auf die tastatur, mit zeige- und mittelfinger auf den tasten A, S, K und L</p> 
+  <p style="font-size: 1.5rem; color: #666;">Drücken sie eine beliebige taste, um fortzufahren.</p> 
   <img src="img/MIAT_image.png" 
        style="max-width:40%; width:100%; height:auto; margin-top:1rem;"/>
 `
@@ -2014,7 +2015,7 @@ const multiImplicitIntroTrial = {
           ">${choice}</button>`;
       }
     : undefined,
-  choices: respondentIsMobile ? ['Continue'] : 'ALL_KEYS',
+  choices: respondentIsMobile ? ['Weiter'] : 'ALL_KEYS',
   save_trial_parameters: {
     stimulus: false
   }
@@ -2048,12 +2049,12 @@ const multiple_pretest_completion_trial = {
   type: respondentIsMobile ? jsPsychHtmlButtonResponse : jsPsychHtmlKeyboardResponse,
   stimulus: `
     <div style="text-align: center; font-size: 2rem; font-weight: 500;">
-      <p>Multiple Pretest Complete!</p>
-      <p>The main task will begin next.</p>
+      <p>Mehrfach-vortest abgeschlossen!</p>
+      <p>Die hauptaufgabe beginnt als nächstes.</p>
       ${
         respondentIsMobile
           ? '' // Mobile uses styled button
-          : '<p style="font-size: 1.5rem; color: #666;">Press any key to continue to the main task.</p>'
+          : '<p style="font-size: 1.5rem; color: #666;">Drücken Sie eine beliebige Taste, um mit der Hauptaufgabe fortzufahren.</p>'
       }
     </div>
   `,
@@ -2075,7 +2076,7 @@ const multiple_pretest_completion_trial = {
           ">${choice}</button>`;
       }
     : undefined,
-  choices: respondentIsMobile ? ['Continue'] : 'ALL_KEYS',
+  choices: respondentIsMobile ? ['Weiter'] : 'ALL_KEYS',
   save_trial_parameters: {
     stimulus: false
   }
@@ -2111,9 +2112,9 @@ timeline.push({
       color: #111;
       padding: 5vh 5vw;
     ">
-      <p>🎉 Thank you for participating!</p>
-      <p> Please keep this window open </p>
-      <p> until you are redirected.</p>
+      <p>🎉 Vielen Dank für Ihre Teilnahme!</p>
+      <p> Bitte lassen Sie dieses Fenster geöffnet, </p>
+      <p> bis Sie weitergeleitet werden.</p>
     </div>
   `,
   choices: "NO_KEYS",
