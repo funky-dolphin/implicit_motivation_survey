@@ -1485,11 +1485,14 @@ const preload = {
    'pretest_img/pretest_ocean.png',
    'pretest_img/pretest_clock.png',
    'img/FCBNY_Logo.png',
-   'img/doritos1.png',
-   'img/lays1.png',
-   'img/pringles1.png',
-   'img/takis1.png',
-   'img/ritz1.png']
+   "img/Neutrogena.png",
+   "img/LOreal.png",
+   "img/La_Roche-Posay.png",
+   "img/cerave.png",
+   "img/balea.png",
+   "img/nocosmetics.png",
+   "img/mixa.png"
+ ]
 }
 
 timeline.push(preload);
