@@ -2,14 +2,13 @@ const brands = [
     { name: "Subway", img: "img/Subway.png" },
     { name: "Tim Hortons", img: "img/Tim_hortons.png" }, 
     { name: "McDonalds", img:"img/mcdonalds.png"}, 
-    { name: "A&W", img:"img/aw.png"},
-    { name: "Harvey's", img: "img/harveys.png"},
-    {name: "Chipotle", img: "img/chipotle.png" },
-    {name: "Wendy's", img: "img/wendys.png" },
-    {name: "Freshii", img: "img/freshii.png" }
+    { name: "McCafe", img:"img/mccafe.png"},
+    { name: "Second Cup", img: "img/secondcup.png"},
+    {name: "Country Style", img: "img/country_style.png" },
+    {name: "Starbucks", img: "img/starbucks.png" },
   ];
 
-const category = "Restauration rapide"
+const category = "Un Café Rapide"
 
 const attributes = [
 "aventure",
