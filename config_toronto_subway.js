@@ -8,7 +8,7 @@ const brands = [
     { name: "Tim Hortons", img: "img/Tim_hortons.png" },
   ];
 
-const category = "Fast Food"
+const category = "Quick Coffee";
 
 const attributes = [
 "adventure",
