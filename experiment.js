@@ -2140,19 +2140,18 @@ console.log("✅ Cleaned trials count:", allData.length);
 
 
     try {
-      const snapshot = await database
-        .ref(`miat_results/${survey_name}`)
-        .push(allData);
+  const snapshot = await database
+    .ref(`miat_results/${survey_name}`)
+    .push(allData);
 
-      console.log("✅ Firebase write successful. Key:", snapshot.key);
+  console.log("✅ Firebase write successful. Key:", snapshot.key);
 
-      window.location.href = `https://sample.savanta.com/v2/c/?id=${external_id}`;
-    } catch (e) {
-      console.error("❌ Firebase write failed:", e);
-      setTimeout(() => {
-        window.location.href = `https://sample.savanta.com/v2/c/?id=${external_id}`;
-      }, 3000);
-    }
+  // No redirect, nothing else
+} catch (e) {
+  console.error("❌ Firebase write failed:", e);
+
+  // No redirect, nothing else
+}
   }
 });
 
