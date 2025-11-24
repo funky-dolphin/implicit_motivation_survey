@@ -90,4 +90,4 @@ const pretest_images_multiple = [
 ]
 
 
-const survey_name = "Pringles Trial FCBNY"
+const survey_name = "Toronoto French Coffee"
