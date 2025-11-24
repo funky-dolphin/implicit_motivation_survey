@@ -1,12 +1,11 @@
 const brands = [
-    { name: "A&W", img: "img/aw.png" },
-    { name: "Chipotle", img: "img/chipotle.png" }, 
-    { name: "Freshii", img:"img/freshii.png"}, 
-    { name: "Harveys", img:"img/harveys.png"},
+    { name: "Starbucks", img: "img/starbucks.png" },
+    { name: "Country Style", img: "img/country_style.png" }, 
+    { name: "Second Cup", img:"img/secondcup.png"}, 
+    { name: "McCafe", img:"img/mccafe.png"},
     { name: "McDonalds", img: "img/mcdonalds.png"},
     { name: "Subway", img:"img/Subway.png"},
     { name: "Tim Hortons", img: "img/Tim_hortons.png" },
-    { name: "Wendys", img: "img/wendys.png" }
   ];
 
 const category = "Fast Food"
