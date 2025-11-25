@@ -2139,18 +2139,28 @@ console.log(allData[1]);
 console.log("✅ Cleaned trials count:", allData.length);
 
 
-    try {
+  const url = new URL(window.location.href);
+  const returnUrl = url.searchParams.get("return-url"); // may be null if not provided
+
+// ... later in your submit handler:
+try {
   const snapshot = await database
     .ref(`miat_results/${survey_name}`)
     .push(allData);
 
   console.log("✅ Firebase write successful. Key:", snapshot.key);
 
-  // No redirect, nothing else
+  // Redirect back to Forsta's return URL (not directly to Savanta)
+  if (returnUrl) {
+    window.location.href = returnUrl;
+  }
 } catch (e) {
   console.error("❌ Firebase write failed:", e);
 
-  // No redirect, nothing else
+  // Optional: still return so the survey can continue / show error on their side
+  if (returnUrl) {
+    window.location.href = returnUrl;
+  }
 }
   }
 });
