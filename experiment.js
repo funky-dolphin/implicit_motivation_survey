@@ -1485,12 +1485,9 @@ const preload = {
    'pretest_img/pretest_ocean.png',
    'pretest_img/pretest_clock.png',
    'img/FCBNY_Logo.png',
-   'img/Dominos.png',
-   'img/Little-Caesars-Logo.png',
-   'img/Marcos_Pizza_Logo.png',
-   'img/Papa_Johns_logo.png',
-   'img/PapaMurphylogo.jpg',
-   'img/pizzahut.png']
+   'img/bobs_red_mill_logo.png',
+   'Cherrios_logo.png',
+   ]
 }
 
 timeline.push(preload);
