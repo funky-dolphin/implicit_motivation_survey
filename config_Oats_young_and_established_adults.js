@@ -89,4 +89,4 @@ const pretest_images_multiple = [
 ]
 
 
-const survey_name = "Oats HH with kids"
+const survey_name = "Oats Young and Established Adults"
