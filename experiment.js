@@ -1527,12 +1527,7 @@ timeline.push({
       text-align: center;
       padding: 5vw;
     "> 
-      <img src="img/FCBNY_Logo.png" style="
-        width: 100vw;
-        max-width: 700px;
-        height: auto;
-        margin-bottom: 4vh;
-      "/>
+
       <p1 style="font-size: clamp(1.6rem, 4.0vw, 2rem); font-weight: 600; margin-bottom: 2vh;">
         Welcome to our Implicit Association Survey!
       </p>
