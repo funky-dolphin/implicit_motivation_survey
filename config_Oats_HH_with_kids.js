@@ -3,8 +3,8 @@ const brands = [
     { name: "Cherrios", img: "img/Cherrios_logo.png"}, 
     { name: "Chobani", img:"img/Chobani_logo.png"}, 
     { name: "Eggo", img:"img/eggo_logo.png"},
-    { name: "Jimmy Dean", img: "img/jimmy_dean.png"},
-    { name: "Kodiak", img: "img/Kodiak_logo.png"},
+    { name: "Jimmy Dean", img: "img/jimmy_dean1.png"},
+    { name: "Kodiak", img: "img/Kodiak_logo.jpg"},
     {name: "Quaker Oats", img: "img/Quaker_Oats_logo.png"},
     {name:"Purely Elizabeth", img:"img/purely_elizabeth.png"}
   ];

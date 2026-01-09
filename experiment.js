@@ -1486,7 +1486,13 @@ const preload = {
    'pretest_img/pretest_clock.png',
    'img/FCBNY_Logo.png',
    'img/bobs_red_mill_logo.png',
-   'Cherrios_logo.png',
+   'img/Cherrios_logo.png',
+   'img/Chobani_logo.png',
+   'img/eggo_logo.png',
+   'img/jimmy_dean1.png',
+   'img/Kodiak_logo.jpg',
+   'img/Quaker_Oats_logo.png',
+   'img/purely_elizabeth.png'
    ]
 }
 
