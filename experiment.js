@@ -1485,14 +1485,14 @@ const preload = {
    'pretest_img/pretest_ocean.png',
    'pretest_img/pretest_clock.png',
    'img/FCBNY_Logo.png',
-   'img/bobs_red_mill_logo.png',
-   'img/Cherrios_logo.png',
-   'img/Chobani_logo.png',
-   'img/eggo_logo.png',
-   'img/jimmy_dean1.png',
-   'img/Kodiak_logo.jpg',
-   'img/Quaker_Oats_logo.png',
-   'img/purely_elizabeth.png'
+   'img/Brilliant_Earth_Logo.png',
+   'img/Jared_logo.png',
+   'img/Kay_logo.png',
+   'img/kendra_scott_logo.png',
+   'img/mejuri_logo.png',
+   'img/Pandora-Logo.png',
+   'img/Swarovski_logo.png',
+   'img/zales_logo.jpg'
    ]
 }
 
@@ -2033,7 +2033,7 @@ timeline: multi_pretest_intro});
 //------------------------------------------------------------------------------------------------------
 const multi_pretest_flat = generateFlatMultiBrandTrials(pretest_trials_multiple, respondent_id, "pretest_multiple_implicit", true);
 console.log(multi_pretest_flat);
-const multipretestBlock = wrapPretestBlock(multi_pretest_flat, 7, "pretest_single_implicit");
+const multipretestBlock = wrapPretestBlock(multi_pretest_flat, 5, "pretest_single_implicit");
 timeline.push(multipretestBlock);
 
 
