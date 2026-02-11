@@ -1,15 +1,15 @@
 const brands = [
-    { name: "Absolut", img: "img/Absolut_logo.png" },
-    { name: "Belvedere", img: "img/Belvedere_logo.png"}, 
-    { name: "Ciroc", img:"img/Ciroc_logo.png"}, 
-    { name: "Grey Goose", img:"img/Grey_goose_logo.png"},
-    { name: "Smirnoff", img: "img/Smirnoff_logo.png"},
-    { name: "Stoli", img: "img/Stoli_logo.png"},
-    {name: "Svedka", img: "img/Svedka_logo.png"},
-    {name:"Titos", img:"img/Titos_logo.png"}
+    { name: "Cutwater", img: "img/Cutwater-Logo.gif" },
+    { name: "High Noon", img: "img/High_Noon_logo.png"}, 
+    { name: "Mikes Hard Lemonade", img:"img/Mikes_hard_lemonade_logo.png"}, 
+    { name: "Smirnoff Ice", img:"img/smirnoff_ice_logo.png"},
+    { name: "Surfside", img: "img/surfside_logo.png"},
+    { name: "Truly", img: "img/Truly_logo.png"},
+    {name: "Twisted Tea", img: "img/Twisted-Tea-Logo.png"},
+    {name:"White Claw", img:"img/White_Claw_logo.png"}
   ];
 
-const category = "Vodka"
+const category = "Ready to Drink Alcohol"
 const attributes =[
 "adventure",
 "freedom",
@@ -93,4 +93,4 @@ const pretest_images_multiple = [
 ]
 
 
-const survey_name = "Smirnoff_Vodka_Survey_USA"
+const survey_name = "Smirnoff_RTD_Survey_USA"

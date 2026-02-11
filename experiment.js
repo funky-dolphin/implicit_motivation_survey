@@ -1485,14 +1485,14 @@ const preload = {
    'pretest_img/pretest_ocean.png',
    'pretest_img/pretest_clock.png',
    'img/FCBNY_Logo.png',
-   'img/Absolut_logo.png',
-   'img/Belvedere_logo.png',
-   'img/Ciroc_logo.png',
-   'img/Grey_goose_logo.png',
-   'img/Stoli_logo.png',
-   'img/Titos_logo.png',
-   'img/Smirnoff_logo.png',
-   'img/Svedka_logo.png',
+   'img/Cutwater-Logo.gif',
+   'img/High_Noon_logo.png',
+   'img/Mikes_hard_lemonade_logo.png',
+   'img/smirnoff_ice_logo.png',
+   'img/surfside_logo.png',
+   'img/Truly_logo.png',
+   'img/Twisted-Tea-Logo.png',
+   'img/White_Claw_logo.png'
    ]
 }
 
