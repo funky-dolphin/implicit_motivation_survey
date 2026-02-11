@@ -1485,14 +1485,7 @@ const preload = {
    'pretest_img/pretest_ocean.png',
    'pretest_img/pretest_clock.png',
    'img/FCBNY_Logo.png',
-   'img/Brilliant_Earth_Logo.png',
-   'img/Jared_logo.png',
-   'img/Kay_logo.png',
-   'img/kendra_scott_logo.png',
-   'img/mejuri_logo.png',
-   'img/Pandora-Logo.png',
-   'img/Swarovski_logo.png',
-   'img/zales_logo.jpg'
+  
    ]
 }
 
