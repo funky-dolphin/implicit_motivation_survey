@@ -1,12 +1,12 @@
 const brands = [
-    { name: "", img: "" },
-    { name: "", img: ""}, 
-    { name: "", img:""}, 
-    { name: "", img:""},
-    { name: "", img: ""},
-    { name: "", img: ""},
-    {name: "", img: ""},
-    {name:"", img:""}
+    { name: "Absolut", img: "img/Absolut_logo.png" },
+    { name: "Belvedere", img: "img/Belvedere_logo.png"}, 
+    { name: "Ciroc", img:"img/Ciroc_logo.png"}, 
+    { name: "Grey Goose", img:"img/Grey_goose_logo.png"},
+    { name: "Smirnoff", img: "img/Smirnoff_logo.png"},
+    { name: "Stoli", img: "img/Stoli_logo.png"},
+    {name: "Svedka", img: "img/Svedka_logo.png"},
+    {name:"Titos", img:"img/Titos_logo.png"}
   ];
 
 const category = "Vodka"

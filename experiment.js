@@ -1485,7 +1485,14 @@ const preload = {
    'pretest_img/pretest_ocean.png',
    'pretest_img/pretest_clock.png',
    'img/FCBNY_Logo.png',
-  
+   'img/Absolut_logo.png',
+   'img/Belvedere_logo.png',
+   'img/Ciroc_logo.png',
+   'img/Grey_goose_logo.png',
+   'img/Stoli_logo.png',
+   'img/Titos_logo.png',
+   'img/Smirnoff_logo.png',
+   'img/Svedka_logo.png',
    ]
 }
 
