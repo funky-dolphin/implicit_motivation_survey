@@ -91,4 +91,4 @@ const pretest_images_multiple = [
 ]
 
 
-const survey_name = "Smirnoff_vodka_Survey_UK"
+const survey_name = "Smirnoff_vodka_UK"
