@@ -1,12 +1,12 @@
 const brands = [
-    { name: "Cutwater", img: "img/Cutwater-Logo.gif" },
-    { name: "High Noon", img: "img/High_Noon_logo.png"}, 
-    { name: "Mikes Hard Lemonade", img:"img/Mikes_hard_lemonade_logo.png"}, 
+    { name: "Absolute Sprite", img: "img/absolut_sprite.gif" },
+    { name: "AU", img: "img/AU_logo.png"}, 
+    { name: "Buzzball", img:"img/buzzball_logo.png"}, 
     { name: "Smirnoff Ice", img:"img/smirnoff_ice_logo.png"},
-    { name: "Surfside", img: "img/surfside_logo.png"},
-    { name: "Truly", img: "img/Truly_logo.png"},
-    {name: "Twisted Tea", img: "img/Twisted-Tea-Logo.png"},
-    {name:"White Claw", img:"img/White_Claw_logo.png"}
+    { name: "Funkin", img: "img/funkin_cocktails_logo.png"},
+    { name: "Jack Daniels and Coke", img: "img/jackdaniels_coke_logo.gif"},
+    {name: "Moth", img: "img/moth_logo.png"},
+    {name:"Suntory", img:"img/suntory_logo.jpg"}
   ];
 
 const category = "Ready to Drink Alcohol"
@@ -93,4 +93,4 @@ const pretest_images_multiple = [
 ]
 
 
-const survey_name = "Smirnoff_RTD_Survey_USA"
+const survey_name = "Smirnoff_RTD_Survey_UK"
