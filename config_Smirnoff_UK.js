@@ -1,6 +1,6 @@
 const brands = [
     { name: "Absolut", img: "img/Absolut_logo.png" },
-    { name: "AU", img: "img/au_logo.png"}, 
+    { name: "AU", img: "img/AU_logo.png"}, 
     { name: "Fris", img:"img/fris_logo.svg"}, 
     { name: "Smirnoff", img:"img/Smirnoff_logo.png"},
     { name: "JJ Whitney", img: "img/jj_whitney_logo.png"},

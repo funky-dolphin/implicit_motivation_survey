@@ -1486,7 +1486,7 @@ const preload = {
    'pretest_img/pretest_clock.png',
    'img/FCBNY_Logo.png',
    'img/Absolut_logo.png',
-   'img/au_logo.png',
+   'img/AU_logo.png',
    'img/fris_logo.svg',
    'img/jj_whitney_logo.png',
    'img/Smirnoff_logo.png',
