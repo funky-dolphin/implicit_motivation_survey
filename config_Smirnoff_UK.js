@@ -1,15 +1,13 @@
 const brands = [
-    { name: "Absolute Sprite", img: "img/absolut_sprite.gif" },
-    { name: "AU", img: "img/AU_logo.png"}, 
-    { name: "Buzzball", img:"img/buzzball_logo.png"}, 
-    { name: "Smirnoff Ice", img:"img/smirnoff_ice_logo.png"},
-    { name: "Funkin", img: "img/funkin_cocktails_logo.png"},
-    { name: "Jack Daniels and Coke", img: "img/jackdaniels_coke_logo.gif"},
-    {name: "Moth", img: "img/moth_logo.png"},
-    {name:"Suntory", img:"img/suntory_logo.jpg"}
+    { name: "Absolut", img: "img/Absolut_logo.png" },
+    { name: "AU", img: "img/au_logo.png"}, 
+    { name: "Fris", img:"img/fris_logo.svg"}, 
+    { name: "Smirnoff", img:"img/Smirnoff_logo.png"},
+    { name: "JJ Whitney", img: "img/jj_whitney_logo.png"},
+    { name: "Zubrowka", img: "img/Zubrowka.png"},
   ];
 
-const category = "Ready to Drink Alcohol"
+const category = "Vodka"
 const attributes =[
 "adventure",
 "freedom",
@@ -93,4 +91,4 @@ const pretest_images_multiple = [
 ]
 
 
-const survey_name = "Smirnoff_RTD_Survey_UK"
+const survey_name = "Smirnoff_vodka_Survey_UK"

@@ -1485,14 +1485,12 @@ const preload = {
    'pretest_img/pretest_ocean.png',
    'pretest_img/pretest_clock.png',
    'img/FCBNY_Logo.png',
-   'img/smirnoff_ice_logo.png',
-   'img/absolut_sprite.gif',
-   'img/AU_logo.png',
-   'img/buzzball_logo.png',
-   'img/funkin_cocktails_logo.png',
-   'img/jackdaniels_coke_logo.gif',
-   'img/moth_logo.png',
-   'img/suntory_logo.jpg'
+   'img/Absolut_logo.png',
+   'img/au_logo.png',
+   'img/fris_logo.svg',
+   'img/jj_whitney_logo.png',
+   'img/Smirnoff_logo.png',
+   'img/Zubrowka.png'
    ]
 }
 
