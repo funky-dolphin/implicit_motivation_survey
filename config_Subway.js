@@ -17,10 +17,10 @@ const attributes =[
 "impulsiveness",
 "discovery",
 "unexpected",
-"dynamic",
-"pride",
-"perfection",
-"recognition"
+"dynamic"
+// "pride",
+// "perfection",
+// "recognition"
 // "success",
 // "sophistication",
 // "smart",
