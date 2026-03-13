@@ -396,7 +396,7 @@ function generateFlatTrials(trialVars, respondentId, partLabel) {
           <!-- CATEGORY -->
           ${vars.category ? `
             <div style="background:#ddd; border-radius:12px; padding:3vh 4vw; margin-bottom:4vh; text-align:center;">
-              <p style="font-size:1.2rem; color:#666;">Category</p>
+              <p style="font-size:1.5rem; color:#666;">Category</p>
               <p style="font-size:2rem; font-weight:600; color:#222;">${vars.category}</p>
             </div>` : ''}
 
@@ -408,7 +408,7 @@ function generateFlatTrials(trialVars, respondentId, partLabel) {
 
           <!-- ATTRIBUTE -->
           <div style="background:#fff; border-radius:12px; padding:3vh 4vw; margin-bottom:4vh; text-align:center; box-shadow:0 4px 12px rgba(0,0,0,0.1);">
-            <p style="font-size:clamp(2rem, 6vw, 4rem); font-weight:700; color:#111;">${vars.attribute}</p>
+            <p style="font-size:${respondentIsMobile ? '3.5rem' : '2.0rem'}; font-weight:700; color:#111;">${vars.attribute}</p>
           </div>
 
           ${
@@ -627,7 +627,7 @@ function generateFlatMultiBrandTrials(trialVars, respondentId, partLabel, isPret
               <div style="background:#ddd; border-radius:16px; padding:3vh 5vw;
                           width:min(800px, 90vw); text-align:center; margin:0 auto 4vh;">
                 <p style="font-size:1.5rem; color:#666;">Which image best represents:</p>
-                <p style="font-size:clamp(2rem, 6vw, 4rem); font-weight:700; color:#111;">${attr}</p>
+                <p style="font-size:${respondentIsMobile ? '3.5rem' : '2.0rem'}; font-weight:700; color:#111;">${attr}</p>
               </div>
                 <div style="display:grid; grid-template-columns:repeat(4, clamp(180px, 22vw, 240px));
                   gap:clamp(20px, 3vw, 48px); margin-inline:auto; justify-content:center;">
@@ -883,7 +883,7 @@ function makeTrial(img, attr, respondentId) {
 
     <!-- ATTRIBUTE -->
     <div style="background:#fff; border-radius:12px; padding:3vh 4vw; margin-bottom:4vh; text-align:center; box-shadow:0 4px 12px rgba(0,0,0,0.1);">
-      <p style="font-size:2rem; font-weight:700; color:#111;">${attr}</p>
+      <p style="font-size:${respondentIsMobile ? '3.5rem' : '2.0rem'}; font-weight:700; color:#111;">${attr}</p>
     </div>
     ${respondentIsMobile ? '' : `
     <!-- DESKTOP FAKE BUTTONS -->
