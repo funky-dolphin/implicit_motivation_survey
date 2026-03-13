@@ -623,15 +623,15 @@ function generateFlatMultiBrandTrials(trialVars, respondentId, partLabel, isPret
             </div>`).join("");
 
           return `
-            <div style="display:flex; flex-direction:column; align-items:center; padding:4vh 4vw; width:100%;">
+            <div style="display:flex; flex-direction:column; align-items:center; padding:4vh 4vw; width:100%; width: fit-content ">
               <div style="background:#ddd; border-radius:16px; padding:3vh 5vw;
                           width:min(800px, 90vw); text-align:center; margin:0 auto 4vh;">
                 <p style="font-size:1.5rem; color:#666;">Which image best represents:</p>
                 <p style="font-size:2.2rem; font-weight:700; color:#111;">${attr}</p>
               </div>
-              <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(clamp(180px, 22vw, 240px), 1fr));
-                          gap:clamp(20px, 3vw, 48px); width:min(1100px, 96vw); margin-inline:auto; justify-items:center;">
-                ${imageBlocks}
+                <div style="display:grid; grid-template-columns:repeat(4, clamp(180px, 22vw, 240px));
+                  gap:clamp(20px, 3vw, 48px); margin-inline:auto; justify-content:center;">
+                  ${imageBlocks}
               </div>
             </div>`;
         }
@@ -952,7 +952,7 @@ function makeTrial(img, attr, respondentId) {
 
 return trial};
 
-const pretest_trials = generatePretestTrials(pretest_images, pretest_attributes, respondent_id, 'balanced');
+const pretest_trials = generatePretestTrials(pretest_images, pretest_attributes, respondent_id, 'balanced').splice(0, 5);
 
 // ✅ Flatten directly into main timeline
 
@@ -984,7 +984,7 @@ function generateMultiplePretestTrials(attributes, images) {
 
   return jsPsych.randomization.shuffle(trials);
 }
-const pretest_trials_multiple = generateMultiplePretestTrials(pretest_attributes_multiple, pretest_images_multiple)
+const pretest_trials_multiple = generateMultiplePretestTrials(pretest_attributes_multiple, pretest_images_multiple).splice(0, 5);
 
 console.log(pretest_trials_multiple);
 
@@ -1702,7 +1702,7 @@ timeline.push({
 //-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 //--------ADDING SINGLE PRE-TEST TRIALS TO TIMELINE------------------------------------------------------------------------------------------------
 
-const pretestBlock = wrapPretestBlock(pretest_trials, 6 , "pretest_single_implicit");
+const pretestBlock = wrapPretestBlock(pretest_trials, 2 , "pretest_single_implicit");
 timeline.push(pretestBlock);
 //------------------------------------------------------------------------------------------------------
 
@@ -1901,9 +1901,9 @@ timeline.push({
 
 const categoryFit_flat = generateFlatTrials(category_fit_trials, respondent_id, "Single Category IAT");
 
-const insertSingeAttentionTests = Math.floor(categoryFit_flat.length / 2);
-categoryFit_flat.splice(insertSingeAttentionTests, 0, attentionCheck1, attentionCheck2);
-console.log(categoryFit_flat);
+// const insertSingeAttentionTests = Math.floor(categoryFit_flat.length / 2);
+// categoryFit_flat.splice(insertSingeAttentionTests, 0, attentionCheck1, attentionCheck2);
+// console.log(categoryFit_flat);
 
 const singleTrialsWithCheck = categoryFit_flat.map(t => wrapTrialWithRTCheck(t));
 timeline.push(...singleTrialsWithCheck);
@@ -2033,7 +2033,7 @@ timeline: multi_pretest_intro});
 //------------------------------------------------------------------------------------------------------
 const multi_pretest_flat = generateFlatMultiBrandTrials(pretest_trials_multiple, respondent_id, "pretest_multiple_implicit", true);
 console.log(multi_pretest_flat);
-const multipretestBlock = wrapPretestBlock(multi_pretest_flat, 5, "pretest_single_implicit");
+const multipretestBlock = wrapPretestBlock(multi_pretest_flat, 2, "pretest_single_implicit");
 timeline.push(multipretestBlock);
 
 
@@ -2093,8 +2093,8 @@ timeline.push({
 // Multiple Implicit Brand Test
 //------------------------------------------------------------------------------------------------------
 const multi_main_flat = generateFlatMultiBrandTrials(multi_brand_trials, respondent_id, "Multiple IAT");
-const insertMultiAttentionTests = Math.floor(multi_main_flat.length / 2);
-multi_main_flat.splice(insertMultiAttentionTests, 0, attentionCheck3, mobileBreakerTrial, attentionCheck4, mobileBreakerTrial);
+// const insertMultiAttentionTests = Math.floor(multi_main_flat.length / 2);
+// multi_main_flat.splice(insertMultiAttentionTests, 0, attentionCheck3, mobileBreakerTrial, attentionCheck4, mobileBreakerTrial);
 
 const multiple_brand_trials_with_check = multi_main_flat.map(t => wrapTrialWithRTCheck(t));
 timeline.push(...multiple_brand_trials_with_check);
@@ -2111,8 +2111,7 @@ timeline.push({
       padding: 5vh 5vw;
     ">
       <p>🎉 Thank you for participating!</p>
-      <p> Please keep this window open </p>
-      <p> until you are redirected.</p>
+     
     </div>
   `,
   choices: "NO_KEYS",
@@ -2145,11 +2144,11 @@ console.log("✅ Cleaned trials count:", allData.length);
 
       console.log("✅ Firebase write successful. Key:", snapshot.key);
 
-      window.location.href = `https://sample.savanta.com/v2/c/?id=${external_id}`;
+      // window.location.href = `https://sample.savanta.com/v2/c/?id=${external_id}`;
     } catch (e) {
       console.error("❌ Firebase write failed:", e);
       setTimeout(() => {
-        window.location.href = `https://sample.savanta.com/v2/c/?id=${external_id}`;
+        // window.location.href = `https://sample.savanta.com/v2/c/?id=${external_id}`;
       }, 3000);
     }
   }
