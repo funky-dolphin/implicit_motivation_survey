@@ -1454,13 +1454,13 @@ function wrapPretestBlock(trials, minCorrect, partLabel) {
       ...(respondentIsMobile ? [mobileBreakerTrial] : [])
     ],
 
-    loop_function: function() {
-      const blockData = jsPsych.data.get().last(trials.length)
-        .filter(d => d.part === partLabel && d.trial_category !== "mobile_breaker");
+   loop_function: function() {
+  const allRecent = jsPsych.data.get()
+    .filter(d => d.part === partLabel && d.trial_category !== "mobile_breaker");
 
-      const correctCount = blockData.filter({accurate: true}).count();
-      return correctCount < minCorrect;
-    }
+  const correctCount = allRecent.filter({accurate: true}).count();
+  return correctCount < minCorrect;
+}
   };
 }
 
