@@ -638,8 +638,8 @@ function generateFlatMultiBrandTrials(trialVars, respondentId, partLabel, isPret
 
         // 📱 Mobile layout
         return `<div style="text-align:center; padding:4vh 5vw;">
-                  <p style="font-size:1.2rem; color:#999;">Which brand best represents:</p>
-                  <p style="font-size:1.6rem; font-weight:700; color:#111; margin-bottom:4vh;">${attr}</p>
+                  <p style="font-size:1.5rem; color:#999;">Which brand best represents:</p>
+                  <p style="font-size:3.4rem; font-weight:700; color:#111; margin-bottom:4vh;">${attr}</p>
                 </div>`;
       },
       choices: respondentIsMobile ? ['0','1','2','3'] : ['a','s','k','l'],
