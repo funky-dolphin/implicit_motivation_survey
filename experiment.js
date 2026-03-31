@@ -2,8 +2,8 @@ function isMobileDevice() {
   return /Android|iPhone|iPad|iPod|Mobile|Tablet/i.test(navigator.userAgent);
 }
 
-const minRT = 250;
-const maxRT = 6000;
+const minRT = 200;
+const maxRT = 8500;
 
 const respondentIsMobile = isMobileDevice();
 
@@ -16,7 +16,7 @@ function getQueryParam(param) {
   return urlParams.get(param);
 }
 
-const external_id = getQueryParam("id") || "UNKNOWN";
+// const external_id = getQueryParam("id") || "UNKNOWN";
 
 
 
@@ -35,11 +35,11 @@ const jsPsych = initJsPsych({
 //   }
 // });
 
-jsPsych.data.addProperties({ external_id: external_id, moble: respondentIsMobile });
+jsPsych.data.addProperties({moble: respondentIsMobile });
 
 
 
-const respondent_id = jsPsych.randomization.randomID(10);
+const respondent_id = getQueryParam("id") || "UNKNOWN";
 const timeline = [];
 
 const mobileBreakerTrial = {
@@ -629,9 +629,9 @@ function generateFlatMultiBrandTrials(trialVars, respondentId, partLabel, isPret
                 <p style="font-size:1.5rem; color:#666;">Which image best represents:</p>
                 <p style="font-size:2.2rem; font-weight:700; color:#111;">${attr}</p>
               </div>
-              <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(clamp(180px, 22vw, 240px), 1fr));
-                          gap:clamp(20px, 3vw, 48px); width:min(1100px, 96vw); margin-inline:auto; justify-items:center;">
-                ${imageBlocks}
+              <div style="display:grid; grid-template-columns:repeat(4, clamp(180px, 22vw, 240px));
+            gap:clamp(20px, 3vw, 48px); margin-inline:auto; justify-content:center; width:fit-content;">
+            ${imageBlocks}
               </div>
             </div>`;
         }
@@ -1403,11 +1403,13 @@ function wrapPretestBlock(trials, minCorrect, partLabel) {
       {
         type: respondentIsMobile ? jsPsychHtmlButtonResponse : jsPsychHtmlKeyboardResponse,
         stimulus: function() {
-          const blockData = jsPsych.data.get().last(trials.length)
-            .filter(d => d.part === partLabel && d.trial_category !== "mobile_breaker");
+        const allRecent = jsPsych.data.get()
+                .filter(d => d.part === partLabel && 
+                 d.trial_category !== "mobile_breaker" && 
+                 !d.is_feedback);
 
-          const correctCount = blockData.filter({accurate: true}).count();
-          const totalCount   = blockData.count();
+          const lastAttempt = allRecent.values().slice(-trials.length);
+          const correctCount = lastAttempt.filter(d => d.accurate === true).length;
 
           if (correctCount >= minCorrect) {
             return `
@@ -1454,17 +1456,24 @@ function wrapPretestBlock(trials, minCorrect, partLabel) {
       ...(respondentIsMobile ? [mobileBreakerTrial] : [])
     ],
 
-    loop_function: function() {
-      const blockData = jsPsych.data.get().last(trials.length)
-        .filter(d => d.part === partLabel && d.trial_category !== "mobile_breaker");
+  loop_function: function() {
+  const allRecent = jsPsych.data.get()
+    .filter(d => d.part === partLabel && 
+                 d.trial_category !== "mobile_breaker" && 
+                 !d.is_feedback);
 
-      const correctCount = blockData.filter({accurate: true}).count();
-      return correctCount < minCorrect;
-    }
-  };
+  // Only look at the most recent attempt
+  const lastAttempt = allRecent.values().slice(-trials.length);
+  const correctCount = lastAttempt.filter(d => d.accurate === true).length;
+
+  console.log("correctCount:", correctCount);
+  console.log("minCorrect:", minCorrect);
+
+  return correctCount < minCorrect;
 }
 
-
+  };
+}
 
 
 
@@ -1485,11 +1494,14 @@ const preload = {
    'pretest_img/pretest_ocean.png',
    'pretest_img/pretest_clock.png',
    'img/FCBNY_Logo.png',
-   'img/doritos1.png',
-   'img/lays1.png',
-   'img/pringles1.png',
-   'img/takis1.png',
-   'img/ritz1.png']
+   'img/BANQUE POPULAIRE.png',
+   'img/BNP-Paribas.png',
+   'img/BoursoBank.png',
+   'img/Caisse-Epargne.png',
+   'img/Credit-Agricole.png',
+   'img/CIC.png',
+   'img/Credit-Mutuel.png',
+  'img/Revolut.png']
 }
 
 timeline.push(preload);
@@ -1523,12 +1535,6 @@ timeline.push({
       text-align: center;
       padding: 5vw;
     "> 
-      <img src="img/FCBNY_Logo.png" style="
-        width: 100vw;
-        max-width: 700px;
-        height: auto;
-        margin-bottom: 4vh;
-      "/>
       <p1 style="font-size: clamp(1.6rem, 4.0vw, 2rem); font-weight: 600; margin-bottom: 2vh;">
         Bienvenue à notre sondage Implicit Association!
       </p>
@@ -2034,7 +2040,7 @@ timeline: multi_pretest_intro});
 //------------------------------------------------------------------------------------------------------
 const multi_pretest_flat = generateFlatMultiBrandTrials(pretest_trials_multiple, respondent_id, "pretest_multiple_implicit", true);
 console.log(multi_pretest_flat);
-const multipretestBlock = wrapPretestBlock(multi_pretest_flat, 7, "pretest_single_implicit");
+const multipretestBlock = wrapPretestBlock(multi_pretest_flat, 7, "pretest_multiple_implicit");
 timeline.push(multipretestBlock);
 
 
