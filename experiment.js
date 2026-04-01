@@ -39,7 +39,7 @@ jsPsych.data.addProperties({moble: respondentIsMobile });
 
 
 
-const respondent_id = getQueryParam("id") || "UNKNOWN";
+const respondent_id = getQueryParam("id") || jsPsych.randomization.randomID(10).replace(/[.#$\[\]/%]/g, '_');
 const timeline = [];
 
 const mobileBreakerTrial = {
