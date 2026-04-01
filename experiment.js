@@ -2150,24 +2150,19 @@ console.log("✅ Cleaned trials count:", allData.length);
 
 // ... later in your submit handler:
 try {
-  const snapshot = await database
-    .ref(`miat_results/${survey_name}`)
-    .push(allData);
+      const snapshot = await database
+        .ref(`miat_results/${survey_name}`)
+        .push(allData);
 
-  console.log("✅ Firebase write successful. Key:", snapshot.key);
+      console.log("✅ Firebase write successful. Key:", snapshot.key);
 
-  // Redirect back to Forsta's return URL (not directly to Savanta)
-  if (returnUrl) {
-    window.location.href = returnUrl;
-  }
-} catch (e) {
-  console.error("❌ Firebase write failed:", e);
-
-  // Optional: still return so the survey can continue / show error on their side
-  if (returnUrl) {
-    window.location.href = returnUrl;
-  }
-}
+      window.location.href = `https://sample.savanta.com/v2/c/?id=${external_id}`;
+    } catch (e) {
+      console.error("❌ Firebase write failed:", e);
+      setTimeout(() => {
+        window.location.href = `https://sample.savanta.com/v2/c/?id=${external_id}`;
+      }, 3000);
+    }
   }
 });
 
