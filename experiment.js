@@ -1239,7 +1239,7 @@ function wrapTrialWithRTCheck(trial) {
           }
           if (lastReal.rt > maxRT) {
             return `<p style="font-size:2rem; color:red;">
-                      🐢 Torp lent! Veuillez répondre plus vite svp.<br>
+                      🐢 Trop lent! Veuillez répondre plus vite svp.<br>
                       ${respondentIsMobile ? "" : "Appuyez sur n'importe quelle touche pour répéter."}
                     </p>`;
           }
@@ -1536,7 +1536,7 @@ timeline.push({
       padding: 5vw;
     "> 
       <p1 style="font-size: clamp(1.6rem, 4.0vw, 2rem); font-weight: 600; margin-bottom: 2vh;">
-        Bienvenue à notre sondage Implicit Association!
+        Bienvenue à notre sondage Association Implicite!
       </p>
       <p style="font-size: clamp(1.4rem, 4.5vw, 2rem); margin-bottom: 1vh;">
         Merci pour votre temps!
@@ -1544,7 +1544,7 @@ timeline.push({
       ${
         respondentIsMobile
           ? ""
-          : '<p style="font-size: clamp(1rem, 3vw, 1.3rem); margin-bottom: 3vh;">Appuyez sur la barre despace pour continuer.</p>'
+          : '<p style="font-size: clamp(1rem, 3vw, 1.3rem); margin-bottom: 3vh;">Appuyez sur la barre d\'espace pour continuer.</p>'
       }
       <p style="color: white; font-size: clamp(0.8rem, 2.5vw, 1rem); margin-top: 5vh;">
         Program built by Nicholas Brereton
@@ -1941,11 +1941,11 @@ const single_implicit_completition_trial = {
   type: respondentIsMobile ? jsPsychHtmlButtonResponse : jsPsychHtmlKeyboardResponse,
   stimulus: `
     <div style="text-align:center;">
-      <p style="font-size: 3rem;">La 1 partie est terminée!</p>
+      <p style="font-size: 3rem;">La partie 1 est terminée!</p>
       ${
         respondentIsMobile
           ? '' // mobile will have a button
-          : '<p>Appuyez sur n`importe quelle touche pour passer à la 2e partie.</p>'
+          : '<p>Appuyez sur n\'importe quelle touche pour passer à la 2e partie.</p>'
       }
     </div>
   `,
