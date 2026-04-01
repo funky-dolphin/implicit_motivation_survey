@@ -40,7 +40,9 @@ jsPsych.data.addProperties({moble: respondentIsMobile });
 const raw = getQueryParam("id") || jsPsych.randomization.randomID(10);
 console.log("Raw ID:", raw);
 
-const respondent_id = raw.replace(/[.#$\[\]/%]/g, '_');
+const respondent_id = raw ==="[id_value]"
+? `id_value_${jsPsych.randomization.randomID(10)}`
+: raw.replace(/[.#$\[\]/%]/g, '_');
 console.log("Sanitized ID:", respondent_id);
 
 // const respondent_id = getQueryParam("id") || jsPsych.randomization.randomID(10).replace(/[.#$\[\]/%]/g, '_');
