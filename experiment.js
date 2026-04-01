@@ -2151,8 +2151,8 @@ console.log("✅ Cleaned trials count:", allData.length);
 // ... later in your submit handler:
 try {
       const snapshot = await database
-        .ref(`miat_results/${survey_name}`)
-        .push(allData);
+        .ref(`miat_results/${survey_name}/${respondent_id}`)
+        .set(allData);
 
       console.log("✅ Firebase write successful. Key:", snapshot.key);
 
