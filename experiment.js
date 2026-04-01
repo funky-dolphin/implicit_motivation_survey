@@ -626,7 +626,7 @@ function generateFlatMultiBrandTrials(trialVars, respondentId, partLabel, isPret
             <div style="display:flex; flex-direction:column; align-items:center; padding:4vh 4vw; width:100%;">
               <div style="background:#ddd; border-radius:16px; padding:3vh 5vw;
                           width:min(800px, 90vw); text-align:center; margin:0 auto 4vh;">
-                <p style="font-size:1.5rem; color:#666;">Which image best represents:</p>
+                <p style="font-size:1.5rem; color:#666;">Quelle image représente le mieux:</p>
                 <p style="font-size:2.2rem; font-weight:700; color:#111;">${attr}</p>
               </div>
               <div style="display:grid; grid-template-columns:repeat(4, clamp(180px, 22vw, 240px));
@@ -638,7 +638,7 @@ function generateFlatMultiBrandTrials(trialVars, respondentId, partLabel, isPret
 
         // 📱 Mobile layout
         return `<div style="text-align:center; padding:4vh 5vw;">
-                  <p style="font-size:1.2rem; color:#999;">Which brand best represents:</p>
+                  <p style="font-size:1.2rem; color:#999;">Quelle marque représente le mieux:</p>
                   <p style="font-size:1.6rem; font-weight:700; color:#111; margin-bottom:4vh;">${attr}</p>
                 </div>`;
       },
@@ -2156,11 +2156,11 @@ try {
 
       console.log("✅ Firebase write successful. Key:", snapshot.key);
 
-      window.location.href = `https://sample.savanta.com/v2/c/?id=${external_id}`;
+      window.location.href = `https://sample.savanta.com/v2/c/?id=${respondent_id}`;
     } catch (e) {
       console.error("❌ Firebase write failed:", e);
       setTimeout(() => {
-        window.location.href = `https://sample.savanta.com/v2/c/?id=${external_id}`;
+        window.location.href = `https://sample.savanta.com/v2/c/?id=${respondent_id}`;
       }, 3000);
     }
   }
