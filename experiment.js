@@ -3,7 +3,7 @@ function isMobileDevice() {
 }
 
 const minRT = 250;
-const maxRT = 7000;
+const maxRT = 8000;
 
 const respondentIsMobile = isMobileDevice();
 
@@ -952,7 +952,7 @@ function makeTrial(img, attr, respondentId) {
 
 return trial};
 
-const pretest_trials = generatePretestTrials(pretest_images, pretest_attributes, respondent_id, 'balanced').splice(0, 5);
+const pretest_trials = generatePretestTrials(pretest_images, pretest_attributes, respondent_id, 'balanced');
 
 // ✅ Flatten directly into main timeline
 
@@ -984,7 +984,7 @@ function generateMultiplePretestTrials(attributes, images) {
 
   return jsPsych.randomization.shuffle(trials);
 }
-const pretest_trials_multiple = generateMultiplePretestTrials(pretest_attributes_multiple, pretest_images_multiple).splice(0, 5);
+const pretest_trials_multiple = generateMultiplePretestTrials(pretest_attributes_multiple, pretest_images_multiple);
 
 console.log(pretest_trials_multiple);
 
@@ -1485,14 +1485,14 @@ const preload = {
    'pretest_img/pretest_ocean.png',
    'pretest_img/pretest_clock.png',
    'img/FCBNY_Logo.png',
-   "img/Burger_King_logo.png",
-   "img/Chipotle_logo.png",
-   "img/Jersey_Mikes_logo.png",
-   "img/jimmyjohns_logo.png",
-   "img/KFC_logo.png",
-   "img/McDonalds_logo.png",
-   "img/pizza_hut_logo.png",
-   "img/Subway_logo.png",
+   "img/Amex_logo.png",
+   "img/Barclays_logo.png",
+   "img/HSBC_logo.png",
+   "img/Klarna_logo.png",
+   "img/Mastercard_logo.png",
+   "img/PayPal_logo.png",
+   "img/Revolut_logo.png",
+   "img/Visa_logo.png"
    ]
 }
 
@@ -1703,7 +1703,7 @@ timeline.push({
 //-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 //--------ADDING SINGLE PRE-TEST TRIALS TO TIMELINE------------------------------------------------------------------------------------------------
 
-const pretestBlock = wrapPretestBlock(pretest_trials, 2 , "pretest_single_implicit");
+const pretestBlock = wrapPretestBlock(pretest_trials, 6 , "pretest_single_implicit");
 timeline.push(pretestBlock);
 //------------------------------------------------------------------------------------------------------
 
@@ -1902,9 +1902,9 @@ timeline.push({
 
 const categoryFit_flat = generateFlatTrials(category_fit_trials, respondent_id, "Single Category IAT");
 
-// const insertSingeAttentionTests = Math.floor(categoryFit_flat.length / 2);
-// categoryFit_flat.splice(insertSingeAttentionTests, 0, attentionCheck1, attentionCheck2);
-// console.log(categoryFit_flat);
+const insertSingeAttentionTests = Math.floor(categoryFit_flat.length / 2);
+categoryFit_flat.splice(insertSingeAttentionTests, 0, attentionCheck1, attentionCheck2);
+console.log(categoryFit_flat);
 
 const singleTrialsWithCheck = categoryFit_flat.map(t => wrapTrialWithRTCheck(t));
 timeline.push(...singleTrialsWithCheck);
@@ -2034,7 +2034,7 @@ timeline: multi_pretest_intro});
 //------------------------------------------------------------------------------------------------------
 const multi_pretest_flat = generateFlatMultiBrandTrials(pretest_trials_multiple, respondent_id, "pretest_multiple_implicit", true);
 console.log(multi_pretest_flat);
-const multipretestBlock = wrapPretestBlock(multi_pretest_flat, 2, "pretest_single_implicit");
+const multipretestBlock = wrapPretestBlock(multi_pretest_flat, 6, "pretest_multiple_implicit");
 timeline.push(multipretestBlock);
 
 
@@ -2094,8 +2094,8 @@ timeline.push({
 // Multiple Implicit Brand Test
 //------------------------------------------------------------------------------------------------------
 const multi_main_flat = generateFlatMultiBrandTrials(multi_brand_trials, respondent_id, "Multiple IAT");
-// const insertMultiAttentionTests = Math.floor(multi_main_flat.length / 2);
-// multi_main_flat.splice(insertMultiAttentionTests, 0, attentionCheck3, mobileBreakerTrial, attentionCheck4, mobileBreakerTrial);
+const insertMultiAttentionTests = Math.floor(multi_main_flat.length / 2);
+multi_main_flat.splice(insertMultiAttentionTests, 0, attentionCheck3, mobileBreakerTrial, attentionCheck4, mobileBreakerTrial);
 
 const multiple_brand_trials_with_check = multi_main_flat.map(t => wrapTrialWithRTCheck(t));
 timeline.push(...multiple_brand_trials_with_check);
@@ -2145,11 +2145,11 @@ console.log("✅ Cleaned trials count:", allData.length);
 
       console.log("✅ Firebase write successful. Key:", snapshot.key);
 
-      // window.location.href = `https://sample.savanta.com/v2/c/?id=${external_id}`;
+      window.location.href = `https://sample.savanta.com/v2/c/?id=${external_id}`;
     } catch (e) {
       console.error("❌ Firebase write failed:", e);
       setTimeout(() => {
-        // window.location.href = `https://sample.savanta.com/v2/c/?id=${external_id}`;
+        window.location.href = `https://sample.savanta.com/v2/c/?id=${external_id}`;
       }, 3000);
     }
   }
