@@ -9,7 +9,7 @@ const brands = [
     {name:"Visa", img:"img/Visa_logo.png"}
   ];
 
-const category = "Banks"
+const category = "Money & Payment Services"
 const attributes =[
 "bold",
 "freedom",
