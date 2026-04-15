@@ -16,7 +16,7 @@ function getQueryParam(param) {
   return urlParams.get(param);
 }
 
-const external_id = getQueryParam("id") || "UNKNOWN";
+// const external_id = getQueryParam("id") || "UNKNOWN";
 
 
 
@@ -35,11 +35,20 @@ const jsPsych = initJsPsych({
 //   }
 // });
 
-jsPsych.data.addProperties({ external_id: external_id, moble: respondentIsMobile });
+jsPsych.data.addProperties({mobile: respondentIsMobile });
 
 
 
-const respondent_id = jsPsych.randomization.randomID(10);
+// const respondent_id = jsPsych.randomization.randomID(10);
+
+const raw = getQueryParam("id") || jsPsych.randomization.randomID(10);
+console.log("Raw ID:", raw);
+
+const respondent_id = raw ==="[id_value]"
+? `id_value_${jsPsych.randomization.randomID(10)}`
+: raw.replace(/[.#$\[\]/%]/g, '_');
+console.log("Sanitized ID:", respondent_id);
+
 const timeline = [];
 
 const mobileBreakerTrial = {
@@ -2138,22 +2147,22 @@ console.log(allData[1]);
 console.log("✅ Cleaned trials count:", allData.length);
 
 
-    try {
-      const snapshot = await database
-        .ref(`miat_results/${survey_name}`)
-        .push(allData);
+  try {
+  await database
+    .ref(`miat_results/${survey_name}/${respondent_id}`)
+    .set(allData);
 
-      console.log("✅ Firebase write successful. Key:", snapshot.key);
+  console.log("✅ Firebase write successful. Key:", respondent_id);
 
-      window.location.href = `https://sample.savanta.com/v2/c/?id=${external_id}`;
-    } catch (e) {
-      console.error("❌ Firebase write failed:", e);
-      setTimeout(() => {
-        window.location.href = `https://sample.savanta.com/v2/c/?id=${external_id}`;
-      }, 3000);
-    }
+  window.location.href = `https://sample.savanta.com/v2/c/?id=${respondent_id}`;
+} catch (e) {
+  console.error("❌ Firebase write failed:", e);
+  setTimeout(() => {
+    window.location.href = `https://sample.savanta.com/v2/c/?id=${respondent_id}`;
+  }, 3000);
   }
-});
+    }
+  });
 
 console.log(timeline)
 jsPsych.run(timeline);
