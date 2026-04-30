@@ -1494,14 +1494,14 @@ const preload = {
    'pretest_img/pretest_ocean.png',
    'pretest_img/pretest_clock.png',
    'img/FCBNY_Logo.png',
-   "img/Amex_logo.png",
-   "img/Barclays_logo.png",
-   "img/HSBC_logo.png",
-   "img/Klarna_logo.png",
-   "img/Mastercard_logo.png",
-   "img/PayPal_logo.png",
-   "img/Revolut_logo.png",
-   "img/Visa_logo.png"
+   "img/Aetna.png",
+   "img/ambetter.png",
+   "img/blue cross blue shield.png",
+   "img/Cigna.png",
+   "img/Florida Blue.png",
+   "img/Humana.png",
+   "img/Oscar.png",
+   "img/United Health Care.png"
    ]
 }
 

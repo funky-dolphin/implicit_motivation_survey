@@ -1,12 +1,12 @@
 const brands = [
-    { name: "Amex", img: "img/Amex_logo.png" },
-    { name: "Barclays", img: "img/Barclays_logo.png" }, 
-    { name: "HSBC", img:"img/HSBC_logo.png"}, 
-    { name: "Klarna", img:"img/Klarna_logo.png"},
-    { name: "Mastercard", img: "img/Mastercard_logo.png"},
-    { name: "PayPal", img: "img/PayPal_logo.png"},
-    {name: "Revolut", img: "img/Revolut_logo.png"},
-    {name:"Visa", img:"img/Visa_logo.png"}
+    { name: "Aetna", img: "img/Aetna.png" },
+    { name: "Ambetter", img: "img/ambetter.png" }, 
+    { name: "Blue Cross Blue Shield", img:"img/blue cross blue shield.png"}, 
+    { name: "Cigna", img:"img/Cigna.png"},
+    { name: "Florida Blue", img: "img/Florida Blue.png"},
+    { name: "Humana", img: "img/Humana.png"},
+    {name: "Oscar", img: "img/Oscar.png"},
+    {name:"United Health Care", img:"img/United Health Care.png"}
   ];
 
 const category = "Money & Payment Services"
