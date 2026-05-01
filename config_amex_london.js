@@ -89,4 +89,4 @@ const pretest_images_multiple = [
 ]
 
 
-const survey_name = "Florida_Blue_b2b"
+const survey_name = "Florida_Blue_hcp"
