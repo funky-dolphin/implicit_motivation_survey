@@ -9,7 +9,7 @@ const brands = [
     {name:"United Health Care", img:"img/United Health Care.png"}
   ];
 
-const category = "Money & Payment Services"
+const category = "Health Insurance Brands"
 const attributes =[
 "adventure",
 "freedom",
@@ -89,4 +89,4 @@ const pretest_images_multiple = [
 ]
 
 
-const survey_name = "Amex_London"
+const survey_name = "Florida_Blue_Gen_Pop"
