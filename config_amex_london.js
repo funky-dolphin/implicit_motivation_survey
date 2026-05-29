@@ -2,7 +2,7 @@ const brands = [
     { name: "Bejeweled", img: "img/bewjewled_app.jpg" },
     { name: "Candy Crush", img: "img/candy_crush.png" }, 
     { name: "Clash of Clans", img:"img/clash_of_clans_app.png" }, 
-    { name: "Gossip Harbor", img:"img/gossip_harbor.png"},
+    { name: "Gossip Harbor", img:"img/gossip_harbor.jpeg"},
     { name: "Monopoly Go", img: "img/monopoly_go.png"},
     { name: "Wordle", img: "img/NYTIMES.jpg"},
     {name: "Royal Kingdom", img: "img/Royal_Kingdom.jpg"},

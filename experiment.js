@@ -1501,7 +1501,7 @@ const preload = {
    "img/bewjewled_app.jpg",
    "img/candy_crush.png",
     "img/clash_of_clans_app.png",
-    "img/gossip_harbor.png",
+    "img/gossip_harbor.jpeg",
     "img/monopoly_go.png",
     "img/NYTIMES.jpg",
     "img/Royal_Kingdom.jpg",
