@@ -1498,15 +1498,15 @@ const preload = {
    'pretest_img/pretest_ocean.png',
    'pretest_img/pretest_clock.png',
    'img/FCBNY_Logo.png',
-   "img/Aetna.png",
-   "img/ambetter.png",
-   "img/blue cross blue shield.png",
-   "img/Cigna.png",
-   "img/Florida Blue.png",
-   "img/Humana.png",
-   "img/Oscar.png",
-   "img/United Health Care.png"
-   ]
+   "img/bewjewled_app.jpg",
+   "img/candy_crush.png",
+    "img/clash_of_clans_app.png",
+    "img/gossip_harbor.png",
+    "img/monopoly_go.png",
+    "img/NYTIMES.jpg",
+    "img/Royal_Kingdom.jpg",
+    "img/whiteout_survival.jpg"
+  ]
 }
 
 timeline.push(preload);
