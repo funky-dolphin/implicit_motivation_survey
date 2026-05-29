@@ -624,6 +624,7 @@ function generateFlatMultiBrandTrials(trialVars, respondentId, partLabel, isPret
                         text-align:center; box-shadow:0 6px 16px rgba(0,0,0,0.1);
                         display:flex; flex-direction:column; align-items:center; gap:12px;">
               <img src="${img}" style="width:100%; aspect-ratio:1/1; object-fit:contain;" />
+              <div style="font-size:1rem; font-weight:600; color:#333;">${imageNames[i]}</div>
               <div style="background:${brandKeyColors[i]};
                           border-radius:8px; padding:8px 10px;
                           font-weight:bold; font-family:'Courier New', monospace; font-size:18px;">
@@ -655,9 +656,12 @@ function generateFlatMultiBrandTrials(trialVars, respondentId, partLabel, isPret
       button_html: respondentIsMobile
         ? (choice, index) => {
             const img = imagePaths[index];
-            return `<button style="background:none; border:none; width:47%; aspect-ratio:1/1;
-                                    border-radius:12px; box-shadow:0 4px 12px rgba(0,0,0,0.15); overflow:hidden;">
-                      <img src="${img}" style="width:100%; height:100%; object-fit:contain;" />
+            const name = imageNames[index];
+            return `<button style="background:#fff; border:none; width:47%; aspect-ratio:1/1;
+                                    border-radius:12px; box-shadow:0 4px 12px rgba(0,0,0,0.15);
+                                    display:flex; flex-direction:column; align-items:center; justify-content:center; padding:8px; gap:6px;">
+                      <img src="${img}" style="width:100%; flex:1; object-fit:contain; min-height:0;" />
+                      <div style="font-size:clamp(0.7rem, 2.5vw, 0.9rem); font-weight:600; color:#333;">${name}</div>
                     </button>`;
           }
         : undefined,
