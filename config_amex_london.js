@@ -5,7 +5,7 @@ const brands = [
     { name: "Gossip Harbor", img:"img/gossip_harbor.jpeg"},
     { name: "Monopoly Go", img: "img/monopoly_go.png"},
     { name: "Wordle", img: "img/NYTIMES.jpg"},
-    {name: "Royal Kingdom", img: "img/Royal_Kingdom.jpg"},
+    {name: "Royal Match", img: "img/Royal_Match_app_icon.png"},
     {name:"Whiteout Survival", img:"img/whiteout_survival.jpg"}
   ];
 
