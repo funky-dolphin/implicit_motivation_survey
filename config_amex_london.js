@@ -92,4 +92,4 @@ const pretest_images_multiple = [
 ]
 
 
-const survey_name = "Royal_Kingdom_Survey"
+const survey_name = "Royal_Match_Survey"
