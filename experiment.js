@@ -1499,17 +1499,17 @@ const preload = {
    'pretest_img/pretest_clock.png',
    'img/FCBNY_Logo.png',
    "img/athletic.png",
-"img/Best_Day_Logo.png",
-"img/Corona_Cero_Logo_Blue.jpg", 
-"img/heineken_00.png",
-"img/MicUltraZero.png",
-"img/peroni_0.webp",
-"img/sierra_nevada.png",
-"img/stella_0.png",
+    "img/bells.webp",
+    "img/corona-logo.png",
+    "img/Heineken-Logo.png",
+    "img/Modelo-Logo.png",
+    "img/peroni_logo.png",
+    "img/Sierra_nevada1.png",
+    "img/Stella-Artois-Logo.png",
   ]
 }
 
-
+   
 
 
 timeline.push(preload);

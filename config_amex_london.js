@@ -1,15 +1,15 @@
 const brands = [
-    { name: "Athletic", img: "img/athletic.png" },
-    { name: "Best Day", img: "img/Best_Day_Logo.png" }, 
-    { name: "Corona Cero", img:"img/Corona_Cero_Logo_Blue.jpg" }, 
-    { name: "Heineken", img:"img/heineken_00.png"},
-    { name: "Micholob Ultra", img: "img/MicUltraZero.png"},
-    { name: "Peroni", img: "img/peroni_0.webp"},
-    {name: "Sierra Nevada", img: "img/sierra_nevada.png "},
-    {name:"Stella Artois", img:"img/stella_0.png"}
+    { name: "Athletic", img:"img/athletic.png" },
+    { name: "Bell's Brewery", img:"img/bells.webp" }, 
+    { name: "Corona", img:"img/corona-logo.png" }, 
+    { name: "Heineken", img:"img/Heineken-Logo.png"},
+    { name: "Modelo", img: "img/Modelo-Logo.png"},
+    { name: "Peroni", img: "img/peroni_logo.png"},
+    {name: "Sierra Nevada", img: "img/Sierra_nevada1.png"},
+    {name:"Stella Artois", img:"img/Stella-Artois-Logo.png"}
   ];
 
-const category = "Non-Alcoholic Beers"
+const category = "Beer"
 const attributes =[
 "adventure",
 "freedom",
@@ -107,4 +107,4 @@ const pretest_images_multiple = [
 ]
 
 
-const survey_name = "Athletic Non-Alcoholic Beers"
+const survey_name = "Athletic Alcoholic Beers"
