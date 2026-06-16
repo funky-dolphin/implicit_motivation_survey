@@ -1498,16 +1498,19 @@ const preload = {
    'pretest_img/pretest_ocean.png',
    'pretest_img/pretest_clock.png',
    'img/FCBNY_Logo.png',
-   "img/bewjewled_app.jpg",
-   "img/candy_crush.png",
-    "img/clash_of_clans_app.png",
-    "img/gossip_harbor.jpeg",
-    "img/monopoly_go.png",
-    "img/NYTIMES.jpg",
-    "img/Royal_Match_app_icon.png",
-    "img/whiteout_survival.jpg"
+   "img/athletic.png",
+"img/Best_Day_Logo.png",
+"img/Corona_Cero_Logo_Blue.jpg", 
+"img/heineken_00.png",
+"img/MicUltraZero.png",
+"img/peroni_0.webp",
+"img/sierra_nevada.png",
+"img/stella_0.png",
   ]
 }
+
+
+
 
 timeline.push(preload);
 
