@@ -107,4 +107,4 @@ const pretest_images_multiple = [
 ]
 
 
-const survey_name = "Athletic Alcoholic Beers"
+const survey_name = "Athletic_Alcoholic_Beers"
