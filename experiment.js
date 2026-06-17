@@ -3,7 +3,7 @@ function isMobileDevice() {
 }
 
 const minRT = 250;
-const maxRT = 8000;
+const maxRT = 9000;
 
 const respondentIsMobile = isMobileDevice();
 
