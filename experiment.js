@@ -1500,14 +1500,13 @@ const preload = {
    'pretest_img/pretest_ocean.png',
    'pretest_img/pretest_clock.png',
    'img/FCBNY_Logo.png',
-   'img/BANQUE POPULAIRE.png',
-   'img/BNP-Paribas.png',
-   'img/BoursoBank.png',
-   'img/Caisse-Epargne.png',
-   'img/Credit-Agricole.png',
-   'img/CIC.png',
-   'img/Credit-Mutuel.png',
-  'img/Revolut.png']
+   "img/black_market.png",
+   "img/amazon.jpg", 
+   "img/discount.png", 
+   "img/leboncoin.png",
+   "img/Temu.png",
+   "img/vinted.png",
+]
 }
 
 timeline.push(preload);

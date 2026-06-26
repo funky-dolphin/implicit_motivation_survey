@@ -1,34 +1,31 @@
 const brands = [
-    { name: "Banque Populaire", img: "img/BANQUE POPULAIRE.png" },
-    { name: "BNP Paribas", img: "img/BNP-Paribas.png" }, 
-    { name: "Bourso Bank", img:"img/BoursoBank.png"}, 
-    { name: "Caisse d'Épargne", img:"img/Caisse-Epargne.png"},
-    { name: "CIC", img: "img/CIC.png"},
-    {name: "Credit Agricole", img: "img/Credit-Agricole.png" },
-    {name: "Credit Mutuel", img: "img/Credit-Mutuel.png" },
-    {name: "Revolut", img: "img/Revolut.png" },
+    { name: "Black Market", img: "img/black_market.png" },
+    { name: "Amazon", img: "img/amazon.jpg" }, 
+    { name: "Discount", img:"img/discount.png"}, 
+    { name: "Leboncoin", img:"img/leboncoin.png"},
+    { name: "Temu", img: "img/Temu.png"},
+    {name: "Vinted", img: "img/vinted.png" },
   ];
 
-const category = "Banques"
+const category = "Détaillants en Ligne"
 
 const attributes = [
 "audace",
 "liberté",
-"courage",
 "spontanéité",
 "découverte",
 "non conformisme",
 "dynamisme",
 "innovation",
+"libération",
 "fierté",
-"succès",
 "sophistication",
-"ambition",
 "confiance en soi",
 "statut",
 "autonomie",
+"optimisation",
 "prospérité",
-"contrôle",
+"indépendance",
 "efficacité",
 "praticité",
 "simplicité",
@@ -39,27 +36,27 @@ const attributes = [
 "sécurité",
 "bienveillance",
 "proximité",
-"responsabilité",
 "protection",
 "sérénité",
+"se sentir comme à la maison",
+"appartenance",
 "accompagnement",
 "engagement",
 "joie",
-"insouciance",
 "plaisir",
 "confort",
 "optimisme",
 "ouverture d'esprit",
 "sympathie",
 "générosité",
-"excitation",
 "passion",
 "inspiration",
-"vitalité",
 "réactivité",
 "individualité",
+"curiosité",
+"créativité",
 "progrès",
-"pertinence",
+"modernité"
 ];
 
 
@@ -92,4 +89,4 @@ const pretest_images_multiple = [
 ]
 
 
-const survey_name = "Paris_Caisse_d_Epargne"
+const survey_name = "Leboncoin"
