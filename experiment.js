@@ -1390,6 +1390,10 @@ function wrapTrialWithRTCheck(trial) {
 // }
 
 function wrapPretestBlock(trials, minCorrect, partLabel) {
+  // trials interleaves a "mobile_breaker" filler after each real question on mobile,
+  // but allRecent below excludes breakers — so the window must count only real trials.
+  const realTrialCount = trials.filter(t => t.data?.trial_category !== "mobile_breaker").length;
+
   const mobileBreakerTrial = {
     type: jsPsychHtmlKeyboardResponse,
     stimulus: "",
@@ -1414,7 +1418,7 @@ function wrapPretestBlock(trials, minCorrect, partLabel) {
                  d.trial_category !== "mobile_breaker" && 
                  !d.is_feedback);
 
-          const lastAttempt = allRecent.values().slice(-trials.length);
+          const lastAttempt = allRecent.values().slice(-realTrialCount);
           const correctCount = lastAttempt.filter(d => d.accurate === true).length;
 
           if (correctCount >= minCorrect) {
@@ -1435,7 +1439,7 @@ function wrapPretestBlock(trials, minCorrect, partLabel) {
             `;
           }
         },
-        choices: respondentIsMobile ? ['Continue'] : "ALL_KEYS",
+        choices: respondentIsMobile ? ['Continuer'] : "ALL_KEYS",
         button_html: respondentIsMobile
           ? (choice, index) => `
               <button style="
@@ -1469,7 +1473,7 @@ function wrapPretestBlock(trials, minCorrect, partLabel) {
                  !d.is_feedback);
 
   // Only look at the most recent attempt
-  const lastAttempt = allRecent.values().slice(-trials.length);
+  const lastAttempt = allRecent.values().slice(-realTrialCount);
   const correctCount = lastAttempt.filter(d => d.accurate === true).length;
 
   console.log("correctCount:", correctCount);
@@ -1578,7 +1582,7 @@ timeline.push({
           ">${choice}</button>`;
       }
     : undefined,
-  choices: respondentIsMobile ? ['Begin'] : [' ']
+  choices: respondentIsMobile ? ['Commencer'] : [' ']
 });
 
 
@@ -1645,7 +1649,7 @@ timeline.push({
           ">${choice}</button>`;
       }
     : undefined,
-  choices: respondentIsMobile ? ['Ready'] : "ALL_KEYS",
+  choices: respondentIsMobile ? ['Prêt'] : "ALL_KEYS",
 });
 
 
@@ -1695,7 +1699,7 @@ timeline.push({
           ">${choice}</button>`;
       }
     : undefined,
-  choices: respondentIsMobile ? ['Begin Pre-Test'] : "ALL_KEYS",
+  choices: respondentIsMobile ? ['Commencer le test préliminaire'] : "ALL_KEYS",
 });
 
 //------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -1890,7 +1894,7 @@ timeline.push({
           ">${choice}</button>`;
       }
     : undefined,
-  choices: respondentIsMobile ? ['Begin'] : 'ALL_KEYS',
+  choices: respondentIsMobile ? ['Commencer'] : 'ALL_KEYS',
 
   save_trial_parameters: {
     stimulus: false
@@ -1972,7 +1976,7 @@ const single_implicit_completition_trial = {
           ">${choice}</button>`;
       }
     : undefined,
-  choices: respondentIsMobile ? ['Continue'] : 'ALL_KEYS',
+  choices: respondentIsMobile ? ['Continuer'] : 'ALL_KEYS',
   save_trial_parameters: {
     stimulus: false
   }
@@ -2025,7 +2029,7 @@ const multiImplicitIntroTrial = {
           ">${choice}</button>`;
       }
     : undefined,
-  choices: respondentIsMobile ? ['Continue'] : 'ALL_KEYS',
+  choices: respondentIsMobile ? ['Continuer'] : 'ALL_KEYS',
   save_trial_parameters: {
     stimulus: false
   }
@@ -2086,7 +2090,7 @@ const multiple_pretest_completion_trial = {
           ">${choice}</button>`;
       }
     : undefined,
-  choices: respondentIsMobile ? ['Continue'] : 'ALL_KEYS',
+  choices: respondentIsMobile ? ['Continuer'] : 'ALL_KEYS',
   save_trial_parameters: {
     stimulus: false
   }
