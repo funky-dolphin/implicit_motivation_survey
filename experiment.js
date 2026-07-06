@@ -46,6 +46,9 @@ const respondent_id = raw ==="[id_value]"
 console.log("Sanitized ID:", respondent_id);
 
 // const respondent_id = getQueryParam("id") || jsPsych.randomization.randomID(10).replace(/[.#$\[\]/%]/g, '_');
+
+va('event', 'survey_started', { mobile: String(respondentIsMobile) });
+
 const timeline = [];
 
 const mobileBreakerTrial = {
@@ -1718,7 +1721,7 @@ timeline.push({
 //-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 //--------ADDING SINGLE PRE-TEST TRIALS TO TIMELINE------------------------------------------------------------------------------------------------
 
-const pretestBlock = wrapPretestBlock(pretest_trials, 6 , "pretest_single_implicit");
+const pretestBlock = wrapPretestBlock(pretest_trials, 3 , "pretest_single_implicit");
 timeline.push(pretestBlock);
 //------------------------------------------------------------------------------------------------------
 
@@ -2049,7 +2052,7 @@ timeline: multi_pretest_intro});
 //------------------------------------------------------------------------------------------------------
 const multi_pretest_flat = generateFlatMultiBrandTrials(pretest_trials_multiple, respondent_id, "pretest_multiple_implicit", true);
 console.log(multi_pretest_flat);
-const multipretestBlock = wrapPretestBlock(multi_pretest_flat, 7, "pretest_multiple_implicit");
+const multipretestBlock = wrapPretestBlock(multi_pretest_flat, 4, "pretest_multiple_implicit");
 timeline.push(multipretestBlock);
 
 
@@ -2157,7 +2160,8 @@ console.log("✅ Cleaned trials count:", allData.length);
   const url = new URL(window.location.href);
   const returnUrl = url.searchParams.get("return-url"); // may be null if not provided
 
-// ... later in your submit handler:
+va('event', 'survey_completed', { mobile: String(respondentIsMobile) });
+
 try {
   await database
     .ref(`miat_results/${survey_name}/${respondent_id}`)
