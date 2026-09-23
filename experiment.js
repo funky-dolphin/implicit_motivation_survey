@@ -201,6 +201,10 @@ const attentionCheck2 = {
 
 
 const attentionCheck3 = {
+  timeline: [
+    ...(respondentIsMobile ? [mobileBreakerTrial] : []), // BEFORE
+
+    {
   type: respondentIsMobile ? jsPsychHtmlButtonResponse : jsPsychHtmlKeyboardResponse,
 
   stimulus: () => `
@@ -293,11 +297,19 @@ const attentionCheck3 = {
 
   data.accurate = (data.user_answer === data.correct_answer);
 }
+    },
+
+    ...(respondentIsMobile ? [mobileBreakerTrial] : []) // AFTER
+  ]
 };
 
 
 
 const attentionCheck4 = {
+  timeline: [
+    ...(respondentIsMobile ? [mobileBreakerTrial] : []), // BEFORE
+
+    {
   type: respondentIsMobile ? jsPsychHtmlButtonResponse : jsPsychHtmlKeyboardResponse,
   stimulus: () => {
     return `
@@ -385,6 +397,10 @@ const attentionCheck4 = {
     }
     data.accurate = (data.user_answer === data.correct_answer);
   }
+    },
+
+    ...(respondentIsMobile ? [mobileBreakerTrial] : []) // AFTER
+  ]
 };
 
 
@@ -1008,6 +1024,7 @@ function generateCategoryFitTrials(category, attributes) {
   }));
 }
 const category_fit_trials = generateCategoryFitTrials(category, attributes);
+const category_fit_trials_2 = generateCategoryFitTrials(category_2, attributes);
 
 
 
@@ -1921,6 +1938,76 @@ timeline.push(...singleTrialsWithCheck);
 
 
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+//Second Single Category IAT (category_2)
+//----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+timeline.push({
+  type: jsPsychHtmlKeyboardResponse,
+  stimulus: '',
+  choices: "NO_KEYS",
+  trial_duration: 20,
+  data: { trial_category: 'mobile_breaker' },
+  on_finish: function(data){
+    data.trial_type = 'mobile_breaker'}
+});
+
+timeline.push({
+  type: respondentIsMobile ? jsPsychHtmlButtonResponse : jsPsychHtmlKeyboardResponse,
+  stimulus: `
+    <div style="text-align:center; font-size: 2rem; font-weight: 500;">
+      <p>Now we will repeat that task for a second category.</p>
+      ${
+        respondentIsMobile
+          ? ''
+          : '<p>Press any key to continue.</p>'
+      }
+    </div>
+  `,
+  button_html: respondentIsMobile
+    ? (choice, index) => {
+        return `
+          <button style="
+            font-size: clamp(2rem, 6.0vw, 6.0rem);
+            font-weight: 500;
+            padding: 2.5vh 6vw;
+            margin-top: 4vh;
+            border-radius: 2.0vw;
+            border: none;
+            background-color: rgba(62, 126, 245, 0.91);
+            color: white;
+            box-shadow: 0 0.5vw 1.5vw rgba(0,0,0,0.2);
+            cursor: pointer;
+            width: 80vw;
+          ">${choice}</button>`;
+      }
+    : undefined,
+  choices: respondentIsMobile ? ['Continue'] : 'ALL_KEYS',
+  save_trial_parameters: {
+    stimulus: false
+  }
+});
+
+timeline.push({
+  type: jsPsychHtmlKeyboardResponse,
+  stimulus: '',
+  choices: "NO_KEYS",
+  trial_duration: 20,
+  data: { trial_category: 'mobile_breaker' },
+  on_finish: function(data){
+    data.trial_type = 'mobile_breaker'}
+});
+
+const categoryFit_flat_2 = generateFlatTrials(category_fit_trials_2, respondent_id, "Single Category IAT 2");
+
+const insertSingeAttentionTests2 = Math.floor(categoryFit_flat_2.length / 2);
+categoryFit_flat_2.splice(insertSingeAttentionTests2, 0, attentionCheck1, attentionCheck2);
+console.log(categoryFit_flat_2);
+
+const singleTrialsWithCheck2 = categoryFit_flat_2.map(t => wrapTrialWithRTCheck(t));
+timeline.push(...singleTrialsWithCheck2);
+
+
+
+//----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 //-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 timeline.push({
@@ -2104,7 +2191,7 @@ timeline.push({
 //------------------------------------------------------------------------------------------------------
 const multi_main_flat = generateFlatMultiBrandTrials(multi_brand_trials, respondent_id, "Multiple IAT");
 const insertMultiAttentionTests = Math.floor(multi_main_flat.length / 2);
-multi_main_flat.splice(insertMultiAttentionTests, 0, attentionCheck3, mobileBreakerTrial, attentionCheck4, mobileBreakerTrial);
+multi_main_flat.splice(insertMultiAttentionTests, 0, attentionCheck3, attentionCheck4);
 
 const multiple_brand_trials_with_check = multi_main_flat.map(t => wrapTrialWithRTCheck(t));
 timeline.push(...multiple_brand_trials_with_check);
