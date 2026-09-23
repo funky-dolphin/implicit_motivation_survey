@@ -1511,14 +1511,15 @@ const preload = {
    'pretest_img/pretest_ocean.png',
    'pretest_img/pretest_clock.png',
    'img/FCBNY_Logo.png',
-   "img/Aetna.png",
-   "img/ambetter.png",
-   "img/blue cross blue shield.png",
-   "img/Cigna.png",
-   "img/Florida Blue.png",
-   "img/Humana.png",
-   "img/Oscar.png",
-   "img/United Health Care.png"
+   "img/microsoft_logo.png",
+   "img/netsuite_logo.png", 
+    "img/oracle-logo.png", 
+    "img/palantir_logo.png",
+    "img/rippling_logo.png",
+    "img/salesforce_logo.png",
+    "img/SAP_logo.png",
+    "img/servicenow_logo.png",
+    "img/workday_logo.png"
    ]
 }
 

@@ -1,12 +1,13 @@
 const brands = [
-    { name: "Aetna", img: "img/Aetna.png" },
-    { name: "Ambetter", img: "img/ambetter.png" }, 
-    { name: "Blue Cross Blue Shield", img:"img/blue cross blue shield.png"}, 
-    { name: "Cigna", img:"img/Cigna.png"},
-    { name: "Florida Blue", img: "img/Florida Blue.png"},
-    { name: "Humana", img: "img/Humana.png"},
-    {name: "Oscar", img: "img/Oscar.png"},
-    {name:"United Health Care", img:"img/United Health Care.png"}
+    { name: "Microsoft", img: "img/microsoft_logo.png" },
+    { name: "Netsuite", img: "img/netsuite_logo.png" }, 
+    { name: "Oracle", img:"img/oracle-logo.png"}, 
+    { name: "Palantir", img:"img/palantir_logo.png"},
+    { name: "Rippling", img: "img/rippling_logo.png"},
+    { name: "Salesforce", img: "img/salesforce_logo.png"},
+    {name: "SAP", img: "img/SAP_logo.png"},
+    {name:"Service Now", img:"img/servicenow_logo.png"},
+    {name:"Workday", img:"img/workday_logo.png"}
   ];
 
 const category = "Enterprise Software Solutions"
