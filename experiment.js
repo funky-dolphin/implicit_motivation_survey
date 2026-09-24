@@ -655,7 +655,7 @@ function generateFlatMultiBrandTrials(trialVars, respondentId, partLabel, isPret
             <div style="display:flex; flex-direction:column; align-items:center; padding:4vh 4vw; width:100%; width: fit-content ">
               <div style="background:#ddd; border-radius:16px; padding:3vh 5vw;
                           width:min(800px, 90vw); text-align:center; margin:0 auto 4vh;">
-                <p style="font-size:1.5rem; color:#666;">Which image best represents:</p>
+                <p style="font-size:1.5rem; color:#666;">Which brand best represents:</p>
                 <p style="font-size:${respondentIsMobile ? '3.5rem' : '2.5rem'}; font-weight:700; color:#111;">${attr}</p>
               </div>
                 <div style="display:grid; grid-template-columns:repeat(4, clamp(180px, 22vw, 240px));
@@ -2221,46 +2221,37 @@ timeline.push({
   on_finish: async function () {
 
     if (hasRedirected) return;
-    hasRedicted = true;
+    hasRedirected = true;
 
-     const FINAL_URL = `https://www.rdsecured.com/return?inbound_code=1000&rdud=${encodeURIComponent(rdud)}`;
+      const FINAL_URL = `https://www.rdsecured.com/return?inbound_code=1000&rdud=${encodeURIComponent(rdud)}`;
+       const allData = jsPsych.data.get().values()
+       .filter(d =>
+        d.trial_type !== "preload" &&
+        d.trial_category !== "mobile_breaker" &&
+        d.trial_type !== "mobile_breaker" &&
+        d.part !== "Breaker" &&
+        !d.is_feedback
+      );
 
-    const allData = jsPsych.data.get().values()
-  .filter(d => 
-    d.trial_type !== "preload" &&            // 🚫 drop preload/meta
-    d.trial_category !== "mobile_breaker" && // 🚫 drop breakers
-    d.trial_type !== "mobile_breaker" &&     // 🚫 catch if it’s stored in trial_type
-    d.part !== "Breaker" &&                  // 🚫 drop "Breaker" part
-    d.stimulus?.toString().trim() !== "" &&  // 🚫 drop blanks
-    !d.is_feedback                           // 🚫 drop feedback
-  )
-  .map(d => ({
-    ...d,
-    mobile: respondentIsMobile   // ✅ add your mobile flag
-  }));
+    let redirected = false;
 
-console.log("✅ Final filtered length:", allData.length);
+    setTimeout(() => {
+      if (!redirected) {
+        window.location.href = FINAL_URL;
+      }
+    }, 2000);
 
-console.log(allData[1]);
-console.log("✅ Cleaned trials count:", allData.length);
+    try {
+      await database.ref(`miat_results/${survey_name}`).push(allData);
 
+      redirected = true;
+      window.location.href = FINAL_URL;
 
-  try {
-  await database
-    .ref(`miat_results/${survey_name}/${respondent_id}`)
-    .set(allData);
-
-  console.log("✅ Firebase write successful. Key:", respondent_id);
-
-  window.location.href = `https://sample.savanta.com/v2/c/?id=${respondent_id}`;
-} catch (e) {
-  console.error("❌ Firebase write failed:", e);
-  setTimeout(() => {
-    window.location.href = `https://sample.savanta.com/v2/c/?id=${respondent_id}`;
-  }, 3000);
-  }
+    } catch (e) {
+      window.location.href = FINAL_URL;
     }
-  });
+  }
+});
 
 console.log(timeline)
 jsPsych.run(timeline);
