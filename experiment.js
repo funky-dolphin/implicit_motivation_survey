@@ -1,3 +1,5 @@
+let hasRedirected = false;
+
 function isMobileDevice() {
   return /Android|iPhone|iPad|iPod|Mobile|Tablet/i.test(navigator.userAgent);
 }
@@ -16,7 +18,9 @@ function getQueryParam(param) {
   return urlParams.get(param);
 }
 
-// const external_id = getQueryParam("id") || "UNKNOWN";
+const rdud = getQueryParam("id") ||
+  getQueryParam("rdud") ||
+   "UNKNOWN";
 
 
 
@@ -35,7 +39,7 @@ const jsPsych = initJsPsych({
 //   }
 // });
 
-jsPsych.data.addProperties({mobile: respondentIsMobile });
+jsPsych.data.addProperties({rdud: rdud, mobile: respondentIsMobile });
 
 
 
@@ -2215,6 +2219,12 @@ timeline.push({
   choices: "NO_KEYS",
   trial_duration: 1000,
   on_finish: async function () {
+
+    if (hasRedirected) return;
+    hasRedicted = true;
+
+     const FINAL_URL = `https://www.rdsecured.com/return?inbound_code=1000&rdud=${encodeURIComponent(rdud)}`;
+
     const allData = jsPsych.data.get().values()
   .filter(d => 
     d.trial_type !== "preload" &&            // 🚫 drop preload/meta
