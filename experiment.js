@@ -628,6 +628,7 @@ function generateFlatMultiBrandTrials(trialVars, respondentId, partLabel, isPret
       type: respondentIsMobile ? jsPsychHtmlButtonResponse : jsPsychHtmlKeyboardResponse,
       stimulus: () => {
         const attr = vars.attribute;  // ✅ no vars.data
+        const promptLabel = isPretest ? "Which image best represents:" : "Which brand best represents:";
         const brandImgs = imagePaths;
         const brandKeys = ['A', 'S', 'K', 'L'];
         const brandKeyColors = [
@@ -655,7 +656,7 @@ function generateFlatMultiBrandTrials(trialVars, respondentId, partLabel, isPret
             <div style="display:flex; flex-direction:column; align-items:center; padding:4vh 4vw; width:100%; width: fit-content ">
               <div style="background:#ddd; border-radius:16px; padding:3vh 5vw;
                           width:min(800px, 90vw); text-align:center; margin:0 auto 4vh;">
-                <p style="font-size:1.5rem; color:#666;">Which brand best represents:</p>
+                <p style="font-size:1.5rem; color:#666;">${promptLabel}</p>
                 <p style="font-size:${respondentIsMobile ? '3.5rem' : '2.5rem'}; font-weight:700; color:#111;">${attr}</p>
               </div>
                 <div style="display:grid; grid-template-columns:repeat(4, clamp(180px, 22vw, 240px));
@@ -667,7 +668,7 @@ function generateFlatMultiBrandTrials(trialVars, respondentId, partLabel, isPret
 
         // 📱 Mobile layout
         return `<div style="text-align:center; padding:4vh 5vw;">
-                  <p style="font-size:1.5rem; color:#999;">Which brand best represents:</p>
+                  <p style="font-size:1.5rem; color:#999;">${promptLabel}</p>
                   <p style="font-size:3.4rem; font-weight:700; color:#111; margin-bottom:4vh;">${attr}</p>
                 </div>`;
       },
