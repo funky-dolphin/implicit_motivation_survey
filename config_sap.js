@@ -10,8 +10,8 @@ const brands = [
     {name:"Workday", img:"img/workday_logo.png"}
   ];
 
-const category = "Enterprise Business Software"
-const category_2 = "AI Companies"
+const category = "Enterprise Applications & Software"
+const category_2 = "AI"
 const attributes =[
 'Freedom',
 'Courage',
