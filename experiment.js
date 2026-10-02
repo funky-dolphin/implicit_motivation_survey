@@ -2213,7 +2213,8 @@ timeline.push({
       color: #111;
       padding: 5vh 5vw;
     ">
-      <p>🎉 Thank you for participating. Please do not close this window until you have been redirected.</p>
+     <p>🎉 Thank you for participating.</p>
+      <p>Please do not close this window <br> until you have been redirected.</p>
      
     </div>
   `,
